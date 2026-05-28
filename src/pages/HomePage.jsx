@@ -88,14 +88,16 @@ export default function HomePage() {
           }
 
           /* .main-banner — valores exactos del CSS de la plantilla (línea 897) */
-          /* padding-top reducido de 250px a 150px porque nuestro navbar es sticky, no absolute */
+          /* Se agrega margin-top negativo para subir el elemento azul hasta el tope de la pantalla, detrás del navbar sticky */
           .main-banner {
-            padding: 150px 120px 150px 120px;
+            margin-top: calc(-1 * var(--navbar-height));
+            padding: calc(150px + var(--navbar-height)) 120px 150px 120px;
           }
           /* Responsive <=992px — CSS plantilla líneas 2003-2006 */
           @media (max-width: 992px) {
             .main-banner {
-              padding: 80px 15px 30px 15px;
+              margin-top: calc(-1 * var(--navbar-height));
+              padding: calc(80px + var(--navbar-height)) 15px 30px 15px;
             }
           }
         `}</style>
