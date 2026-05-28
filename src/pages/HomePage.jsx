@@ -78,7 +78,7 @@ export default function HomePage() {
               <div className="flex flex-wrap items-center gap-6 mt-2 w-full">
                 <Link 
                   to="/catalog" 
-                  className="inline-flex items-center gap-3 px-8 py-3.5 bg-[#1C2035] hover:bg-[#2B314E] dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 rounded-full font-bold text-sm tracking-wide transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1C2035] dark:focus:ring-white"
+                  className="inline-flex items-center gap-3 px-8 py-3.5 bg-primary hover:bg-primary/90 text-white rounded-full font-bold text-sm tracking-wide transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-white"
                 >
                   <span>Descubrir colección</span>
                   <span className="text-lg font-light leading-none">&rarr;</span>
@@ -90,38 +90,38 @@ export default function HomePage() {
         </section>
 
         {/* Business Features Section (Franja inferior) */}
-        <section className="bg-[#ECEAF0] dark:bg-[#151719] border-t border-[#D9D6DF] dark:border-white/5 py-8 px-container select-none">
+        <section className="bg-slate-50 dark:bg-[#151719] border-y border-slate-200 dark:border-white/5 py-8 px-container select-none">
           <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-6">
             
             <div className="flex items-center gap-3.5">
-              <span className="material-symbols-outlined text-[#1C2035] dark:text-slate-200 text-[28px] font-light shrink-0" aria-hidden="true">verified</span>
+              <span className="material-symbols-outlined text-primary dark:text-slate-200 text-[28px] font-light shrink-0" aria-hidden="true">verified</span>
               <div>
-                <h4 className="font-bold text-[#1C2035] dark:text-white text-xs sm:text-sm">Calidad premium</h4>
-                <p className="text-[#5E5B56] dark:text-slate-400 text-[10px] sm:text-xs">Materiales seleccionados</p>
+                <h4 className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">Calidad premium</h4>
+                <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs">Materiales seleccionados</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3.5">
-              <span className="material-symbols-outlined text-[#1C2035] dark:text-slate-200 text-[28px] font-light shrink-0" aria-hidden="true">local_shipping</span>
+              <span className="material-symbols-outlined text-primary dark:text-slate-200 text-[28px] font-light shrink-0" aria-hidden="true">local_shipping</span>
               <div>
-                <h4 className="font-bold text-[#1C2035] dark:text-white text-xs sm:text-sm">Envíos seguros</h4>
-                <p className="text-[#5E5B56] dark:text-slate-400 text-[10px] sm:text-xs">A todo el país</p>
+                <h4 className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">Envíos seguros</h4>
+                <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs">A todo el país</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3.5">
-              <span className="material-symbols-outlined text-[#1C2035] dark:text-slate-200 text-[28px] font-light shrink-0" aria-hidden="true">verified_user</span>
+              <span className="material-symbols-outlined text-primary dark:text-slate-200 text-[28px] font-light shrink-0" aria-hidden="true">verified_user</span>
               <div>
-                <h4 className="font-bold text-[#1C2035] dark:text-white text-xs sm:text-sm">Garantía incluida</h4>
-                <p className="text-[#5E5B56] dark:text-slate-400 text-[10px] sm:text-xs">Compra con tranquilidad</p>
+                <h4 className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">Garantía incluida</h4>
+                <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs">Compra con tranquilidad</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3.5">
-              <span className="material-symbols-outlined text-[#1C2035] dark:text-slate-200 text-[28px] font-light shrink-0" aria-hidden="true">schedule</span>
+              <span className="material-symbols-outlined text-primary dark:text-slate-200 text-[28px] font-light shrink-0" aria-hidden="true">schedule</span>
               <div>
-                <h4 className="font-bold text-[#1C2035] dark:text-white text-xs sm:text-sm">Atención real</h4>
-                <p className="text-[#5E5B56] dark:text-slate-400 text-[10px] sm:text-xs">Te ayudamos siempre</p>
+                <h4 className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">Atención real</h4>
+                <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs">Te ayudamos siempre</p>
               </div>
             </div>
 
