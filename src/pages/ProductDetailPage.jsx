@@ -89,9 +89,9 @@ export default function ProductDetailPage() {
   return (
     <>
       <Helmet>
-        <title>{product.name} | I Nova Sv</title>
+        <title>{product.name} | I Nova SV</title>
         <meta name="description" content={getOgDescription()} />
-        <meta property="og:title" content={`${product.name} | I Nova Sv`} />
+        <meta property="og:title" content={`${product.name} | I Nova SV`} />
         <meta property="og:image" content={mainImg} />
         <meta property="og:description" content={getOgDescription()} />
         <meta property="og:url" content={`${BASE_URL}/product/${product.slug}`} />

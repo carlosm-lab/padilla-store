@@ -5,7 +5,7 @@ export default function NotFoundPage() {
   return (
     <>
       <Helmet>
-        <title>Página no encontrada - I Nova Sv</title>
+        <title>Página no encontrada - I Nova SV</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">

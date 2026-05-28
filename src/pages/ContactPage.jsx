@@ -134,7 +134,7 @@ export default function ContactPage() {
   return (
     <div className="bg-background-light dark:bg-background-dark min-h-screen py-[var(--space-xl)] md:py-[var(--space-2xl)]">
       <Helmet>
-        <title>Contacto | I Nova Sv</title>
+        <title>Contacto | I Nova SV</title>
         <meta property="og:url" content={`${BASE_URL}/contact`} />
         <meta property="og:image" content={`${BASE_URL}/og-image.png`} />
         <meta name="description" content="Contáctanos para resolver tus dudas sobre compras, pedidos personalizados o envíos en El Salvador." />

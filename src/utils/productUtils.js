@@ -1,7 +1,7 @@
 // ──────────────────────────────────────────────────────────────
 // UTILIDADES DE OFERTAS / PROMOCIONES
 // ──────────────────────────────────────────────────────────────
-// Las ofertas en I Nova Sv tienen 3 estados posibles:
+// Las ofertas en I Nova SV tienen 3 estados posibles:
 //   1. PROGRAMADA: tiene offer_starts_at en el futuro
 //   2. ACTIVA: old_price > price, ya empezó y no ha expirado
 //   3. EXPIRADA: offer_ends_at ya pasó

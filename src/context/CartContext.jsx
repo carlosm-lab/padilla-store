@@ -1,7 +1,7 @@
 // ──────────────────────────────────────────────────────────────
 // CONTEXTO DEL CARRITO
 // ──────────────────────────────────────────────────────────────
-// El corazón de la lógica de ventas en I Nova Sv. Maneja:
+// El corazón de la lógica de ventas en I Nova SV. Maneja:
 //   - Persistencia en localStorage (guest-first, sin tabla de carritos)
 //   - Sincronización con Supabase (user_carts) cuando hay usuario logueado
 //   - Revalidación de precios cada 60 segundos
@@ -26,6 +26,7 @@
 // - MAX_TOTAL_ITEMS (50): ítems distintos máximos en el carrito
 // Estos límites existen para evitar mensajes de WhatsApp gigantes.
 // ──────────────────────────────────────────────────────────────
+import { safeLocalStorage } from '@/utils/storage';
 import { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { toast } from 'react-hot-toast';
 import { supabase } from '@/lib/supabaseClient';
@@ -48,15 +49,15 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(() => {
     try {
       // Migración de keys antiguas (legacy) a 'pages_*'
-      const oldCart = localStorage.getItem('cart');
-      const oldTime = localStorage.getItem('cart_timestamp');
-      const oldExp = localStorage.getItem('cart_was_expired');
-      if (oldCart) { localStorage.setItem('pages_cart', oldCart); localStorage.removeItem('cart'); }
-      if (oldTime) { localStorage.setItem('pages_cart_timestamp', oldTime); localStorage.removeItem('cart_timestamp'); }
-      if (oldExp) { localStorage.setItem('pages_cart_was_expired', oldExp); localStorage.removeItem('cart_was_expired'); }
+      const oldCart = safeLocalStorage.getItem('cart');
+      const oldTime = safeLocalStorage.getItem('cart_timestamp');
+      const oldExp = safeLocalStorage.getItem('cart_was_expired');
+      if (oldCart) { safeLocalStorage.setItem('pages_cart', oldCart); safeLocalStorage.removeItem('cart'); }
+      if (oldTime) { safeLocalStorage.setItem('pages_cart_timestamp', oldTime); safeLocalStorage.removeItem('cart_timestamp'); }
+      if (oldExp) { safeLocalStorage.setItem('pages_cart_was_expired', oldExp); safeLocalStorage.removeItem('cart_was_expired'); }
 
-      const saved = localStorage.getItem('pages_cart');
-      const timestamp = localStorage.getItem('pages_cart_timestamp');
+      const saved = safeLocalStorage.getItem('pages_cart');
+      const timestamp = safeLocalStorage.getItem('pages_cart_timestamp');
       
       // Expiración de 7 días: si el carrito lleva más de una semana
       // sin actividad, se borra y se muestra un toast al usuario.
@@ -65,9 +66,9 @@ export const CartProvider = ({ children }) => {
         const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
         
         if (now - parseInt(timestamp, 10) > SEVEN_DAYS) {
-          localStorage.removeItem('pages_cart');
-          localStorage.removeItem('pages_cart_timestamp');
-          localStorage.setItem('pages_cart_was_expired', 'true');
+          safeLocalStorage.removeItem('pages_cart');
+          safeLocalStorage.removeItem('pages_cart_timestamp');
+          safeLocalStorage.setItem('pages_cart_was_expired', 'true');
           return [];
         }
         return JSON.parse(saved);
@@ -78,8 +79,8 @@ export const CartProvider = ({ children }) => {
       // localStorage corrupto — limpiar y empezar de cero
       logger.error('Error parsing cart from localStorage, cleaning up corrupted data:', e);
       try {
-        localStorage.removeItem('pages_cart');
-        localStorage.removeItem('pages_cart_timestamp');
+        safeLocalStorage.removeItem('pages_cart');
+        safeLocalStorage.removeItem('pages_cart_timestamp');
       } catch (cleanupErr) {
         logger.error('Error cleaning up localStorage:', cleanupErr);
       }
@@ -121,10 +122,10 @@ export const CartProvider = ({ children }) => {
     window.addEventListener('storage', handleStorageChange);
 
     // Mostrar toast si el carrito expiró (flag del init)
-    if (localStorage.getItem('pages_cart_was_expired') === 'true') {
+    if (safeLocalStorage.getItem('pages_cart_was_expired') === 'true') {
       setTimeout(() => {
         toast('Tu carrito ha expirado por inactividad.', { icon: '🕒', duration: 4000 });
-        localStorage.removeItem('pages_cart_was_expired');
+        safeLocalStorage.removeItem('pages_cart_was_expired');
       }, 1000);
     }
 
@@ -133,9 +134,9 @@ export const CartProvider = ({ children }) => {
 
   // ── Persistencia en localStorage ────────────────────────
   useEffect(() => {
-    localStorage.setItem('pages_cart', JSON.stringify(cartItems));
+    safeLocalStorage.setItem('pages_cart', JSON.stringify(cartItems));
     if (cartItems.length === 0) {
-      localStorage.removeItem('pages_cart_timestamp');
+      safeLocalStorage.removeItem('pages_cart_timestamp');
     }
   }, [cartItems]);
 
@@ -341,7 +342,7 @@ export const CartProvider = ({ children }) => {
     });
     
     // Registrar timestamp de última actividad (para la expiración de 7 días)
-    localStorage.setItem('pages_cart_timestamp', Date.now().toString());
+    safeLocalStorage.setItem('pages_cart_timestamp', Date.now().toString());
 
     toast.success(
       <div>

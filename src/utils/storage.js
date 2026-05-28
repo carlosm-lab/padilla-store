@@ -1,3 +1,4 @@
+import { logger } from './logger';
 // ──────────────────────────────────────────────────────────────
 // UTILIDADES DE SUPABASE STORAGE
 // ──────────────────────────────────────────────────────────────
@@ -62,3 +63,32 @@ export function collectProductImageFiles(product) {
   }
   return files;
 }
+
+export const safeLocalStorage = {
+  setItem: (key, value) => {
+    try {
+      localStorage.setItem(key, value);
+      return true;
+    } catch (error) {
+      logger.error(`Error saving to localStorage (Key: ${key}):`, error);
+      return false;
+    }
+  },
+  getItem: (key) => {
+    try {
+      return localStorage.getItem(key);
+    } catch (error) {
+      logger.error(`Error reading from localStorage (Key: ${key}):`, error);
+      return null;
+    }
+  },
+  removeItem: (key) => {
+    try {
+      localStorage.removeItem(key);
+      return true;
+    } catch (error) {
+      logger.error(`Error removing from localStorage (Key: ${key}):`, error);
+      return false;
+    }
+  }
+};

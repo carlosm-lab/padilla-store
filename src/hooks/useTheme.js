@@ -13,6 +13,7 @@
 // que Tailwind CSS v4 usa para sus variantes dark:.
 // ──────────────────────────────────────────────────────────────
 import { useState, useEffect } from 'react';
+import { safeLocalStorage } from '@/utils/storage';
 
 const OLD_KEY = 'detalles_eternos_theme';  // Legacy — migración
 const NEW_KEY = 'pages_theme';
@@ -21,13 +22,13 @@ export function useTheme() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
     if (typeof window !== 'undefined') {
       // Migrar key vieja si existe
-      const oldMode = localStorage.getItem(OLD_KEY);
+      const oldMode = safeLocalStorage.getItem(OLD_KEY);
       if (oldMode) {
-        localStorage.setItem(NEW_KEY, oldMode);
-        localStorage.removeItem(OLD_KEY);
+        safeLocalStorage.setItem(NEW_KEY, oldMode);
+        safeLocalStorage.removeItem(OLD_KEY);
       }
       
-      const savedMode = localStorage.getItem(NEW_KEY);
+      const savedMode = safeLocalStorage.getItem(NEW_KEY);
       return savedMode === 'dark';
     }
     return false;
@@ -36,10 +37,10 @@ export function useTheme() {
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add('dark');
-      localStorage.setItem(NEW_KEY, 'dark');
+      safeLocalStorage.setItem(NEW_KEY, 'dark');
     } else {
       document.documentElement.classList.remove('dark');
-      localStorage.setItem(NEW_KEY, 'light');
+      safeLocalStorage.setItem(NEW_KEY, 'light');
     }
   }, [isDarkMode]);
 

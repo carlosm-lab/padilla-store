@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { safeLocalStorage } from '@/utils/storage';
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -7,7 +8,7 @@ export default function CookieBanner() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    const consent = localStorage.getItem('cookie_consent');
+    const consent = safeLocalStorage.getItem('cookie_consent');
     if (!consent) {
       // Small delay so it slides in nicely
       const timer = setTimeout(() => setShow(true), 1000);
@@ -16,7 +17,7 @@ export default function CookieBanner() {
   }, []);
 
   const handleAccept = () => {
-    localStorage.setItem('cookie_consent', 'true');
+    safeLocalStorage.setItem('cookie_consent', 'true');
     setShow(false);
   };
 

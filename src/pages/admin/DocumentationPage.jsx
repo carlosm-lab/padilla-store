@@ -6,8 +6,8 @@ import { BASE_URL, SITE_NAME } from '@/config/constants';
 // Import the raw contents of the documents — embedded in src/data/ (no external deps)
 
 const sprintsContent = `================================================================================
-  I Nova Sv — PLAN DE DESARROLLO POR SPRINTS
-  Proyecto interno: I Nova Sv
+  I Nova SV — PLAN DE DESARROLLO POR SPRINTS
+  Proyecto interno: I Nova SV
   Versión 1.0 — Marzo 2026
   10 sprints · 10 semanas · 406 horas · 1 desarrollador
 ================================================================================
@@ -158,7 +158,7 @@ sanitización: DOMPurify con ALLOWED_TAGS vacío, sin excepciones.
 
 TAREAS
 ─────────────────────────────────────────────────────────────────────────────
-  2h  supabaseClient.js: singleton con storageKey 'I Nova Sv-auth' (evita conflictos
+  2h  supabaseClient.js: singleton con storageKey 'I Nova SV-auth' (evita conflictos
       en desarrollo local con otras apps Supabase en el mismo dominio)
       → src/lib/supabaseClient.js
 
@@ -262,7 +262,7 @@ TAREAS
   1h  useDebounce.js: hook genérico de debounce, default 300ms
       → src/hooks/useDebounce.js
 
-  3h  useTheme.js: dark mode con persistencia 'I Nova Sv_theme', migración de key
+  3h  useTheme.js: dark mode con persistencia 'I Nova SV_theme', migración de key
       legacy 'theme-preference', clase 'dark' en <html>
       → src/hooks/useTheme.js
       Notas: Retorna { isDarkMode, toggleTheme }
@@ -301,8 +301,8 @@ TAREAS
       → src/context/SettingsContext.jsx
       Notas: Expone { settings, loading, fetchSettings }
 
-  3h  AuthContext.jsx: caché en sessionStorage (I Nova Sv_user, I Nova Sv_profile,
-      I Nova Sv_auth_cache_time) con TTL 1 hora
+  3h  AuthContext.jsx: caché en sessionStorage (I Nova SV_user, I Nova SV_profile,
+      I Nova SV_auth_cache_time) con TTL 1 hora
       → src/context/AuthContext.jsx
 
   3h  AuthContext.jsx: Effect 1 — getSession() + onAuthStateChange
@@ -354,7 +354,7 @@ También se configuraban el routing completo y los headers de seguridad.
 TAREAS
 ─────────────────────────────────────────────────────────────────────────────
   4h  CartContext.jsx: addToCart, removeFromCart, updateQuantity, clearCart
-      con escritura inmediata en localStorage (I Nova Sv_cart) como fuente primaria
+      con escritura inmediata en localStorage (I Nova SV_cart) como fuente primaria
       → src/context/CartContext.jsx
 
   3h  CartContext.jsx: sync con Supabase (user_carts) con debounce 1500ms
@@ -371,7 +371,7 @@ TAREAS
       → src/context/CartContext.jsx
 
   2h  CartContext.jsx: expiración automática a los 7 días de inactividad
-      (I Nova Sv_cart_timestamp) con notificación toast
+      (I Nova SV_cart_timestamp) con notificación toast
       → src/context/CartContext.jsx
 
   2h  CartContext.jsx: sincronización multi-tab vía StorageEvent en window
@@ -450,10 +450,10 @@ TAREAS
 ─────────────────────────────────────────────────────────────────────────────
   3h  ErrorBoundary.jsx: captura errores de render, UI de recuperación con 2 opciones.
       Limpieza controlada (LOW-004): solo sessionStorage y keys volátiles,
-      NUNCA I Nova Sv_cart ni I Nova Sv_favorites
+      NUNCA I Nova SV_cart ni I Nova SV_favorites
       → src/components/ErrorBoundary.jsx
 
-  2h  Logo.jsx: icono Material Symbols + texto 'I Nova Sv', versiones sm/md/lg
+  2h  Logo.jsx: icono Material Symbols + texto 'I Nova SV', versiones sm/md/lg
       → src/components/Logo.jsx
 
   2h  ui/ThemeToggle.jsx: botón con iconos dark_mode/light_mode, tooltip descriptivo
@@ -499,11 +499,11 @@ TAREAS
 
   3h  admin/AdminLayout.jsx desktop: sidebar colapsable + header con avatar
       y ThemeToggle + área scrollable. shrink-0 en header (LOW-011)
-      → src/I Nova Sv/admin/AdminLayout.jsx
+      → src/I Nova SV/admin/AdminLayout.jsx
 
   2h  admin/AdminLayout.jsx: AdminFooterBar mobile con 5 iconos
       (Dashboard, Productos, Categorías, Mensajes, Ajustes)
-      → src/I Nova Sv/admin/AdminLayout.jsx
+      → src/I Nova SV/admin/AdminLayout.jsx
 ─────────────────────────────────────────────────────────────────────────────
   TOTAL: 40 horas
 
@@ -632,31 +632,31 @@ TAREAS
 
   3h  HomePage.jsx: sección Hero — imagen desde settings.hero_image_url,
       título/subtítulo dinámicos, CTA 'Ver Catálogo'
-      → src/I Nova Sv/HomePage.jsx
+      → src/I Nova SV/HomePage.jsx
 
   3h  HomePage.jsx: sección Especialidades — grid de categorías con iconos
       Material Symbols, cards navegables a /catalogo?category=slug
-      → src/I Nova Sv/HomePage.jsx
+      → src/I Nova SV/HomePage.jsx
 
   2h  HomePage.jsx: sección Nuestra Historia — texto narrativo con imagen lateral
-      → src/I Nova Sv/HomePage.jsx
+      → src/I Nova SV/HomePage.jsx
 
   3h  HomePage.jsx: sección Productos Destacados — grid de ProductCard con
       productos recientes y ofertas activas
-      → src/I Nova Sv/HomePage.jsx
+      → src/I Nova SV/HomePage.jsx
 
   5h  CatalogPage.jsx: sincronización bidireccional con URL searchParams
       (?category, ?search, ?sort, ?page) — cualquier cambio de filtro actualiza la URL
-      → src/I Nova Sv/CatalogPage.jsx
+      → src/I Nova SV/CatalogPage.jsx
       Notas: Estado compartible. El botón de atrás restaura filtros anteriores.
 
   4h  CatalogPage.jsx: grid 2/3/4 columnas, FilterSidebar (desktop),
       MobileFilterDrawer (mobile), paginación offset con Anterior/Siguiente
-      → src/I Nova Sv/CatalogPage.jsx
+      → src/I Nova SV/CatalogPage.jsx
 
   3h  CatalogPage.jsx: loading con skeletons shimmer, empty state con ilustración,
       error state
-      → src/I Nova Sv/CatalogPage.jsx
+      → src/I Nova SV/CatalogPage.jsx
 ─────────────────────────────────────────────────────────────────────────────
   TOTAL: 40 horas
 
@@ -687,60 +687,60 @@ TAREAS
 ─────────────────────────────────────────────────────────────────────────────
   3h  ProductDetailPage.jsx: galería — imagen principal + thumbnails clickeables
       del array images[], cambio de imagen principal al hacer click
-      → src/I Nova Sv/ProductDetailPage.jsx
+      → src/I Nova SV/ProductDetailPage.jsx
 
   4h  ProductDetailPage.jsx: nombre, precio, descripción, categoría, tags como chips,
       botón agregar al carrito con selector de cantidad, botón compartir
-      → src/I Nova Sv/ProductDetailPage.jsx
+      → src/I Nova SV/ProductDetailPage.jsx
 
   3h  ProductDetailPage.jsx: oferta activa (precio anterior tachado + badge +
       OfferCountdown) y oferta programada (badge 'Próxima oferta' + 'Inicia en...')
-      → src/I Nova Sv/ProductDetailPage.jsx
+      → src/I Nova SV/ProductDetailPage.jsx
 
   2h  ProductDetailPage.jsx: nota personalizada — textarea cuyo contenido se incluye
       en el payload del carrito y luego en el mensaje de WhatsApp
-      → src/I Nova Sv/ProductDetailPage.jsx
+      → src/I Nova SV/ProductDetailPage.jsx
 
   2h  ProductDetailPage.jsx: productos relacionados — grid de ProductCard de la misma
       categoría, excluyendo el producto actual
-      → src/I Nova Sv/ProductDetailPage.jsx
+      → src/I Nova SV/ProductDetailPage.jsx
 
   2h  ProductDetailPage.jsx: StructuredData Product (nombre, precio, imagen, sku,
       availability InStock), meta tags dinámicos title/description/OG
-      → src/I Nova Sv/ProductDetailPage.jsx
+      → src/I Nova SV/ProductDetailPage.jsx
 
   3h  ContactPage.jsx: campos nombre, email, asunto (select), mensaje.
       Validación y sanitización con sanitizeInput() antes de procesar
-      → src/I Nova Sv/ContactPage.jsx
+      → src/I Nova SV/ContactPage.jsx
       Notas: 348 líneas — página con más capas de seguridad del sistema
 
   3h  ContactPage.jsx: Cloudflare Turnstile widget invisible, obtención de token
       antes del submit, incluir en el INSERT a contact_messages
-      → src/I Nova Sv/ContactPage.jsx
+      → src/I Nova SV/ContactPage.jsx
 
   2h  ContactPage.jsx: honeypot — campo 'website' con opacity:0, position:absolute.
       Contenido = bot detectado, submit descartado silenciosamente
-      → src/I Nova Sv/ContactPage.jsx
+      → src/I Nova SV/ContactPage.jsx
 
   2h  ContactPage.jsx: rate limiting — localStorage 'last_contact_sent' TTL 60s
-      → src/I Nova Sv/ContactPage.jsx
+      → src/I Nova SV/ContactPage.jsx
 
   3h  ContactPage.jsx: flujo completo — validar → honeypot → rate limit → token
       Turnstile → INSERT → reset formulario + widget → notificación éxito
-      → src/I Nova Sv/ContactPage.jsx
+      → src/I Nova SV/ContactPage.jsx
 
   2h  NotFoundPage.jsx: 404 minimalista con noindex/nofollow en meta robots
-      → src/I Nova Sv/NotFoundPage.jsx
+      → src/I Nova SV/NotFoundPage.jsx
 
   2h  PrivacyPage.jsx: política de privacidad con prose Tailwind, meta tags
-      → src/I Nova Sv/PrivacyPage.jsx
+      → src/I Nova SV/PrivacyPage.jsx
 
   2h  TermsPage.jsx: términos y condiciones con prose Tailwind, meta tags
-      → src/I Nova Sv/TermsPage.jsx
+      → src/I Nova SV/TermsPage.jsx
 
   4h  SEO meta tags: react-helmet-async en todas las páginas públicas —
       title único, description, og:title, og:description, og:image, og:url
-      → Todas las páginas en src/I Nova Sv/
+      → Todas las páginas en src/I Nova SV/
 
   3h  QA: prueba integral del flujo público completo — navegación → producto →
       carrito → WhatsApp, en mobile y desktop, dark y light mode
@@ -777,20 +777,20 @@ TAREAS
   4h  DashboardPage.jsx: RPC get_dashboard_data → StatCards para cada métrica
       (productos, categorías, ofertas activas, mensajes no leídos, favoritos, usuarios).
       Click en StatCard abre StatDetailModal.
-      → src/I Nova Sv/admin/DashboardPage.jsx
+      → src/I Nova SV/admin/DashboardPage.jsx
 
   4h  DashboardPage.jsx: widgets — RecentProducts, CategoryChart, TopFavorites,
       RecentMessages
-      → src/I Nova Sv/admin/DashboardPage.jsx
+      → src/I Nova SV/admin/DashboardPage.jsx
 
   4h  ProductsPage.jsx: listado con búsqueda debounce 500ms, filtro por categoría,
       filtro por ofertas activas, paginación 25/página
-      → src/I Nova Sv/admin/ProductsPage.jsx
+      → src/I Nova SV/admin/ProductsPage.jsx
 
   4h  ProductsPage.jsx: eliminación individual con ConfirmDialog (danger),
       eliminación masiva con checkboxes, cleanup de Storage — solo filenames
       de URLs *.supabase.co (HIGH-002)
-      → src/I Nova Sv/admin/ProductsPage.jsx
+      → src/I Nova SV/admin/ProductsPage.jsx
 
   4h  ProductModal.jsx: nombre, slug (auto-generado + editable + verificación
       unicidad en DB), descripción, precio, precio anterior
@@ -817,22 +817,22 @@ TAREAS
 
   4h  CategoriesPage.jsx: CRUD completo, selector de icono Material Symbols,
       preview del ícono. Al guardar dispara 'categories-updated' para invalidar caché.
-      → src/I Nova Sv/admin/CategoriesPage.jsx
+      → src/I Nova SV/admin/CategoriesPage.jsx
 
   3h  MessagesPage.jsx: listado con indicador leído/no leído, marcar como leído,
       eliminación con ConfirmDialog
-      → src/I Nova Sv/admin/MessagesPage.jsx
+      → src/I Nova SV/admin/MessagesPage.jsx
 
   2h  FavoritesPage.jsx: ranking de productos más favoriteados, conteo descendente
-      → src/I Nova Sv/admin/FavoritesPage.jsx
+      → src/I Nova SV/admin/FavoritesPage.jsx
 
   3h  SettingsPage.jsx: StoreSettingsForm con todos los campos de store_settings
-      → src/I Nova Sv/admin/SettingsPage.jsx
+      → src/I Nova SV/admin/SettingsPage.jsx
       Notas: Al guardar, Realtime propaga el cambio a todas las pestañas abiertas
 
   3h  SettingsPage.jsx: gestión de roles (listar usuarios, cambiar role),
       StoreCategoryImagesForm
-      → src/I Nova Sv/admin/SettingsPage.jsx
+      → src/I Nova SV/admin/SettingsPage.jsx
 ─────────────────────────────────────────────────────────────────────────────
   TOTAL: 44 horas
 
@@ -960,11 +960,11 @@ RESUMEN GENERAL DEL PROYECTO
 
 ================================================================================`;
 
-const graphicContent = `I Nova Sv - descripción Gráfica
+const graphicContent = `I Nova SV - descripción Gráfica
 
 ## Naturaleza y propósito del sistema
 
-I Nova Sv es una aplicación web de catálogo comercial construida para un negocio de venta directa en El Salvador, cuyo modelo de operación se aleja deliberadamente de lo que se entiende por ecommerce convencional. No existe pasarela de pagos, no existe gestión de inventario, y el concepto de stock es irrelevante para su funcionamiento: todos los productos se consideran disponibles por definición, porque el negocio opera por pedido y el cierre de cada venta ocurre fuera del sistema, a través de una conversación en WhatsApp. La aplicación existe para un propósito acotado y bien definido: permitir que un visitante explore un catálogo visual, acumule productos en un carrito, y genere con un solo gesto un mensaje pre-formateado que abre WhatsApp con el pedido completo listo para enviar. Todo lo que ocurre después de ese momento — la confirmación de disponibilidad, la negociación del precio final, el acuerdo de entrega — sucede entre el comprador y la administradora sin ninguna mediación técnica. Esta decisión de diseño no es una limitación sino una elección que simplifica radicalmente la arquitectura y elimina toda la complejidad asociada a pagos, órdenes, reembolsos y estados de envío.
+I Nova SV es una aplicación web de catálogo comercial construida para un negocio de venta directa en El Salvador, cuyo modelo de operación se aleja deliberadamente de lo que se entiende por ecommerce convencional. No existe pasarela de pagos, no existe gestión de inventario, y el concepto de stock es irrelevante para su funcionamiento: todos los productos se consideran disponibles por definición, porque el negocio opera por pedido y el cierre de cada venta ocurre fuera del sistema, a través de una conversación en WhatsApp. La aplicación existe para un propósito acotado y bien definido: permitir que un visitante explore un catálogo visual, acumule productos en un carrito, y genere con un solo gesto un mensaje pre-formateado que abre WhatsApp con el pedido completo listo para enviar. Todo lo que ocurre después de ese momento — la confirmación de disponibilidad, la negociación del precio final, el acuerdo de entrega — sucede entre el comprador y la administradora sin ninguna mediación técnica. Esta decisión de diseño no es una limitación sino una elección que simplifica radicalmente la arquitectura y elimina toda la complejidad asociada a pagos, órdenes, reembolsos y estados de envío.
 
 ## Stack tecnológico y decisiones de arquitectura
 
@@ -1034,11 +1034,11 @@ El sistema está funcionalmente completo para su propósito declarado. El catál
 
 La deuda técnica más importante es la ausencia de tests automatizados. La documentación menciona una estructura de tests con Vitest, Cypress y Playwright, pero no hay evidencia de que existan tests escritos que cubran los flujos críticos. Para un sistema cuya operación depende de la correcta generación del mensaje de WhatsApp, la revalidación de precios y las políticas de seguridad de la base de datos, la ausencia de tests significa que cualquier modificación futura carga con el riesgo de introducir regresiones que solo se detectarían en producción. Esta es la brecha más relevante entre el estado actual del sistema y un estado que se podría considerar completamente robusto.`;
 
-const funcContent = `# I Nova Sv — Descripción funcional del código
+const funcContent = `# I Nova SV — Descripción funcional del código
 
 ## Visión general del sistema
 
-I Nova Sv es una aplicación web de catálogo comercial construida para un negocio de venta directa en El Salvador que opera completamente al margen de los mecanismos convencionales del comercio electrónico. No existe pasarela de pagos, no existe gestión de inventario, y el concepto de stock es funcionalmente irrelevante: todos los productos se consideran disponibles por definición porque el negocio trabaja por pedido, y el cierre de cada venta ocurre fuera del sistema, a través de una conversación en WhatsApp entre el comprador y la administradora. La aplicación existe para un propósito deliberadamente acotado: permitir que un visitante explore un catálogo visual atractivo, acumule productos en un carrito, y con un solo gesto genere un mensaje pre-formateado que abre WhatsApp con el pedido completo listo para enviar. Todo lo que ocurre después de ese momento — la confirmación de disponibilidad, el acuerdo de precio final, la logística de entrega — sucede entre personas sin ninguna mediación técnica. Esta decisión de diseño no es una limitación técnica sino una elección que elimina radicalmente la complejidad asociada a pagos, órdenes, reembolsos y estados de envío, permitiendo que una sola persona administre el negocio completo sin infraestructura especializada. El sistema está construido sobre React 19 con Vite como bundler, Tailwind CSS en su versión 4 para estilos, y Supabase como backend completo que provee base de datos PostgreSQL, autenticación mediante Google OAuth, almacenamiento de archivos y suscripciones en tiempo real, todo desplegado en Vercel como aplicación estática.
+I Nova SV es una aplicación web de catálogo comercial construida para un negocio de venta directa en El Salvador que opera completamente al margen de los mecanismos convencionales del comercio electrónico. No existe pasarela de pagos, no existe gestión de inventario, y el concepto de stock es funcionalmente irrelevante: todos los productos se consideran disponibles por definición porque el negocio trabaja por pedido, y el cierre de cada venta ocurre fuera del sistema, a través de una conversación en WhatsApp entre el comprador y la administradora. La aplicación existe para un propósito deliberadamente acotado: permitir que un visitante explore un catálogo visual atractivo, acumule productos en un carrito, y con un solo gesto genere un mensaje pre-formateado que abre WhatsApp con el pedido completo listo para enviar. Todo lo que ocurre después de ese momento — la confirmación de disponibilidad, el acuerdo de precio final, la logística de entrega — sucede entre personas sin ninguna mediación técnica. Esta decisión de diseño no es una limitación técnica sino una elección que elimina radicalmente la complejidad asociada a pagos, órdenes, reembolsos y estados de envío, permitiendo que una sola persona administre el negocio completo sin infraestructura especializada. El sistema está construido sobre React 19 con Vite como bundler, Tailwind CSS en su versión 4 para estilos, y Supabase como backend completo que provee base de datos PostgreSQL, autenticación mediante Google OAuth, almacenamiento de archivos y suscripciones en tiempo real, todo desplegado en Vercel como aplicación estática.
 
 ## Arquitectura general y organización del código
 

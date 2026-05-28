@@ -16,8 +16,7 @@ export default function UserAvatar({ user, size = 'md', className = '' }) {
   const src = user?.user_metadata?.avatar_url || user?.user_metadata?.picture || getFallbackUrl(user);
 
   return (
-    <img
-      src={src}
+    <img alt="" src={src}
       onError={(e) => {
         e.target.onerror = null;
         e.target.src = getFallbackUrl(user);

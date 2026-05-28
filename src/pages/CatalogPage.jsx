@@ -139,10 +139,10 @@ export default function CatalogPage() {
   return (
     <>
       <Helmet>
-        <title>Catálogo | I Nova Sv</title>
+        <title>Catálogo | I Nova SV</title>
         <meta property="og:url" content={`${BASE_URL}/catalog`} />
         <meta property="og:image" content={`${BASE_URL}/og-image.png`} />
-        <meta name="description" content="Explora nuestra colección completa de accesorios para celular, cases y más en I Nova Sv." />
+        <meta name="description" content="Explora nuestra colección completa de accesorios para celular, cases y más en I Nova SV." />
         <link rel="canonical" href={`${BASE_URL}/catalog`} />
       </Helmet>
       <main className="flex flex-1 flex-col lg:flex-row w-full px-container py-[var(--space-lg)] gap-[var(--space-lg)]">

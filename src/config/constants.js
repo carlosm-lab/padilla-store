@@ -49,7 +49,7 @@ export const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || 'contacto@ino
 // en staging, agregar VITE_BASE_URL a las env vars.
 export const BASE_URL = 'https://inova-sv.vercel.app';
 
-export const SITE_NAME = "I Nova Sv";
+export const SITE_NAME = "I Nova SV";
 export const CONTACT_LOCATION = "El Salvador";
 
 // ── Límites del carrito ──────────────────────────────────

@@ -1,138 +1,229 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSettings } from '@/context/SettingsContext';
 import ProductCard from '@/components/ProductCard';
 import { useProducts } from '@/hooks/useProducts';
 import { useCategories } from '@/hooks/useCategories';
 import { Helmet } from 'react-helmet-async';
-import { WHATSAPP_NUMBER, BASE_URL } from '@/config/constants';
-import SocialIcons from '@/components/SocialIcons';
+import { BASE_URL } from '@/config/constants';
+import { useEffect } from 'react';
 
-const FALLBACK_HERO_IMG = '/hero_aura_cases.png';
+const FALLBACK_HERO_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuC2utPyicqN_kUOlg_KMlF2AA1cqvefgwLmDWPoStz9OLaD7KrTngV5Z330vaSwZf_Ad-Va2vFoDwEj4lBCqcQF_O4oZyxM7HrmORUD6zpvKgOA0z6fzdO1HZ6FDAI6BOHCIeCRWCSiZu8u9TJ79hmbPK0DLNbKphBr3g-E6flprEImzUkY0AIKfn31wWv1HhkMfxaEYUmAZAXARQ2wqx1GSswK_9grPpT5H48RI4n8rkAexrzyjQuq7HR3Lyfy-voEibkI1gYHm5I';
 
 export default function HomePage() {
-  const navigate = useNavigate();
   const { products: homeProducts, loading } = useProducts({ limit: 4 });
   const { categories: allCategories, loading: loadingCategories } = useCategories();
   const { settings } = useSettings();
-  
-  // Show categories marked as "featured" by admin. Fallback: first 3 alphabetically.
+
   const categories = (() => {
     const featured = allCategories.filter(c => c.featured);
     return featured.length > 0 ? featured : allCategories.slice(0, 3);
   })();
 
-  const getCategoryTheme = (cat) => {
-    return {
-      icon: cat.icon || 'category',
-      desc: cat.description || 'Explora nuestros hermosos detalles de esta categoría.',
-      img: cat.image_url || 'https://images.unsplash.com/photo-1513290254054-0f62d1ecbaaa?q=80&w=800&auto=format&fit=crop'
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
     };
-  };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    const elements = document.querySelectorAll('.fade-in-up');
+    elements.forEach(element => {
+      observer.observe(element);
+    });
+
+    return () => {
+      elements.forEach(element => {
+        observer.unobserve(element);
+      });
+    };
+  }, []);
 
   return (
     <>
       <Helmet>
-        <title>Inicio | I Nova Sv</title>
-        <meta name="description" content="Encuentra los mejores accesorios para tu celular en I Nova Sv." />
-        <meta property="og:title" content="I Nova Sv" />
+        <title>Inicio | I Nova SV</title>
+        <meta name="description" content="Encuentra los mejores accesorios para tu celular en I Nova SV." />
+        <meta property="og:title" content="I Nova SV" />
         <meta property="og:description" content="Accesorios para celular y tecnología." />
         <meta property="og:image" content={settings?.hero_image_url || FALLBACK_HERO_IMG} />
         <meta property="og:url" content={BASE_URL} />
         <link rel="canonical" href={`${BASE_URL}/`} />
         <link rel="preload" as="image" href={settings?.hero_image_url || FALLBACK_HERO_IMG} />
+        <style>{`
+          .hide-scrollbar::-webkit-scrollbar { display: none; }
+          .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+          
+          @media (prefers-reduced-motion: no-preference) {
+            .fade-in-up {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            }
+            .fade-in-up.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            @keyframes float {
+              0%, 100% { transform: translateY(0); }
+              50% { transform: translateY(-12px); }
+            }
+            .animate-float {
+              animation: float 6s ease-in-out infinite;
+            }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .fade-in-up {
+                opacity: 1;
+                transform: translateY(0);
+            }
+          }
+
+          /* .main-banner — valores exactos del CSS de la plantilla (línea 897) */
+          /* padding-top reducido de 250px a 150px porque nuestro navbar es sticky, no absolute */
+          .main-banner {
+            padding: 150px 120px 150px 120px;
+          }
+          /* Responsive <=992px — CSS plantilla líneas 2003-2006 */
+          @media (max-width: 992px) {
+            .main-banner {
+              padding: 80px 15px 30px 15px;
+            }
+          }
+        `}</style>
       </Helmet>
-      <main className="flex-1">
-        {/* Hero Section */}        <section className="w-full bg-background-light dark:bg-background-dark text-[#1C2035] dark:text-white py-[var(--space-xl)] lg:py-[var(--space-3xl)] select-none">
-          <div className="mx-auto max-w-7xl px-container grid grid-cols-1 md:grid-cols-2 gap-[var(--space-lg)] lg:gap-[var(--space-2xl)] items-center">
-            
-            {/* Columna imagen */}
-            <div className="flex justify-center items-center w-full order-1 md:order-none">
-              <img 
-                src={settings?.hero_image_url || FALLBACK_HERO_IMG} 
-                alt="Colección Aura" 
-                className="w-full h-auto max-h-[45vw] md:max-h-[480px] lg:max-h-[560px] object-contain"
-              />
+
+      {/* Hero Section — Estructura exacta de landing/index.html líneas 168-200 */}
+      {/* CSS: .main-banner (línea 893), responsive @media max-width:992px (línea 2003) */}
+      <section
+        className="main-banner relative w-full overflow-hidden text-center lg:text-left"
+        style={{
+          /* Desktop: padding: 250px 120px 150px 120px (CSS línea 897) */
+          /* Mobile: padding: 226px 0px 30px 0px (CSS línea 2005) */
+          /* Ajuste: el navbar de la plantilla es absolute, el nuestro es sticky, */
+          /* así que restamos ~100px del padding-top para compensar */
+        }}
+      >
+        {/* Fondo decorativo — .main-banner:after (CSS línea 902) */}
+        {/* background-image: url(slider-left-dec.png), z-index:1 */}
+        {/* En mobile se oculta: .main-banner:after { display:none } (CSS línea 1979) */}
+        <div
+          className="absolute inset-0 pointer-events-none z-[1] hidden lg:block"
+          style={{
+            backgroundImage: "url('/slider-left-dec.png')",
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'contain',
+            backgroundPosition: 'left top'
+          }}
+        />
+
+        {/* .container (Bootstrap max-width 1140px en xl) */}
+        <div className="max-w-[1140px] mx-auto px-[15px]">
+          {/* .row > .col-lg-12 > .row (plantilla líneas 170-172) */}
+          <div className="flex flex-wrap">
+            {/* .col-lg-6.align-self-center — Columna izquierda (plantilla línea 173) */}
+            <div className="w-full lg:w-1/2 px-[15px] self-center">
+              {/* .left-content.show-up.header-text (plantilla línea 174) */}
+              {/* .left-content { margin-right: 15px } (CSS línea 916) */}
+              {/* .show-up { position:relative; z-index:2 } (CSS línea 202) */}
+              <div className="lg:mr-[15px] relative z-[2]">
+                {/* h2: font-weight:700, line-height:70px, font-size:50px, mb:20px (CSS líneas 920-925) */}
+                <h2 className="font-bold text-[32px] leading-[42px] lg:text-[50px] lg:leading-[70px] mb-[20px] text-[#2a2a2a] dark:text-white">
+                  {settings?.hero_title || "Protege tu estilo"}
+                </h2>
+                {/* p: mb:45px, color:#2a2a2a, font-weight:400 (CSS líneas 928-931) */}
+                {/* En mobile color:#afafaf (CSS línea 1987) */}
+                <p className="mb-[45px] text-[15px] leading-[30px] font-normal text-[#afafaf] lg:text-[#2a2a2a] dark:text-slate-300">
+                  {settings?.hero_subtitle || "Descubre nuestra nueva colección de fundas premium. Diseño minimalista, máxima protección para tu dispositivo."}
+                </p>
+                {/* Botones — .white-button (CSS líneas 207-228) */}
+                {/* .white-button a en .main-banner: bg #4b8ef1, color #fff (CSS líneas 952-955) */}
+                {/* display:inline-block, padding:10px 20px, rounded:23px, font:15px 500 (CSS líneas 208-217) */}
+                {/* .first-button { margin-right:15px } (CSS línea 935) */}
+                <div className="flex flex-wrap gap-[15px] justify-center lg:justify-start">
+                  <Link
+                    to="/catalog"
+                    className="inline-flex items-center gap-[5px] px-[20px] py-[10px] bg-[#4b8ef1] text-white hover:bg-[#3a7ddf] font-medium text-[15px] rounded-[23px] tracking-[0.3px] transition-all duration-500"
+                  >
+                    Comprar ahora
+                    <span className="material-symbols-outlined text-[18px]" aria-hidden="true">shopping_bag</span>
+                  </Link>
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center gap-[5px] px-[20px] py-[10px] bg-[#4b8ef1] text-white hover:bg-[#3a7ddf] font-medium text-[15px] rounded-[23px] tracking-[0.3px] transition-all duration-500"
+                  >
+                    Contáctanos
+                    <span className="material-symbols-outlined text-[18px]" aria-hidden="true">chat</span>
+                  </Link>
+                </div>
+              </div>
             </div>
 
-            {/* Columna texto */}
-            <div className="flex flex-col items-start justify-center text-left gap-[var(--space-md)] order-2 md:order-none">
-              <span className="text-[var(--text-xs)] font-semibold tracking-[0.25em] text-[#8C8274] dark:text-slate-400 uppercase select-none font-sans">
-                {settings?.hero_subtitle_tag || "ACCESORIOS QUE"}
-              </span>
-              
-              <h1 className="text-[var(--text-hero)] font-brand font-medium leading-[1.08] text-[#1C2035] dark:text-white tracking-tight">
-                {settings?.hero_title === "Elevan tu experiencia diaria." || !settings?.hero_title ? (
-                  <>Elevan tu<br />experiencia<br />diaria.</>
-                ) : (
-                  settings.hero_title
-                )}
-              </h1>
-              
-              <p className="text-[var(--text-base)] text-[#5E5B56] dark:text-slate-300 font-medium max-w-lg leading-relaxed">
-                {settings?.hero_subtitle || "Diseñados para complementar tu estilo y proteger lo que te conecta."}
-              </p>
-              
-              <Link 
-                to="/catalog" 
-                className="inline-flex items-center gap-3 px-8 py-3.5 bg-[#1C2035] hover:bg-[#2B314E] dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 rounded-full font-bold text-sm tracking-wide transition-all shadow-sm mt-[var(--space-sm)]"
-              >
-                <span>Descubrir colección</span>
-                <span className="text-lg font-light leading-none">&rarr;</span>
-              </Link>
+            {/* .col-lg-6 — Columna derecha imagen (plantilla línea 191) */}
+            <div className="w-full lg:w-1/2 px-[15px]">
+              {/* .right-image: text-align:center, position:relative, z-index:20 (CSS líneas 942-946) */}
+              {/* En mobile: margin:30px auto 0 auto (CSS línea 2011) */}
+              <div className="text-center relative z-[20] mt-[30px] lg:mt-0 mx-auto lg:mx-0">
+                {/* .right-image img: max-width:710px (CSS línea 949) */}
+                <img
+                  src="/slider-dec.png"
+                  alt="I Nova SV"
+                  className="max-w-full lg:max-w-[710px] inline-block"
+                />
+              </div>
             </div>
+          </div>
+        </div>
+      </section>
 
+      <main className="max-w-[1440px] mx-auto bg-[#fcf8f8] dark:bg-background-dark text-[#1c1b1b] dark:text-slate-100 font-sans">
+        <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up">
+          <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-8 text-center">Explorar por Categoría</h2>
+          <div className="flex overflow-x-auto hide-scrollbar gap-[16px] snap-x snap-mandatory pb-4">
+            {loadingCategories ? (
+              <div className="w-full py-12 flex justify-center"><div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div></div>
+            ) : categories.map((cat, index) => {
+              const defaultImages = [
+                "https://lh3.googleusercontent.com/aida-public/AB6AXuAkucagwOYF8skqepVgQ2unwBr55ZdWiGwNboYt7tmxilkmRP7-YfP_KhkFa91r60es4k5OCNvGKv-CBlJgjpcpRYwM-fxXpVJEwd3-hlXJA-ABb5LK4VWgmamHEXbXZ3YiZpVrP7eDe98zPo_eFmGC1pJo5Q-LRLHiK95H5j_BrKtT00q2x1XoFsNOXdnCEI-9ryQsd8iNa5AMFkdvwFpiBody5KTwLWLpQc3ky5YcwkAE8CqDSyy4fiWXXFm1nB0E5Myw_0gEwbM",
+                "https://lh3.googleusercontent.com/aida-public/AB6AXuDa9RT3tTmdr__dyJDduA7hC1eKpWc0JqjZCicXbU6N4RVsxsdPR10UqdR_AMKBGLC2SE6RAg8wRhm0dLFTcx5iAV4hpZhvXnJ8LeQT8slk0UYaa4yFhhOnnjLaW68zsHcUdMClAdqZ3LfOl9VqSvcB7sMZIf43GOAr5jCnKMzgZ9JhiBLhHaCXbGMig-p2_B-FiJMtqT4wYDNXzekesDVTNpRkwl3_Ey4ELulDZhY4jpr_hd2WEDbrJMtPy-FZGoZEPSjt9F7D_sc",
+                "https://lh3.googleusercontent.com/aida-public/AB6AXuDiNFm07Ae9c-95bNmCWBRKfdWVo-KG8I9-jIXHahCF-wYVdvlGqr7Ng06fNvFm5z32RGlufWOr0TzuzS2yusnaJfrY4MiFLv5rwCGDk344wQ6IRUdh1rqlziT0wtaJCAc5toyESQsRcXhFoTvoSlTKOHlTt0ucKRp0zT13bEDLvs8L8oNwlCMJ5rjJ05Mv6qy8u-h7ScqTneGoVzqGOomle6bvEzsjvCoGXBXBg3k4YoIut070sNsWKetXR--fNB03YU_Od4a0a1U"
+              ];
+              const imgSrc = cat.image_url || defaultImages[index % defaultImages.length];
+              return (
+                <Link
+                  key={cat.id}
+                  to={`/catalog?category=${cat.slug}`}
+                  className="snap-start shrink-0 w-64 md:w-1/3 group relative rounded-2xl overflow-hidden bg-[#f6f3f2] dark:bg-white/5 aspect-[4/5] md:aspect-square flex flex-col hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-shadow duration-300"
+                >
+                  <div className="flex-grow p-8 flex items-center justify-center">
+                    <img alt={cat.name} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" src={imgSrc} />
+                  </div>
+                  <div className="p-6 bg-[#f1edec]/50 dark:bg-black/50 backdrop-blur-sm absolute bottom-0 w-full">
+                    <h3 className="text-[18px] leading-[28px] font-medium text-[#1c1b1b] dark:text-white text-center">{cat.name}</h3>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </section>
 
-        {/* Business Features Section (Franja inferior) */}
-        <section className="bg-slate-50 dark:bg-[#151719] border-y border-slate-200 dark:border-white/5 py-8 px-container select-none">
-          <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-6">
-            
-            <div className="flex items-center gap-3.5">
-              <span className="material-symbols-outlined text-primary dark:text-slate-200 text-[28px] font-light shrink-0" aria-hidden="true">verified</span>
-              <div>
-                <h4 className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">Calidad premium</h4>
-                <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs">Materiales seleccionados</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3.5">
-              <span className="material-symbols-outlined text-primary dark:text-slate-200 text-[28px] font-light shrink-0" aria-hidden="true">local_shipping</span>
-              <div>
-                <h4 className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">Envíos seguros</h4>
-                <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs">A todo el país</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3.5">
-              <span className="material-symbols-outlined text-primary dark:text-slate-200 text-[28px] font-light shrink-0" aria-hidden="true">verified_user</span>
-              <div>
-                <h4 className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">Garantía incluida</h4>
-                <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs">Compra con tranquilidad</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3.5">
-              <span className="material-symbols-outlined text-primary dark:text-slate-200 text-[28px] font-light shrink-0" aria-hidden="true">schedule</span>
-              <div>
-                <h4 className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">Atención real</h4>
-                <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs">Te ayudamos siempre</p>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        {/* New Products */}
-        <section className="px-container py-[var(--space-2xl)]">
-          <div className="mb-[var(--space-md)]">
-            <h2 className="text-[var(--text-3xl)] font-bold">Novedades</h2>
-            <p className="text-slate-600 dark:text-slate-400 mt-[var(--space-2xs)]">Los últimos diseños que han llegado a nuestra tienda.</p>
-            <Link to="/catalog" className="inline-flex text-primary font-bold items-center gap-[var(--space-xs)] hover:underline mt-[var(--space-sm)]">
-              Ver todo <span className="material-symbols-outlined">arrow_forward</span>
+        {/* Featured Products */}
+        <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="shop">
+          <div className="flex justify-between items-end mb-8">
+            <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white">Los Más Deseados</h2>
+            <Link to="/catalog" className="text-[16px] leading-[24px] text-[#5d5f5f] dark:text-primary hover:text-[#444748] dark:hover:text-white transition-colors underline decoration-1 underline-offset-4">
+              Ver todos
             </Link>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-[var(--space-lg)]">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-[16px] md:gap-8">
             {loading ? (
               <div className="col-span-full py-12 flex justify-center"><div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div></div>
             ) : homeProducts.length > 0 ? (
@@ -145,76 +236,32 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Specialties */}
-        <section className="px-container py-[var(--space-xl)]">
-          <h2 className="text-slate-900 dark:text-slate-100 text-[var(--text-3xl)] font-bold mb-[var(--space-lg)]">Nuestras Especialidades</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-[var(--space-lg)]">
-            {loadingCategories ? (
-               <div className="col-span-full py-12 flex justify-center"><div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div></div>
-            ) : categories.length === 0 ? (
-               <div className="col-span-full py-12 text-center text-slate-500">Pronto llegarán nuevas categorías.</div>
-            ) : categories.map(cat => {
-              const theme = getCategoryTheme(cat);
-              return (
-                <Link 
-                  key={cat.id} 
-                  to={`/catalog?category=${cat.slug}`}
-                  className="relative flex flex-col justify-end p-[var(--space-md)] rounded-xl border border-slate-100 dark:border-white/5 shadow-360 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer overflow-hidden min-h-[160px] bg-white dark:bg-white/5 focus:outline-none focus:ring-2 focus:ring-primary" 
-                >
-                  <img 
-                    src={theme.img} 
-                    alt={cat.name} 
-                    onError={(e) => { e.target.style.display = 'none'; }}
-                    loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 transition-opacity duration-300 group-hover:from-black"></div>
-                  
-                  <div className="relative z-10 flex flex-col gap-[var(--space-2xs)] transform transition-transform duration-300 translate-y-2 group-hover:translate-y-0">
-                    <div className="w-[clamp(2.5rem,6vw,3rem)] aspect-square mb-[var(--space-xs)] rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white group-hover:bg-primary transition-colors duration-300">
-                      <span className="material-symbols-outlined" style={{ fontSize: 'var(--icon-md)' }}>{theme.icon}</span>
-                    </div>
-                    <h3 className="text-[var(--text-lg)] text-white font-bold tracking-wide drop-shadow-md break-words">{cat.name}</h3>
-                    <p className="text-white/80 text-[var(--text-sm)] line-clamp-3 drop-shadow-sm break-words">{theme.desc}</p>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* Story Section */}
-        <section className="bg-white border-y border-slate-100 dark:bg-white/5 dark:border-transparent px-container py-[var(--space-2xl)] shadow-360 relative z-10">
-          <div className="flex flex-col md:flex-row gap-[var(--space-xl)] items-center">
-            <div className="flex-1">
-              <h2 className="text-[var(--text-3xl)] font-bold mb-[var(--space-lg)]">Tu celular, tu estilo</h2>
-              <p className="text-[var(--text-lg)] text-slate-700 dark:text-slate-300 mb-[var(--space-xl)] leading-relaxed">
-                Creemos que tu dispositivo merece la mejor protección y el mejor diseño. Descubre accesorios que se adaptan a tu ritmo de vida.
-              </p>
-              <div className="space-y-[var(--space-md)]">
-                <div className="flex items-start gap-[var(--space-md)]">
-                  <span className="bg-primary text-white w-[clamp(1.5rem,4vw,2rem)] aspect-square rounded-full flex items-center justify-center shrink-0 font-bold text-[var(--text-sm)]">1</span>
-                  <p className="font-medium">Elige los accesorios ideales para tu modelo.</p>
-                </div>
-                <div className="flex items-start gap-[var(--space-md)]">
-                  <span className="bg-primary text-white w-[clamp(1.5rem,4vw,2rem)] aspect-square rounded-full flex items-center justify-center shrink-0 font-bold text-[var(--text-sm)]">2</span>
-                  <p className="font-medium">Agrégalos a tu carrito y contacta con nosotros vía WhatsApp.</p>
-                </div>
-                <div className="flex items-start gap-[var(--space-md)]">
-                  <span className="bg-primary text-white w-[clamp(1.5rem,4vw,2rem)] aspect-square rounded-full flex items-center justify-center shrink-0 font-bold text-[var(--text-sm)]">3</span>
-                  <p className="font-medium">Coordinamos la entrega rápida y segura hasta la puerta de tu casa.</p>
-                </div>
+        {/* Trust Section */}
+        <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-[16px] md:gap-6">
+            <div className="bg-[#f6f3f2] dark:bg-white/5 p-8 rounded-2xl flex flex-col items-center text-center gap-4 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-shadow">
+              <div className="w-16 h-16 rounded-full bg-[#f1edec] dark:bg-white/10 flex items-center justify-center text-[#5d5f5f] dark:text-white mb-2">
+                <span className="material-symbols-outlined text-[32px]" style={{ fontVariationSettings: "'FILL' 0" }}>local_shipping</span>
               </div>
+              <h3 className="text-[18px] leading-[28px] font-medium text-[#1c1b1b] dark:text-white">Envío gratis</h3>
+              <p className="text-[16px] leading-[24px] text-[#444748] dark:text-slate-400">En todos los pedidos superiores a $50. Recíbelo en 24/48h.</p>
             </div>
-            <div className="flex-1 w-full">
-              <div className="aspect-video rounded-xl bg-slate-300 overflow-hidden shadow-360">
-                <img loading="eager" alt="Hands crafting" className="w-full h-full object-cover" src={settings?.story_image_url || "https://lh3.googleusercontent.com/aida-public/AB6AXuCaeArssF_3O-p7X4lsXtjx6IVwX8KDLaO44YbE9bVMBL0wII6YeLPu_XUYBYP-cZeiHFMdQIGQMqNt8dF0uwYbvgO5d-OHqW9lGDT90POXBfjt9F0RL6QxwgTZeH7MvZA9ArESxH0en2a-4zUvFOey9lLWYD6r3QeT0-a0g4EBJkyrSSa-uZr07zWN3-xKJr-RiY4kHhkqvbKENnC6hjivPXauIXG4_AyktByiJBkJf37a662tC04O_skpaOxuZAjbytZ5rvIwzTgw"}/>
+            <div className="bg-[#f6f3f2] dark:bg-white/5 p-8 rounded-2xl flex flex-col items-center text-center gap-4 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-shadow">
+              <div className="w-16 h-16 rounded-full bg-[#f1edec] dark:bg-white/10 flex items-center justify-center text-[#5d5f5f] dark:text-white mb-2">
+                <span className="material-symbols-outlined text-[32px]" style={{ fontVariationSettings: "'FILL' 0" }}>verified</span>
               </div>
+              <h3 className="text-[18px] leading-[28px] font-medium text-[#1c1b1b] dark:text-white">Garantía 1 año</h3>
+              <p className="text-[16px] leading-[24px] text-[#444748] dark:text-slate-400">Todos nuestros productos cuentan con garantía de calidad.</p>
+            </div>
+            <div className="bg-[#f6f3f2] dark:bg-white/5 p-8 rounded-2xl flex flex-col items-center text-center gap-4 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-shadow">
+              <div className="w-16 h-16 rounded-full bg-[#f1edec] dark:bg-white/10 flex items-center justify-center text-[#5d5f5f] dark:text-white mb-2">
+                <span className="material-symbols-outlined text-[32px]" style={{ fontVariationSettings: "'FILL' 0" }}>lock</span>
+              </div>
+              <h3 className="text-[18px] leading-[28px] font-medium text-[#1c1b1b] dark:text-white">Pago seguro</h3>
+              <p className="text-[16px] leading-[24px] text-[#444748] dark:text-slate-400">Transacciones 100% seguras con encriptación SSL.</p>
             </div>
           </div>
         </section>
-
-
       </main>
     </>
   );

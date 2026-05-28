@@ -5,7 +5,7 @@ export default function Logo({ textOnly, iconOnlyMobile, className = '' }) {
     <Link to="/" className={`flex items-center gap-[clamp(0.375rem,1.125vw,0.5625rem)] text-primary shrink-0 ${className}`}>
       {!textOnly && (
         <img 
-          src="/logo-red.svg" 
+          src="/logo.svg" 
           alt="I Nova logo" 
           className="h-[clamp(1.5rem,2.5vw,2rem)] w-auto object-contain"
         />

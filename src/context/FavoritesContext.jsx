@@ -26,6 +26,7 @@
 // Este bloqueo es "defense in depth" — los botones de UI ya están
 // protegidos por showAuthModal, pero esto es un segundo check.
 // ──────────────────────────────────────────────────────────────
+import { safeLocalStorage } from '@/utils/storage';
 import { createContext, useContext, useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useAuth } from './AuthContext';
 import { supabase } from '@/lib/supabaseClient';
@@ -50,13 +51,13 @@ export const FavoritesProvider = ({ children }) => {
   useEffect(() => {
     try {
       // Migración de key antigua
-      const oldFavs = localStorage.getItem('favorites');
+      const oldFavs = safeLocalStorage.getItem('favorites');
       if (oldFavs) {
-        localStorage.setItem('pages_favorites', oldFavs);
-        localStorage.removeItem('favorites');
+        safeLocalStorage.setItem('pages_favorites', oldFavs);
+        safeLocalStorage.removeItem('favorites');
       }
 
-      const saved = localStorage.getItem('pages_favorites');
+      const saved = safeLocalStorage.getItem('pages_favorites');
       if (saved) {
         const parsed = JSON.parse(saved);
         // Filtrar IDs que no sean UUIDs válidos (corrupción o manipulación)
@@ -65,7 +66,7 @@ export const FavoritesProvider = ({ children }) => {
         setFavorites(valid);
         // Si se limpiaron IDs inválidos, actualizar localStorage
         if (valid.length !== parsed.length) {
-          localStorage.setItem('pages_favorites', JSON.stringify(valid));
+          safeLocalStorage.setItem('pages_favorites', JSON.stringify(valid));
         }
       }
     } catch (e) {
@@ -98,7 +99,7 @@ export const FavoritesProvider = ({ children }) => {
         const dbFavorites = data.map((f) => f.product_id);
         let localFavorites = [];
         try {
-          localFavorites = JSON.parse(localStorage.getItem('pages_favorites') || '[]');
+          localFavorites = JSON.parse(safeLocalStorage.getItem('pages_favorites') || '[]');
         } catch (e) {
           logger.error("Error parsing favorites from localStorage during sync:", e);
         }
@@ -120,7 +121,7 @@ export const FavoritesProvider = ({ children }) => {
         if (mounted) {
           const updatedFavorites = [...new Set([...dbFavorites, ...validLocalFavorites])];
           setFavorites(updatedFavorites);
-          localStorage.setItem('pages_favorites', JSON.stringify(updatedFavorites));
+          safeLocalStorage.setItem('pages_favorites', JSON.stringify(updatedFavorites));
         }
       } catch (err) {
         logger.error('Error sincronizando favoritos:', err);
@@ -136,7 +137,7 @@ export const FavoritesProvider = ({ children }) => {
 
   // Mantener localStorage sincronizado con el estado React
   useEffect(() => {
-    localStorage.setItem('pages_favorites', JSON.stringify(favorites));
+    safeLocalStorage.setItem('pages_favorites', JSON.stringify(favorites));
   }, [favorites]);
 
   // ── Toggle con update optimista ─────────────────────────

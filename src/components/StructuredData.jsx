@@ -20,7 +20,7 @@ export const createOrganizationSchema = (settings) => {
   return {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "I Nova Sv",
+  "name": "I Nova SV",
   "url": origin,
   "logo": `${origin}/logo.png`,
   "contactPoint": {
