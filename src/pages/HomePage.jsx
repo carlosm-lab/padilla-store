@@ -43,47 +43,45 @@ export default function HomePage() {
       </Helmet>
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="px-container py-[var(--space-lg)]">
-          {/* Banner con fondo crema minimalista en light mode y grafito/oscuro en dark mode */}
-          <div className="relative overflow-hidden rounded-[2rem] bg-[#F5F1EB] dark:bg-[#1E2022] min-h-[clamp(24rem,55vw,36rem)] flex items-center p-8 lg:p-16 border border-slate-200/50 dark:border-white/5 shadow-360">
-            {/* Elementos decorativos de fondo sutiles */}
-            <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-white/30 dark:bg-white/5 blur-3xl pointer-events-none"></div>
-            <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-80 h-80 rounded-full bg-white/30 dark:bg-white/5 blur-3xl pointer-events-none"></div>
+        <section className="px-container pt-8 pb-12">
+          {/* Banner con fondo crema/hueso suave y estilo premium minimalista */}
+          <div className="relative overflow-hidden rounded-[2rem] bg-[#F3EFE9] dark:bg-[#1D1E20] min-h-[520px] lg:min-h-[580px] xl:min-h-[640px] flex items-center p-6 sm:p-12 lg:p-16 xl:p-20 border border-[#E7E2D9] dark:border-white/5 shadow-sm">
+            {/* Fondo decorativo sutil en degradado suave */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-white/30 dark:from-transparent dark:to-white/5 pointer-events-none"></div>
             
-            <div className="relative z-10 w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div className="relative z-10 w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
               
-              {/* Left Column: Product Image (Desktop a la izquierda, en móvil arriba) */}
-              <div className="order-1 lg:order-1 flex justify-center items-center w-full h-full min-h-[280px] sm:min-h-[350px] lg:min-h-[450px]">
-                <div className="relative w-full max-w-lg aspect-square lg:aspect-[4/5] rounded-[2rem] overflow-hidden shadow-xl border border-white/40 dark:border-white/10 group bg-slate-100 dark:bg-white/5">
-                  <div className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105" style={{backgroundImage: `url("${settings?.hero_image_url || FALLBACK_HERO_IMG}")`}}></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none"></div>
+              {/* Columna Izquierda: Mockup de Producto (Teléfono en piedra + cargador) (Ocupa 6 de 12 columnas) */}
+              <div className="lg:col-span-6 flex justify-center items-center w-full h-full">
+                <div className="relative w-full max-w-lg aspect-[5/4] lg:aspect-[4/3.8] rounded-3xl overflow-hidden shadow-2xl border border-white/50 dark:border-white/10 group bg-slate-200 dark:bg-white/5">
+                  <div className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-102" style={{backgroundImage: `url("${settings?.hero_image_url || FALLBACK_HERO_IMG}")`}}></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent pointer-events-none"></div>
                 </div>
               </div>
 
-              {/* Right Column: Text Content & CTAs */}
-              <div className="order-2 lg:order-2 flex flex-col items-start text-left gap-4 lg:gap-6 px-4 lg:px-0">
-                <span className="text-[10px] sm:text-xs font-bold tracking-[0.25em] text-slate-500 dark:text-slate-400 uppercase select-none font-sans">
+              {/* Columna Derecha: Contenido de Textos y CTAs (Ocupa 6 de 12 columnas) */}
+              <div className="lg:col-span-6 flex flex-col items-start justify-center text-left gap-4 sm:gap-5 lg:gap-6 pl-0 lg:pl-8">
+                <span className="text-[10px] sm:text-xs font-bold tracking-[0.3em] text-[#8C8274] dark:text-slate-400 uppercase select-none font-sans">
                   {settings?.hero_subtitle_tag || "ACCESORIOS QUE"}
                 </span>
                 
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-brand font-medium leading-[1.15] text-[#1E293B] dark:text-white mb-2">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl font-brand font-medium leading-[1.12] text-[#1D2433] dark:text-white tracking-tight">
                   {settings?.hero_title || "Elevan tu experiencia diaria."}
                 </h1>
                 
-                <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 font-medium max-w-xl leading-relaxed">
+                <p className="text-sm sm:text-base md:text-[17px] text-[#555C66] dark:text-slate-300 font-medium max-w-lg leading-relaxed mt-1">
                   {settings?.hero_subtitle || "Diseñados para complementar tu estilo y proteger lo que te conecta."}
                 </p>
                 
                 <div className="flex flex-wrap items-center gap-6 mt-4 w-full">
                   <Link 
                     to="/catalog" 
-                    className="inline-flex items-center gap-2 px-8 py-4 bg-[#181D26] hover:bg-[#2A313C] dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 rounded-full font-bold text-sm tracking-wide transition-all shadow-md shadow-slate-900/10 focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-white"
+                    className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#181D26] hover:bg-[#2A313C] dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 rounded-full font-bold text-sm tracking-wide transition-all shadow-md shadow-slate-900/10 focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-white"
                   >
                     <span>Descubrir colección</span>
                     <span className="material-symbols-outlined text-sm font-bold" aria-hidden="true">arrow_forward</span>
                   </Link>
                   
-                  {/* Redes sociales estilizadas minimalistas */}
                   <SocialIcons 
                     variant="simple" 
                     className="gap-3" 
