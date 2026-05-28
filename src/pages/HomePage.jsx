@@ -43,97 +43,85 @@ export default function HomePage() {
       </Helmet>
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="px-container pt-8 pb-12">
-          {/* Banner con fondo crema/hueso suave y estilo premium minimalista */}
-          <div className="relative overflow-hidden rounded-[2rem] bg-[#F3EFE9] dark:bg-[#1D1E20] min-h-[520px] lg:min-h-[580px] xl:min-h-[640px] flex items-center p-6 sm:p-12 lg:p-16 xl:p-20 border border-[#E7E2D9] dark:border-white/5 shadow-sm">
-            {/* Fondo decorativo sutil en degradado suave */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-white/30 dark:from-transparent dark:to-white/5 pointer-events-none"></div>
+        <section className="w-full bg-[#F5F3F0] dark:bg-[#1D1E20] text-[#1C2035] dark:text-white pt-6 pb-12 lg:py-20 select-none">
+          <div className="mx-auto max-w-7xl px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
             
-            <div className="relative z-10 w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-              
-              {/* Columna Izquierda: Mockup de Producto (Teléfono en piedra + cargador) (Ocupa 6 de 12 columnas) */}
-              <div className="lg:col-span-6 flex justify-center items-center w-full h-full">
-                <div className="relative w-full max-w-lg aspect-[5/4] lg:aspect-[4/3.8] rounded-3xl overflow-hidden shadow-2xl border border-white/50 dark:border-white/10 group bg-slate-200 dark:bg-white/5">
-                  <div className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-102" style={{backgroundImage: `url("${settings?.hero_image_url || FALLBACK_HERO_IMG}")`}}></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent pointer-events-none"></div>
-                </div>
+            {/* Columna Izquierda: Mockup de Producto (Teléfono en piedra + cargador) (Ocupa 6 de 12 columnas) */}
+            <div className="lg:col-span-6 flex justify-center items-center w-full h-full">
+              <div className="w-full max-w-[540px] lg:max-w-none flex justify-center">
+                <img 
+                  src={settings?.hero_image_url || FALLBACK_HERO_IMG} 
+                  alt="Colección Aura" 
+                  className="w-full h-auto max-h-[480px] lg:max-h-[560px] object-contain transition-transform duration-1000 group-hover:scale-102"
+                />
               </div>
-
-              {/* Columna Derecha: Contenido de Textos y CTAs (Ocupa 6 de 12 columnas) */}
-              <div className="lg:col-span-6 flex flex-col items-start justify-center text-left gap-4 sm:gap-5 lg:gap-6 pl-0 lg:pl-8">
-                <span className="text-[10px] sm:text-xs font-bold tracking-[0.3em] text-[#8C8274] dark:text-slate-400 uppercase select-none font-sans">
-                  {settings?.hero_subtitle_tag || "ACCESORIOS QUE"}
-                </span>
-                
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl font-brand font-medium leading-[1.12] text-[#1D2433] dark:text-white tracking-tight">
-                  {settings?.hero_title || "Elevan tu experiencia diaria."}
-                </h1>
-                
-                <p className="text-sm sm:text-base md:text-[17px] text-[#555C66] dark:text-slate-300 font-medium max-w-lg leading-relaxed mt-1">
-                  {settings?.hero_subtitle || "Diseñados para complementar tu estilo y proteger lo que te conecta."}
-                </p>
-                
-                <div className="flex flex-wrap items-center gap-6 mt-4 w-full">
-                  <Link 
-                    to="/catalog" 
-                    className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#181D26] hover:bg-[#2A313C] dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 rounded-full font-bold text-sm tracking-wide transition-all shadow-md shadow-slate-900/10 focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-white"
-                  >
-                    <span>Descubrir colección</span>
-                    <span className="material-symbols-outlined text-sm font-bold" aria-hidden="true">arrow_forward</span>
-                  </Link>
-                  
-                  <SocialIcons 
-                    variant="simple" 
-                    className="gap-3" 
-                  />
-                </div>
-              </div>
-
             </div>
+
+            {/* Columna Derecha: Contenido de Textos y CTAs (Ocupa 6 de 12 columnas) */}
+            <div className="lg:col-span-6 flex flex-col items-start justify-center text-left gap-4 sm:gap-5 lg:gap-6 pl-0 lg:pl-4">
+              <span className="text-[10px] sm:text-xs font-semibold tracking-[0.25em] text-[#8C8274] dark:text-slate-400 uppercase select-none font-sans">
+                {settings?.hero_subtitle_tag || "ACCESORIOS QUE"}
+              </span>
+              
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[3.25rem] xl:text-[4rem] font-brand font-medium leading-[1.08] text-[#1C2035] dark:text-white tracking-tight">
+                {settings?.hero_title === "Elevan tu experiencia diaria." || !settings?.hero_title ? (
+                  <>Elevan tu<br />experiencia<br />diaria.</>
+                ) : (
+                  settings.hero_title
+                )}
+              </h1>
+              
+              <p className="text-sm sm:text-base md:text-[17px] text-[#5E5B56] dark:text-slate-300 font-medium max-w-lg leading-relaxed mt-1">
+                {settings?.hero_subtitle || "Diseñados para complementar tu estilo y proteger lo que te conecta."}
+              </p>
+              
+              <div className="flex flex-wrap items-center gap-6 mt-2 w-full">
+                <Link 
+                  to="/catalog" 
+                  className="inline-flex items-center gap-3 px-8 py-3.5 bg-[#1C2035] hover:bg-[#2B314E] dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 rounded-full font-bold text-sm tracking-wide transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-[#1C2035] dark:focus:ring-white"
+                >
+                  <span>Descubrir colección</span>
+                  <span className="text-lg font-light leading-none">&rarr;</span>
+                </Link>
+              </div>
+            </div>
+
           </div>
         </section>
 
         {/* Business Features Section (Franja inferior) */}
-        <section className="bg-[#EFEFF4] dark:bg-[#151719] border-y border-slate-200/50 dark:border-white/5 py-8 px-container select-none">
+        <section className="bg-[#ECEAF0] dark:bg-[#151719] border-t border-[#D9D6DF] dark:border-white/5 py-8 px-container select-none">
           <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-6">
             
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-slate-900/5 dark:bg-white/5 flex items-center justify-center text-slate-800 dark:text-slate-200 shrink-0">
-                <span className="material-symbols-outlined text-[20px]" aria-hidden="true">verified</span>
-              </div>
+            <div className="flex items-center gap-3.5">
+              <span className="material-symbols-outlined text-[#1C2035] dark:text-slate-200 text-[28px] font-light shrink-0" aria-hidden="true">verified</span>
               <div>
-                <h4 className="font-bold text-[#1E293B] dark:text-white text-xs sm:text-sm">Calidad premium</h4>
-                <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs">Materiales seleccionados</p>
+                <h4 className="font-bold text-[#1C2035] dark:text-white text-xs sm:text-sm">Calidad premium</h4>
+                <p className="text-[#5E5B56] dark:text-slate-400 text-[10px] sm:text-xs">Materiales seleccionados</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-slate-900/5 dark:bg-white/5 flex items-center justify-center text-slate-800 dark:text-slate-200 shrink-0">
-                <span className="material-symbols-outlined text-[20px]" aria-hidden="true">local_shipping</span>
-              </div>
+            <div className="flex items-center gap-3.5">
+              <span className="material-symbols-outlined text-[#1C2035] dark:text-slate-200 text-[28px] font-light shrink-0" aria-hidden="true">local_shipping</span>
               <div>
-                <h4 className="font-bold text-[#1E293B] dark:text-white text-xs sm:text-sm">Envíos seguros</h4>
-                <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs">A todo el país</p>
+                <h4 className="font-bold text-[#1C2035] dark:text-white text-xs sm:text-sm">Envíos seguros</h4>
+                <p className="text-[#5E5B56] dark:text-slate-400 text-[10px] sm:text-xs">A todo el país</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-slate-900/5 dark:bg-white/5 flex items-center justify-center text-slate-800 dark:text-slate-200 shrink-0">
-                <span className="material-symbols-outlined text-[20px]" aria-hidden="true">verified_user</span>
-              </div>
+            <div className="flex items-center gap-3.5">
+              <span className="material-symbols-outlined text-[#1C2035] dark:text-slate-200 text-[28px] font-light shrink-0" aria-hidden="true">verified_user</span>
               <div>
-                <h4 className="font-bold text-[#1E293B] dark:text-white text-xs sm:text-sm">Garantía incluida</h4>
-                <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs">Compra con tranquilidad</p>
+                <h4 className="font-bold text-[#1C2035] dark:text-white text-xs sm:text-sm">Garantía incluida</h4>
+                <p className="text-[#5E5B56] dark:text-slate-400 text-[10px] sm:text-xs">Compra con tranquilidad</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-slate-900/5 dark:bg-white/5 flex items-center justify-center text-slate-800 dark:text-slate-200 shrink-0">
-                <span className="material-symbols-outlined text-[20px]" aria-hidden="true">schedule</span>
-              </div>
+            <div className="flex items-center gap-3.5">
+              <span className="material-symbols-outlined text-[#1C2035] dark:text-slate-200 text-[28px] font-light shrink-0" aria-hidden="true">schedule</span>
               <div>
-                <h4 className="font-bold text-[#1E293B] dark:text-white text-xs sm:text-sm">Atención real</h4>
-                <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs">Te ayudamos siempre</p>
+                <h4 className="font-bold text-[#1C2035] dark:text-white text-xs sm:text-sm">Atención real</h4>
+                <p className="text-[#5E5B56] dark:text-slate-400 text-[10px] sm:text-xs">Te ayudamos siempre</p>
               </div>
             </div>
 
