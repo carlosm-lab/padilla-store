@@ -42,28 +42,25 @@ export default function HomePage() {
         <link rel="preload" as="image" href={settings?.hero_image_url || FALLBACK_HERO_IMG} />
       </Helmet>
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="w-full bg-[#F5F3F0] dark:bg-[#1D1E20] text-[#1C2035] dark:text-white pt-6 pb-12 lg:py-20 select-none">
-          <div className="mx-auto max-w-7xl px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+        {/* Hero Section */}        <section className="w-full bg-background-light dark:bg-background-dark text-[#1C2035] dark:text-white py-[var(--space-xl)] lg:py-[var(--space-3xl)] select-none">
+          <div className="mx-auto max-w-7xl px-container grid grid-cols-1 md:grid-cols-2 gap-[var(--space-lg)] lg:gap-[var(--space-2xl)] items-center">
             
-            {/* Columna Izquierda: Mockup de Producto (Teléfono en piedra + cargador) (Ocupa 6 de 12 columnas) */}
-            <div className="lg:col-span-6 flex justify-center items-center w-full h-full">
-              <div className="w-full max-w-[540px] lg:max-w-none flex justify-center">
-                <img 
-                  src={settings?.hero_image_url || FALLBACK_HERO_IMG} 
-                  alt="Colección Aura" 
-                  className="w-full h-auto max-h-[480px] lg:max-h-[560px] object-contain transition-transform duration-1000 group-hover:scale-102"
-                />
-              </div>
+            {/* Columna imagen */}
+            <div className="flex justify-center items-center w-full order-1 md:order-none">
+              <img 
+                src={settings?.hero_image_url || FALLBACK_HERO_IMG} 
+                alt="Colección Aura" 
+                className="w-full h-auto max-h-[45vw] md:max-h-[480px] lg:max-h-[560px] object-contain"
+              />
             </div>
 
-            {/* Columna Derecha: Contenido de Textos y CTAs (Ocupa 6 de 12 columnas) */}
-            <div className="lg:col-span-6 flex flex-col items-start justify-center text-left gap-4 sm:gap-5 lg:gap-6 pl-0 lg:pl-4">
-              <span className="text-[10px] sm:text-xs font-semibold tracking-[0.25em] text-[#8C8274] dark:text-slate-400 uppercase select-none font-sans">
+            {/* Columna texto */}
+            <div className="flex flex-col items-start justify-center text-left gap-[var(--space-md)] order-2 md:order-none">
+              <span className="text-[var(--text-xs)] font-semibold tracking-[0.25em] text-[#8C8274] dark:text-slate-400 uppercase select-none font-sans">
                 {settings?.hero_subtitle_tag || "ACCESORIOS QUE"}
               </span>
               
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[3.25rem] xl:text-[4rem] font-brand font-medium leading-[1.08] text-[#1C2035] dark:text-white tracking-tight">
+              <h1 className="text-[var(--text-hero)] font-brand font-medium leading-[1.08] text-[#1C2035] dark:text-white tracking-tight">
                 {settings?.hero_title === "Elevan tu experiencia diaria." || !settings?.hero_title ? (
                   <>Elevan tu<br />experiencia<br />diaria.</>
                 ) : (
@@ -71,19 +68,17 @@ export default function HomePage() {
                 )}
               </h1>
               
-              <p className="text-sm sm:text-base md:text-[17px] text-[#5E5B56] dark:text-slate-300 font-medium max-w-lg leading-relaxed mt-1">
+              <p className="text-[var(--text-base)] text-[#5E5B56] dark:text-slate-300 font-medium max-w-lg leading-relaxed">
                 {settings?.hero_subtitle || "Diseñados para complementar tu estilo y proteger lo que te conecta."}
               </p>
               
-              <div className="flex flex-wrap items-center gap-6 mt-2 w-full">
-                <Link 
-                  to="/catalog" 
-                  className="inline-flex items-center gap-3 px-8 py-3.5 bg-primary hover:bg-primary/90 text-white rounded-full font-bold text-sm tracking-wide transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-white"
-                >
-                  <span>Descubrir colección</span>
-                  <span className="text-lg font-light leading-none">&rarr;</span>
-                </Link>
-              </div>
+              <Link 
+                to="/catalog" 
+                className="inline-flex items-center gap-3 px-8 py-3.5 bg-[#1C2035] hover:bg-[#2B314E] dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 rounded-full font-bold text-sm tracking-wide transition-all shadow-sm mt-[var(--space-sm)]"
+              >
+                <span>Descubrir colección</span>
+                <span className="text-lg font-light leading-none">&rarr;</span>
+              </Link>
             </div>
 
           </div>
