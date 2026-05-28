@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet-async';
 import { WHATSAPP_NUMBER, BASE_URL } from '@/config/constants';
 import SocialIcons from '@/components/SocialIcons';
 
-const FALLBACK_HERO_IMG = 'https://images.unsplash.com/photo-1513290254054-0f62d1ecbaaa?q=80&w=800&auto=format&fit=crop';
+const FALLBACK_HERO_IMG = '/hero_aura_cases.png';
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -44,41 +44,101 @@ export default function HomePage() {
       <main className="flex-1">
         {/* Hero Section */}
         <section className="px-container py-[var(--space-lg)]">
-          {/* Banner */}
-          <div className="relative overflow-hidden rounded-[var(--radius-xl)] bg-slate-900 lg:bg-white dark:bg-white/5 min-h-[clamp(18rem,50vw,31.25rem)] flex items-center p-[var(--space-lg)] lg:p-12 xl:p-16 border border-slate-800 lg:border-slate-100 dark:border-white/5 shadow-360">
-            {/* Mobile Background Image (Hidden on Desktop) */}
-            <img 
-              src={settings?.hero_image_url || FALLBACK_HERO_IMG} 
-              alt="Hero background" 
-              className="absolute inset-0 w-full h-full object-cover object-center opacity-60 lg:hidden"
-              fetchpriority="high" 
-              decoding="async" 
-            />
-            {/* Forced dark gradient for mobile to match dark theme request */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 lg:hidden"></div>
+          {/* Banner con fondo crema minimalista en light mode y grafito/oscuro en dark mode */}
+          <div className="relative overflow-hidden rounded-[2rem] bg-[#F5F1EB] dark:bg-[#1E2022] min-h-[clamp(24rem,55vw,36rem)] flex items-center p-8 lg:p-16 border border-slate-200/50 dark:border-white/5 shadow-360">
+            {/* Elementos decorativos de fondo sutiles */}
+            <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-white/30 dark:bg-white/5 blur-3xl pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-80 h-80 rounded-full bg-white/30 dark:bg-white/5 blur-3xl pointer-events-none"></div>
             
-            <div className="relative z-10 w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center h-full">
+            <div className="relative z-10 w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               
-              {/* Left Section: Text & CTAs */}
-              <div className="flex flex-col items-start text-left gap-[var(--space-md)] px-4 lg:px-0">
-                <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-[3.5rem] font-brand font-black leading-[1.1] tracking-tight text-white lg:text-slate-900 dark:lg:text-white drop-shadow-lg lg:drop-shadow-none dark:lg:drop-shadow-lg mb-6 md:mb-8">{settings?.hero_title || "Accesorios para tu celular"}</h1>
-                <p className="text-base md:text-lg text-white/90 lg:text-slate-500 dark:lg:text-white/90 font-medium max-w-xl drop-shadow-md lg:drop-shadow-none dark:lg:drop-shadow-md lg:pr-8 lg:line-clamp-4">{settings?.hero_subtitle || "Encuentra los mejores cases, protectores, cargadores y más. Calidad premium al mejor precio en El Salvador."}</p>
-                
-                {/* Social Media Links (Glassmorphism) */}
-                <SocialIcons 
-                  variant="glass" 
-                  className="mt-8 mx-0 w-full gap-2 sm:gap-3" 
-                />
-              </div>
-               {/* Right Section: Representative Image Subcard (Desktop Only) */}
-              <div className="hidden lg:flex justify-end w-full h-full min-h-[350px] xl:min-h-[450px]">
-                <div className="relative w-full max-w-xl h-full rounded-[var(--radius-xl)] overflow-hidden shadow-2xl border border-white/10 group">
+              {/* Left Column: Product Image (Desktop a la izquierda, en móvil arriba) */}
+              <div className="order-1 lg:order-1 flex justify-center items-center w-full h-full min-h-[280px] sm:min-h-[350px] lg:min-h-[450px]">
+                <div className="relative w-full max-w-lg aspect-square lg:aspect-[4/5] rounded-[2rem] overflow-hidden shadow-xl border border-white/40 dark:border-white/10 group bg-slate-100 dark:bg-white/5">
                   <div className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105" style={{backgroundImage: `url("${settings?.hero_image_url || FALLBACK_HERO_IMG}")`}}></div>
-                  <div className="absolute inset-0 shadow-[inset_0_0_50px_rgba(0,0,0,0.5)] pointer-events-none"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none"></div>
+                </div>
+              </div>
+
+              {/* Right Column: Text Content & CTAs */}
+              <div className="order-2 lg:order-2 flex flex-col items-start text-left gap-4 lg:gap-6 px-4 lg:px-0">
+                <span className="text-[10px] sm:text-xs font-bold tracking-[0.25em] text-slate-500 dark:text-slate-400 uppercase select-none font-sans">
+                  {settings?.hero_subtitle_tag || "ACCESORIOS QUE"}
+                </span>
+                
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-brand font-medium leading-[1.15] text-[#1E293B] dark:text-white mb-2">
+                  {settings?.hero_title || "Elevan tu experiencia diaria."}
+                </h1>
+                
+                <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 font-medium max-w-xl leading-relaxed">
+                  {settings?.hero_subtitle || "Diseñados para complementar tu estilo y proteger lo que te conecta."}
+                </p>
+                
+                <div className="flex flex-wrap items-center gap-6 mt-4 w-full">
+                  <Link 
+                    to="/catalog" 
+                    className="inline-flex items-center gap-2 px-8 py-4 bg-[#181D26] hover:bg-[#2A313C] dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 rounded-full font-bold text-sm tracking-wide transition-all shadow-md shadow-slate-900/10 focus:outline-none focus:ring-2 focus:ring-slate-900 dark:focus:ring-white"
+                  >
+                    <span>Descubrir colección</span>
+                    <span className="material-symbols-outlined text-sm font-bold" aria-hidden="true">arrow_forward</span>
+                  </Link>
+                  
+                  {/* Redes sociales estilizadas minimalistas */}
+                  <SocialIcons 
+                    variant="simple" 
+                    className="gap-3" 
+                  />
                 </div>
               </div>
 
             </div>
+          </div>
+        </section>
+
+        {/* Business Features Section (Franja inferior) */}
+        <section className="bg-[#EFEFF4] dark:bg-[#151719] border-y border-slate-200/50 dark:border-white/5 py-8 px-container select-none">
+          <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-6">
+            
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-slate-900/5 dark:bg-white/5 flex items-center justify-center text-slate-800 dark:text-slate-200 shrink-0">
+                <span className="material-symbols-outlined text-[20px]" aria-hidden="true">verified</span>
+              </div>
+              <div>
+                <h4 className="font-bold text-[#1E293B] dark:text-white text-xs sm:text-sm">Calidad premium</h4>
+                <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs">Materiales seleccionados</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-slate-900/5 dark:bg-white/5 flex items-center justify-center text-slate-800 dark:text-slate-200 shrink-0">
+                <span className="material-symbols-outlined text-[20px]" aria-hidden="true">local_shipping</span>
+              </div>
+              <div>
+                <h4 className="font-bold text-[#1E293B] dark:text-white text-xs sm:text-sm">Envíos seguros</h4>
+                <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs">A todo el país</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-slate-900/5 dark:bg-white/5 flex items-center justify-center text-slate-800 dark:text-slate-200 shrink-0">
+                <span className="material-symbols-outlined text-[20px]" aria-hidden="true">verified_user</span>
+              </div>
+              <div>
+                <h4 className="font-bold text-[#1E293B] dark:text-white text-xs sm:text-sm">Garantía incluida</h4>
+                <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs">Compra con tranquilidad</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-slate-900/5 dark:bg-white/5 flex items-center justify-center text-slate-800 dark:text-slate-200 shrink-0">
+                <span className="material-symbols-outlined text-[20px]" aria-hidden="true">schedule</span>
+              </div>
+              <div>
+                <h4 className="font-bold text-[#1E293B] dark:text-white text-xs sm:text-sm">Atención real</h4>
+                <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs">Te ayudamos siempre</p>
+              </div>
+            </div>
+
           </div>
         </section>
 
