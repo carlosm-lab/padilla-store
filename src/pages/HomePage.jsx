@@ -15,9 +15,11 @@ export default function HomePage() {
   const { categories: allCategories, loading: loadingCategories } = useCategories();
   const { settings } = useSettings();
   const lottieContainer = useRef(null);
+  const lottieContainerMobile = useRef(null);
 
   useEffect(() => {
     let anim;
+    let animMobile;
     if (lottieContainer.current) {
       anim = lottie.loadAnimation({
         container: lottieContainer.current,
@@ -27,9 +29,21 @@ export default function HomePage() {
         path: '/robot-animation.json'
       });
     }
+    if (lottieContainerMobile.current) {
+      animMobile = lottie.loadAnimation({
+        container: lottieContainerMobile.current,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '/robot-animation.json'
+      });
+    }
     return () => {
       if (anim) {
         anim.destroy();
+      }
+      if (animMobile) {
+        animMobile.destroy();
       }
     };
   }, []);
@@ -139,12 +153,24 @@ export default function HomePage() {
             <div className="w-full lg:w-1/2 flex flex-col justify-center items-center lg:items-start text-center lg:text-left relative z-10">
               
               {/* Título Principal */}
-              <h1 className="font-sans font-black tracking-tight text-[38px] leading-[46px] sm:text-[54px] sm:leading-[62px] lg:text-[70px] lg:leading-[78px] mb-6 text-slate-900 dark:text-white">
-                {settings?.hero_title || "Protege tu estilo"} <br className="hidden sm:inline" />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-violet-500 to-blue-500 dark:from-violet-400 dark:via-primary dark:to-blue-400">
-                  sin límites
+              <h1 className="font-sans font-black tracking-tight text-[32px] leading-[40px] sm:text-[54px] sm:leading-[62px] lg:text-[70px] lg:leading-[78px] mb-6 text-slate-900 dark:text-white inline-flex flex-col items-stretch mx-auto lg:mx-0">
+                <span className="block whitespace-nowrap">
+                  {settings?.hero_title || "Protege tu estilo"}
+                </span>
+                <span className="flex justify-between bg-clip-text text-transparent bg-gradient-to-r from-primary via-violet-500 to-blue-500 dark:from-violet-400 dark:via-primary dark:to-blue-400 select-none">
+                  <span>s</span><span>i</span><span>n</span><span>&nbsp;</span><span>l</span><span>í</span><span>m</span><span>i</span><span>t</span><span>e</span><span>s</span>
                 </span>
               </h1>
+              
+              {/* Mobile Robot: Visible only on mobile/tablet, hidden on desktop */}
+              <div className="lg:hidden w-full max-w-[340px] aspect-square mx-auto my-6 z-[20]">
+                <div
+                  ref={lottieContainerMobile}
+                  className="w-full h-full"
+                  aria-label="Animación de un robot saludando"
+                  role="img"
+                />
+              </div>
               
               {/* Subtítulo — Nivel corporativo */}
               <p className="mb-8 text-[16px] sm:text-[18px] leading-[28px] font-normal text-slate-500 dark:text-slate-400 max-w-[500px]">
@@ -171,7 +197,7 @@ export default function HomePage() {
             </div>
             
             {/* Right Column: Lottie Robot (Original size and layout restored exactly) */}
-            <div className="w-full lg:w-1/2 px-[15px]">
+            <div className="hidden lg:block w-full lg:w-1/2 px-[15px]">
               <div className="text-center relative z-[20] mt-[30px] lg:mt-0 mx-auto lg:mx-0">
                 {/* Contenedor de la animación Lottie del robot saludando */}
                 <div
