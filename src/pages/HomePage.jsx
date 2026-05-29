@@ -137,7 +137,7 @@ export default function HomePage() {
               {/* .left-content.show-up.header-text (plantilla línea 174) */}
               {/* .left-content { margin-right: 15px } (CSS línea 916) */}
               {/* .show-up { position:relative; z-index:2 } (CSS línea 202) */}
-              <div className="lg:mr-[15px] relative z-[2] lg:-translate-y-[30%]">
+              <div className="lg:mr-[15px] relative z-[2] lg:-translate-y-[55%]">
                 {/* h2: font-weight:700, line-height:70px, font-size:50px, mb:20px (CSS líneas 920-925) */}
                 <h2 className="font-bold text-[32px] leading-[42px] lg:text-[50px] lg:leading-[70px] mb-[20px] text-[#2a2a2a] dark:text-white">
                   {settings?.hero_title || "Protege tu estilo"}
@@ -174,7 +174,7 @@ export default function HomePage() {
             <div className="w-full lg:w-1/2 px-[15px]">
               {/* .right-image: text-align:center, position:relative, z-index:20 (CSS líneas 942-946) */}
               {/* En mobile: margin:30px auto 0 auto (CSS línea 2011) */}
-              <div className="text-center relative z-[20] mt-[30px] lg:mt-0 mx-auto lg:mx-0 lg:-translate-y-[25%]">
+              <div className="text-center relative z-[20] mt-[30px] lg:mt-0 mx-auto lg:mx-0 lg:-translate-y-[20%]">
                 {/* .right-image img: max-width:710px (CSS línea 949) */}
                 <img
                   src="/slider-dec.png"
