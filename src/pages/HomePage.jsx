@@ -113,45 +113,25 @@ export default function HomePage() {
             margin-top: calc(-1 * var(--navbar-height));
             padding: calc(24px + var(--navbar-height)) 0px 24px 0px;
             background-color: #fcf8f8;
-            background-image: 
-              radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
-              radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
-              radial-gradient(circle at 50% 50%, rgba(244, 63, 94, 0.02) 0%, transparent 55%);
+            background-image: none;
             position: relative;
             overflow: hidden;
             font-family: 'Plus Jakarta Sans', sans-serif;
           }
           .dark .main-banner {
             background-color: #0f172a;
-            background-image: 
-              radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.12) 0%, transparent 50%),
-              radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-              radial-gradient(circle at 50% 50%, rgba(244, 63, 94, 0.03) 0%, transparent 55%);
+            background-image: none;
           }
           @media (min-width: 1024px) {
             .main-banner {
               padding: calc(40px + var(--navbar-height)) 0px 40px 0px;
             }
           }
-          .executive-grid {
-            background-image: radial-gradient(rgba(148, 163, 184, 0.08) 1.2px, transparent 0);
-            background-size: 32px 32px;
-          }
-          .dark .executive-grid {
-            background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1.2px, transparent 0);
-          }
         `}</style>
       </Helmet>
 
       {/* Hero Section — Modern & Executive Redesign */}
       <section className="main-banner relative w-full overflow-hidden">
-        {/* Rejilla de puntos decorativa de fondo (Executive Tone) */}
-        <div className="absolute inset-0 executive-grid pointer-events-none z-[0] opacity-80" />
-
-        {/* Esferas de desenfoque radial suave para dar profundidad 3D */}
-        <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-primary/10 dark:bg-primary/5 blur-[120px] pointer-events-none z-[1]" />
-        <div className="absolute bottom-[10%] left-[-5%] w-[500px] h-[500px] rounded-full bg-blue-500/5 dark:bg-blue-650/5 blur-[100px] pointer-events-none z-[1]" />
-
         {/* Main Hero Container — Spaced and responsive */}
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-24 relative z-[2] w-full">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8 w-full">
