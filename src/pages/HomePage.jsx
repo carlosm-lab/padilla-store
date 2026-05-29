@@ -119,7 +119,7 @@ export default function HomePage() {
         {/* background-image: url(slider-left-dec.png), z-index:1 */}
         {/* En mobile se oculta: .main-banner:after { display:none } (CSS línea 1979) */}
         <div
-          className="absolute left-0 top-0 w-[75%] h-[75%] pointer-events-none z-[1] hidden lg:block"
+          className="absolute left-0 top-0 w-[85%] h-[90%] pointer-events-none z-[1] hidden lg:block"
           style={{
             backgroundImage: "url('/slider-left-dec.png')",
             backgroundRepeat: 'no-repeat',
