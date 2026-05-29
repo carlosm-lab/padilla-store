@@ -156,15 +156,7 @@ export default function HomePage() {
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-24 relative z-[2] w-full">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8 w-full">
             {/* Left Column: Typography & Actions (Aligned and Clean) */}
-            <div className="w-full lg:w-1/2 flex flex-col justify-center items-center lg:items-start text-center lg:text-left relative z-10">
-              {/* Badge Corporativo Superior */}
-              <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-xs font-semibold bg-white/70 dark:bg-slate-900/70 border border-slate-200/60 dark:border-slate-800/60 text-slate-700 dark:text-slate-300 mb-6 transition-all duration-300 shadow-sm backdrop-blur-md">
-                <span className="flex h-2.5 w-2.5 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
-                </span>
-                Colección Premium 2026
-              </div>
+            <div className="w-full lg:w-1/2 flex flex-col justify-center items-center text-center relative z-10">
               
               {/* Título Principal */}
               <h1 className="font-sans font-black tracking-tight text-[38px] leading-[46px] sm:text-[54px] sm:leading-[62px] lg:text-[70px] lg:leading-[78px] mb-6 text-slate-900 dark:text-white">
@@ -180,7 +172,7 @@ export default function HomePage() {
               </p>
 
               {/* Botones de Acción de Alta Gama */}
-              <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center">
                 <Link
                   to="/catalog"
                   className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 font-bold text-[15px] rounded-xl hover:scale-[1.02] shadow-lg shadow-slate-900/10 dark:shadow-white/5 active:scale-[0.98] transition-all duration-300 cursor-pointer border border-transparent"
