@@ -89,15 +89,16 @@ export default function HomePage() {
 
           /* .main-banner — valores exactos del CSS de la plantilla (línea 897) */
           /* Se agrega margin-top negativo para subir el elemento azul hasta el tope de la pantalla, detrás del navbar sticky */
+          /* Se remueve el padding lateral de 120px para permitir al contenedor alinearse con el margen izquierdo de la página */
           .main-banner {
             margin-top: calc(-1 * var(--navbar-height));
-            padding: calc(150px + var(--navbar-height)) 120px 150px 120px;
+            padding: calc(150px + var(--navbar-height)) 0px 150px 0px;
           }
           /* Responsive <=992px — CSS plantilla líneas 2003-2006 */
           @media (max-width: 992px) {
             .main-banner {
               margin-top: calc(-1 * var(--navbar-height));
-              padding: calc(80px + var(--navbar-height)) 15px 30px 15px;
+              padding: calc(80px + var(--navbar-height)) 0px 30px 0px;
             }
           }
         `}</style>
@@ -127,8 +128,8 @@ export default function HomePage() {
           }}
         />
 
-        {/* .container (Bootstrap max-width 1140px en xl) */}
-        <div className="max-w-[1140px] mx-auto px-[15px]">
+        {/* .container (Alineado con el contenedor principal del sitio para consistencia de márgenes) */}
+        <div className="max-w-[1440px] mx-auto px-[20px] md:px-[64px]">
           {/* .row > .col-lg-12 > .row (plantilla líneas 170-172) */}
           <div className="flex flex-wrap">
             {/* .col-lg-6.align-self-center — Columna izquierda (plantilla línea 173) */}
