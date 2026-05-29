@@ -107,81 +107,78 @@ export default function HomePage() {
             }
           }
 
-          /* .main-banner — valores exactos del CSS de la plantilla (línea 897) */
-          /* Se agrega margin-top negativo para subir el elemento azul hasta el tope de la pantalla, detrás del navbar sticky */
-          /* Se remueve el padding lateral de 120px para permitir al contenedor alinearse con el margen izquierdo de la página */
+          /* .main-banner — Diseño moderno y de tono ejecutivo */
           .main-banner {
             margin-top: calc(-1 * var(--navbar-height));
-            padding: calc(150px + var(--navbar-height)) 0px 150px 0px;
+            padding: calc(100px + var(--navbar-height)) 0px 100px 0px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
           }
-          /* Responsive <=992px — CSS plantilla líneas 2003-2006 */
+          .dark .main-banner {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+          }
+          .executive-grid {
+            background-image: radial-gradient(rgba(148, 163, 184, 0.12) 1.5px, transparent 0);
+            background-size: 24px 24px;
+          }
+          .dark .executive-grid {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1.5px, transparent 0);
+          }
+          /* Responsive <=992px */
           @media (max-width: 992px) {
             .main-banner {
-              margin-top: calc(-1 * var(--navbar-height));
-              padding: calc(80px + var(--navbar-height)) 0px 30px 0px;
+              padding: calc(60px + var(--navbar-height)) 0px 60px 0px;
             }
           }
         `}</style>
       </Helmet>
 
-      {/* Hero Section — Estructura exacta de landing/index.html líneas 168-200 */}
-      {/* CSS: .main-banner (línea 893), responsive @media max-width:992px (línea 2003) */}
-      <section
-        className="main-banner relative w-full overflow-hidden text-center lg:text-left"
-        style={{
-          /* Desktop: padding: 250px 120px 150px 120px (CSS línea 897) */
-          /* Mobile: padding: 226px 0px 30px 0px (CSS línea 2005) */
-          /* Ajuste: el navbar de la plantilla es absolute, el nuestro es sticky, */
-          /* así que restamos ~100px del padding-top para compensar */
-        }}
-      >
-        {/* Fondo decorativo — .main-banner:after (CSS línea 902) */}
-        {/* background-image: url(slider-left-dec.png), z-index:1 */}
-        {/* En mobile se oculta: .main-banner:after { display:none } (CSS línea 1979) */}
-        <div
-          className="absolute left-0 top-0 w-[85%] h-[90%] pointer-events-none z-[1] hidden lg:block"
-          style={{
-            backgroundImage: "url('/slider-left-dec.png')",
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'contain',
-            backgroundPosition: 'left top'
-          }}
-        />
+      {/* Hero Section — Modern & Executive Redesign */}
+      <section className="main-banner relative w-full overflow-hidden text-center lg:text-left">
+        {/* Rejilla de puntos decorativa de fondo (Executive Tone) */}
+        <div className="absolute inset-0 executive-grid pointer-events-none z-[0]" />
+
+        {/* Esferas de desenfoque radial suave para dar profundidad 3D sin destellos ni neones */}
+        <div className="absolute top-[10%] right-[5%] w-[450px] h-[450px] rounded-full bg-primary/10 dark:bg-primary/5 blur-[130px] pointer-events-none z-[1]" />
+        <div className="absolute bottom-[5%] left-[5%] w-[350px] h-[350px] rounded-full bg-blue-500/8 dark:bg-blue-500/5 blur-[100px] pointer-events-none z-[1]" />
 
         {/* .container (Alineado con el contenedor principal del sitio para consistencia de márgenes) */}
-        <div className="max-w-[1440px] mx-auto px-[20px] md:px-[64px]">
-          {/* .row > .col-lg-12 > .row (plantilla líneas 170-172) */}
+        <div className="max-w-[1440px] mx-auto px-[20px] md:px-[64px] relative z-[2] w-full">
           <div className="flex flex-wrap">
-            {/* .col-lg-6.align-self-center — Columna izquierda (plantilla línea 173) */}
+            {/* Columna izquierda (Texto y Acciones) */}
             <div className="w-full lg:w-1/2 px-[15px] self-center">
-              {/* .left-content.show-up.header-text (plantilla línea 174) */}
-              {/* .left-content { margin-right: 15px } (CSS línea 916) */}
-              {/* .show-up { position:relative; z-index:2 } (CSS línea 202) */}
-              <div className="lg:mr-[15px] relative z-[2] lg:-translate-y-[55%]">
-                {/* h2: font-weight:700, line-height:70px, font-size:50px, mb:20px (CSS líneas 920-925) */}
-                <h2 className="font-bold text-[32px] leading-[42px] lg:text-[50px] lg:leading-[70px] mb-[20px] text-[#2a2a2a] dark:text-white">
+              <div className="lg:mr-[30px] text-center lg:text-left relative z-[2]">
+                {/* Badge Corporativo Superior */}
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary dark:bg-primary/20 dark:text-violet-300 mb-6 border border-primary/20">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  Premium Tech Accessories
+                </span>
+                
+                {/* Título Principal — Degradado metálico sutil en modo claro/oscuro */}
+                <h2 className="font-extrabold text-[36px] leading-[46px] lg:text-[52px] lg:leading-[68px] mb-[20px] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 dark:from-white dark:via-slate-100 dark:to-slate-300">
                   {settings?.hero_title || "Protege tu estilo"}
                 </h2>
-                {/* p: mb:45px, color:#2a2a2a, font-weight:400 (CSS líneas 928-931) */}
-                {/* En mobile color:#afafaf (CSS línea 1987) */}
-                <p className="mb-[45px] text-[15px] leading-[30px] font-normal text-[#afafaf] lg:text-[#2a2a2a] dark:text-slate-300">
+                
+                {/* Subtítulo — Color pizarra con excelente contraste y legibilidad */}
+                <p className="mb-[40px] text-[16px] leading-[28px] font-normal text-slate-600 dark:text-slate-300 max-w-[540px] mx-auto lg:mx-0">
                   {settings?.hero_subtitle || "Descubre nuestra nueva colección de fundas premium. Diseño minimalista, máxima protección para tu dispositivo."}
                 </p>
-                {/* Botones — .white-button (CSS líneas 207-228) */}
-                {/* .white-button a en .main-banner: bg #4b8ef1, color #fff (CSS líneas 952-955) */}
-                {/* display:inline-block, padding:10px 20px, rounded:23px, font:15px 500 (CSS líneas 208-217) */}
-                {/* .first-button { margin-right:15px } (CSS línea 935) */}
-                <div className="flex flex-wrap gap-[15px] justify-center lg:justify-start">
+
+                {/* Botones Modernizados */}
+                <div className="flex flex-wrap gap-[16px] justify-center lg:justify-start">
                   <Link
                     to="/catalog"
-                    className="inline-flex items-center gap-[5px] px-[20px] py-[10px] bg-[#4b8ef1] text-white hover:bg-[#3a7ddf] font-medium text-[15px] rounded-[23px] tracking-[0.3px] transition-all duration-500"
+                    className="inline-flex items-center gap-[6px] px-[24px] py-[12px] bg-primary text-white hover:bg-primary/90 font-semibold text-[15px] rounded-full shadow-md hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
                   >
                     Comprar ahora
-                    <span className="material-symbols-outlined text-[18px]" aria-hidden="true">shopping_bag</span>
+                    <span className="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_right_alt</span>
                   </Link>
                   <Link
                     to="/contact"
-                    className="inline-flex items-center gap-[5px] px-[20px] py-[10px] bg-[#4b8ef1] text-white hover:bg-[#3a7ddf] font-medium text-[15px] rounded-[23px] tracking-[0.3px] transition-all duration-500"
+                    className="inline-flex items-center gap-[6px] px-[24px] py-[12px] bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-slate-800/80 font-semibold text-[15px] rounded-full shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
                   >
                     Contáctanos
                     <span className="material-symbols-outlined text-[18px]" aria-hidden="true">chat</span>
@@ -190,16 +187,13 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* .col-lg-6 — Columna derecha imagen (plantilla línea 191) */}
-            <div className="w-full lg:w-1/2 px-[15px]">
-              {/* .right-image: text-align:center, position:relative, z-index:20 (CSS líneas 942-946) */}
-              {/* En mobile: margin:30px auto 0 auto (CSS línea 2011) */}
-              <div className="text-center relative z-[20] mt-[30px] lg:mt-0 mx-auto lg:mx-0 lg:-translate-y-[15%]">
-                {/* Contenedor de la animación Lottie del robot saludando */}
+            {/* Columna derecha (Robot Lottie Animado) - Sin cuadro */}
+            <div className="w-full lg:w-1/2 px-[15px] self-center">
+              <div className="text-center relative z-[10] mt-[40px] lg:mt-0 mx-auto lg:mx-0">
                 <div
                   ref={lottieContainer}
-                  className="w-full max-w-[500px] aspect-square mx-auto inline-block"
-                  style={{ minHeight: '350px' }}
+                  className="w-full max-w-[480px] aspect-square mx-auto inline-block"
+                  style={{ minHeight: '320px' }}
                   aria-label="Animación de un robot saludando"
                   role="img"
                 />
