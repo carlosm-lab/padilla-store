@@ -4,8 +4,8 @@ import ProductCard from '@/components/ProductCard';
 import { useProducts } from '@/hooks/useProducts';
 import { useCategories } from '@/hooks/useCategories';
 import { Helmet } from 'react-helmet-async';
-import { BASE_URL } from '@/config/constants';
-import { useEffect, useRef } from 'react';
+import { BASE_URL, WHATSAPP_NUMBER } from '@/config/constants';
+import { useEffect, useRef, useState } from 'react';
 import lottie from 'lottie-web';
 
 const FALLBACK_HERO_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuC2utPyicqN_kUOlg_KMlF2AA1cqvefgwLmDWPoStz9OLaD7KrTngV5Z330vaSwZf_Ad-Va2vFoDwEj4lBCqcQF_O4oZyxM7HrmORUD6zpvKgOA0z6fzdO1HZ6FDAI6BOHCIeCRWCSiZu8u9TJ79hmbPK0DLNbKphBr3g-E6flprEImzUkY0AIKfn31wWv1HhkMfxaEYUmAZAXARQ2wqx1GSswK_9grPpT5H48RI4n8rkAexrzyjQuq7HR3Lyfy-voEibkI1gYHm5I';
@@ -109,15 +109,24 @@ export default function HomePage() {
           /* .main-banner — Diseño moderno y de tono ejecutivo */
           .main-banner {
             margin-top: calc(-1 * var(--navbar-height));
-            padding: calc(90px + var(--navbar-height)) 0px 110px 0px;
-            background: radial-gradient(circle at 80% 20%, #f8fafc 0%, #f1f5f9 60%, #ffffff 100%);
+            padding: calc(60px + var(--navbar-height)) 0px 80px 0px;
+            background: radial-gradient(circle at 50% 30%, #f8fafc 0%, #f1f5f9 60%, #ffffff 100%);
             position: relative;
             overflow: hidden;
             --color-border-line: rgba(148, 163, 184, 0.08);
           }
           .dark .main-banner {
-            background: radial-gradient(circle at 80% 20%, #1e293b 0%, #0f172a 60%, #020617 100%);
+            background: radial-gradient(circle at 50% 30%, #1e293b 0%, #0f172a 60%, #020617 100%);
             --color-border-line: rgba(255, 255, 255, 0.03);
+          }
+          @media (min-width: 1024px) {
+            .main-banner {
+              padding: calc(90px + var(--navbar-height)) 0px 110px 0px;
+              background: radial-gradient(circle at 80% 20%, #f8fafc 0%, #f1f5f9 60%, #ffffff 100%);
+            }
+            .dark .main-banner {
+              background: radial-gradient(circle at 80% 20%, #1e293b 0%, #0f172a 60%, #020617 100%);
+            }
           }
           .executive-grid {
             background-image: radial-gradient(rgba(148, 163, 184, 0.06) 1.5px, transparent 0);
@@ -143,18 +152,6 @@ export default function HomePage() {
             height: 1px;
             background: linear-gradient(to right, transparent, var(--color-border-line) 15%, var(--color-border-line) 85%, transparent);
             pointer-events: none;
-          }
-
-          /* Animaciones de órbitas lentas */
-          @keyframes spin-slow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-          .animate-spin-slow {
-            animation: spin-slow 40s linear infinite;
-          }
-          .animate-spin-reverse-slow {
-            animation: spin-slow 50s linear infinite reverse;
           }
         `}</style>
       </Helmet>
@@ -216,24 +213,41 @@ export default function HomePage() {
               </div>
             </div>
             
-            {/* Right Section: Robot (Flotando con órbitas tecnológicas lentas) */}
-            <div className="lg:col-span-5 flex items-center justify-center relative min-h-[380px] lg:min-h-[440px]">
-              {/* Órbita exterior punteada */}
-              <div className="absolute w-[340px] h-[340px] rounded-full border border-dashed border-slate-200/50 dark:border-slate-800/50 animate-spin-slow pointer-events-none" />
+            {/* Right Section: Premium Product Showcase + Integrated Waving Robot (Lottie) */}
+            <div className="lg:col-span-5 flex items-center justify-center relative min-h-[380px] lg:min-h-[480px]">
+              {/* Sutil halo de luz trasera para dar volumen en 3D */}
+              <div className="absolute w-[350px] h-[350px] rounded-full bg-gradient-to-tr from-primary/15 to-blue-500/5 dark:from-primary/10 dark:to-transparent blur-3xl pointer-events-none" />
               
-              {/* Órbita interior fina */}
-              <div className="absolute w-[250px] h-[250px] rounded-full border border-slate-300/30 dark:border-slate-800/30 animate-spin-reverse-slow pointer-events-none" />
+              {/* Contenedor de la Composición */}
+              <div className="relative w-full max-w-[420px] aspect-square mx-auto">
+                
+                {/* Imagen del Producto Premium (Fondo de la Composición) */}
+                <div className="w-full h-full rounded-3xl overflow-hidden shadow-2xl border border-slate-200/30 dark:border-slate-800/50 transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+                  <img
+                    src="/hero_aura_cases.png"
+                    alt="Colección Aura de Cases Premium en I Nova SV"
+                    className="w-full h-full object-cover"
+                    loading="eager"
+                    width="420"
+                    height="420"
+                  />
+                  {/* Degradado superpuesto sutil en la base para integrar con el diseño */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/10 via-transparent to-transparent pointer-events-none" />
+                </div>
 
-              {/* Sutil sombra/aura de fondo para integración visual sin bordes */}
-              <div className="absolute w-[280px] h-[280px] rounded-full bg-gradient-to-tr from-primary/10 to-blue-500/5 dark:from-primary/10 dark:to-transparent blur-3xl pointer-events-none" />
-              
-              {/* Robot Lottie Container */}
-              <div
-                ref={lottieContainer}
-                className="w-full max-w-[360px] aspect-square mx-auto relative z-10 transition-transform duration-500 hover:scale-[1.03]"
-                aria-label="Animación de un robot saludando"
-                role="img"
-              />
+                {/* Robot Lottie Saludando (Superpuesto en la esquina superior/derecha flotando y presentando el producto) */}
+                <div 
+                  className="absolute -top-[15%] -right-[10%] w-[160px] sm:w-[200px] lg:w-[220px] aspect-square pointer-events-none z-20 drop-shadow-[0_10px_20px_rgba(0,0,0,0.15)]"
+                  title="Robot saludando virtual de I Nova SV"
+                >
+                  <div
+                    ref={lottieContainer}
+                    className="w-full h-full"
+                    aria-label="Asistente de ventas saludando"
+                    role="img"
+                  />
+                </div>
+              </div>
             </div>
           </div>
           
