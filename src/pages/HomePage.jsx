@@ -174,7 +174,7 @@ export default function HomePage() {
             <div className="w-full lg:w-1/2 px-[15px]">
               {/* .right-image: text-align:center, position:relative, z-index:20 (CSS líneas 942-946) */}
               {/* En mobile: margin:30px auto 0 auto (CSS línea 2011) */}
-              <div className="text-center relative z-[20] mt-[30px] lg:mt-0 mx-auto lg:mx-0 lg:-translate-y-[20%]">
+              <div className="text-center relative z-[20] mt-[30px] lg:mt-0 mx-auto lg:mx-0 lg:-translate-y-[15%]">
                 {/* .right-image img: max-width:710px (CSS línea 949) */}
                 <img
                   src="/slider-dec.png"
