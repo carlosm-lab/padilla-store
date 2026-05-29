@@ -79,6 +79,8 @@ export default function HomePage() {
         <link rel="canonical" href={`${BASE_URL}/`} />
         <link rel="preload" as="image" href={settings?.hero_image_url || FALLBACK_HERO_IMG} />
         <style>{`
+          @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
+          
           .hide-scrollbar::-webkit-scrollbar { display: none; }
           .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
           
@@ -91,7 +93,8 @@ export default function HomePage() {
             .fade-in-up.visible {
                 opacity: 1;
                 transform: translateY(0);
-            }            @keyframes float {
+            }
+            @keyframes float {
               0%, 100% { transform: translateY(0); }
               50% { transform: translateY(-12px); }
             }
@@ -105,47 +108,37 @@ export default function HomePage() {
                 transform: translateY(0);
             }
           }
-          /* .main-banner — Diseño moderno y de tono ejecutivo */
+          
           .main-banner {
             margin-top: calc(-1 * var(--navbar-height));
-            padding: calc(80px + var(--navbar-height)) 0px 80px 0px;
+            padding: calc(60px + var(--navbar-height)) 0px 60px 0px;
             background-color: #f8fafc;
             background-image: 
-              radial-gradient(circle at 100% 0%, rgba(124, 58, 237, 0.04) 0%, transparent 50%),
-              radial-gradient(circle at 0% 100%, rgba(59, 130, 246, 0.02) 0%, transparent 50%);
+              radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
+              radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
+              radial-gradient(circle at 50% 50%, rgba(244, 63, 94, 0.02) 0%, transparent 55%);
             position: relative;
             overflow: hidden;
+            font-family: 'Plus Jakarta Sans', sans-serif;
           }
           .dark .main-banner {
-            background-color: #0b0f19;
+            background-color: #080d16;
             background-image: 
-              radial-gradient(circle at 100% 0%, rgba(124, 58, 237, 0.08) 0%, transparent 60%),
-              radial-gradient(circle at 0% 100%, rgba(59, 130, 246, 0.04) 0%, transparent 60%);
+              radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.12) 0%, transparent 50%),
+              radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+              radial-gradient(circle at 50% 50%, rgba(244, 63, 94, 0.03) 0%, transparent 55%);
           }
           @media (min-width: 1024px) {
             .main-banner {
-              padding: calc(140px + var(--navbar-height)) 0px 140px 0px;
+              padding: calc(120px + var(--navbar-height)) 0px 120px 0px;
             }
           }
           .executive-grid {
-            background-image: radial-gradient(rgba(148, 163, 184, 0.04) 1px, transparent 0);
-            background-size: 24px 24px;
+            background-image: radial-gradient(rgba(148, 163, 184, 0.08) 1.2px, transparent 0);
+            background-size: 32px 32px;
           }
           .dark .executive-grid {
-            background-image: radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 0);
-          }
-          
-          /* Líneas de maquetación técnica estilo Vercel */
-          .grid-line-v {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: linear-gradient(to bottom, transparent, rgba(148, 163, 184, 0.05) 20%, rgba(148, 163, 184, 0.05) 80%, transparent);
-            pointer-events: none;
-          }
-          .dark .grid-line-v {
-            background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.02) 20%, rgba(255, 255, 255, 0.02) 80%, transparent);
+            background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1.2px, transparent 0);
           }
         `}</style>
       </Helmet>
@@ -153,53 +146,51 @@ export default function HomePage() {
       {/* Hero Section — Modern & Executive Redesign */}
       <section className="main-banner relative w-full overflow-hidden">
         {/* Rejilla de puntos decorativa de fondo (Executive Tone) */}
-        <div className="absolute inset-0 executive-grid pointer-events-none z-[0] opacity-75" />
+        <div className="absolute inset-0 executive-grid pointer-events-none z-[0] opacity-80" />
 
-        {/* Líneas de Guía de Estructura Técnica */}
-        <div className="grid-line-v left-[10%] lg:left-[15%]" />
-        <div className="grid-line-v right-[10%] lg:right-[15%]" />
-        <div className="grid-line-h bottom-[20%]" />
+        {/* Esferas de desenfoque radial suave para dar profundidad 3D */}
+        <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-primary/10 dark:bg-primary/5 blur-[120px] pointer-events-none z-[1]" />
+        <div className="absolute bottom-[10%] left-[-5%] w-[500px] h-[500px] rounded-full bg-blue-500/5 dark:bg-blue-650/5 blur-[100px] pointer-events-none z-[1]" />
 
-        {/* Esferas de desenfoque radial suave para dar profundidad 3D sin destellos ni neones */}
-        <div className="absolute top-[-10%] right-[-5%] w-[650px] h-[650px] rounded-full bg-primary/10 dark:bg-primary/5 blur-[160px] pointer-events-none z-[1]" />
-        <div className="absolute bottom-[10%] left-[-5%] w-[550px] h-[550px] rounded-full bg-blue-500/5 dark:bg-blue-500/5 blur-[140px] pointer-events-none z-[1]" />
-
-        {/* Main Hero Container — Open, spacious, and typographic-first */}
-        <div className="max-w-[1440px] mx-auto px-[24px] md:px-[80px] relative z-[2] w-full">
-          <div className="flex flex-col lg:grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            {/* Left Section: Typography & Actions */}
-            <div className="w-full lg:col-span-7 flex flex-col justify-center text-center lg:text-left relative z-10 order-1">
+        {/* Main Hero Container — Spaced and responsive */}
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-24 relative z-[2] w-full">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8 w-full">
+            {/* Left Column: Typography & Actions (Aligned and Clean) */}
+            <div className="w-full lg:w-1/2 flex flex-col justify-center items-center lg:items-start text-center lg:text-left relative z-10">
               {/* Badge Corporativo Superior */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/60 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800/80 text-slate-700 dark:text-slate-300 mb-8 self-center lg:self-start transition-all duration-300">
-                <span className="flex h-2 w-2 relative">
+              <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-xs font-semibold bg-white/70 dark:bg-slate-900/70 border border-slate-200/60 dark:border-slate-800/60 text-slate-700 dark:text-slate-300 mb-6 transition-all duration-300 shadow-sm backdrop-blur-md">
+                <span className="flex h-2.5 w-2.5 relative">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
                 </span>
                 Colección Premium 2026
               </div>
               
-              {/* Título Principal — Editorial, sofisticado y de alto nivel */}
-              <h1 className="font-sans font-bold tracking-tight text-[38px] leading-[44px] sm:text-[56px] sm:leading-[62px] lg:text-[72px] lg:leading-[80px] mb-6 text-slate-900 dark:text-white">
-                Protege <span className="font-brand italic font-light text-primary block sm:inline">tu estilo</span> diario
+              {/* Título Principal */}
+              <h1 className="font-sans font-black tracking-tight text-[38px] leading-[46px] sm:text-[54px] sm:leading-[62px] lg:text-[70px] lg:leading-[78px] mb-6 text-slate-900 dark:text-white">
+                {settings?.hero_title || "Protege tu estilo"} <br className="hidden sm:inline" />
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-violet-500 to-blue-500 dark:from-violet-400 dark:via-primary dark:to-blue-400">
+                  sin límites
+                </span>
               </h1>
               
-              {/* Subtítulo — Pizarra ejecutivo, descriptivo y enfocado */}
-              <p className="mb-10 text-[16px] sm:text-[18px] leading-[28px] font-normal text-slate-500 dark:text-slate-400 max-w-[580px] mx-auto lg:mx-0">
-                {settings?.hero_subtitle || "Explora protectores, fundas y tecnología con diseño minimalista y máxima protección para tu dispositivo."}
+              {/* Subtítulo — Nivel corporativo */}
+              <p className="mb-8 text-[16px] sm:text-[18px] leading-[28px] font-normal text-slate-500 dark:text-slate-400 max-w-[500px]">
+                {settings?.hero_subtitle || "Descubre nuestra nueva colección de fundas premium. Diseño minimalista, máxima protección para tu dispositivo."}
               </p>
 
-              {/* Botones de Acción de Alta Gama (Pill de diseño y contorno fino) */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              {/* Botones de Acción de Alta Gama */}
+              <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center lg:justify-start">
                 <Link
                   to="/catalog"
-                  className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold text-[15px] rounded-full hover:scale-[1.02] shadow-lg shadow-slate-900/10 dark:shadow-white/5 hover:shadow-xl transition-all duration-300 cursor-pointer border border-slate-900 dark:border-white"
+                  className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 font-bold text-[15px] rounded-xl hover:scale-[1.02] shadow-lg shadow-slate-900/10 dark:shadow-white/5 active:scale-[0.98] transition-all duration-300 cursor-pointer border border-transparent"
                 >
                   Explorar catálogo
                   <span className="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_right_alt</span>
                 </Link>
                 <Link
                   to="/contact"
-                  className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-white/80 dark:bg-slate-900/80 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 shadow-sm hover:scale-[1.02] transition-all duration-300 cursor-pointer rounded-full backdrop-blur-sm"
+                  className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-white/50 dark:bg-slate-950/40 hover:bg-slate-100/80 dark:hover:bg-slate-900/60 text-slate-800 dark:text-slate-200 border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer rounded-xl backdrop-blur-md"
                 >
                   Contáctanos
                   <span className="material-symbols-outlined text-[18px]" aria-hidden="true">chat</span>
@@ -207,27 +198,15 @@ export default function HomePage() {
               </div>
             </div>
             
-            {/* Right Section: Premium Waving Robot (Lottie) as main visual */}
-            <div className="w-full lg:col-span-5 flex items-center justify-center relative min-h-[320px] sm:min-h-[380px] lg:min-h-[480px] order-2">
-              {/* Sutil halo de luz trasera para dar volumen en 3D */}
-              <div className="absolute w-[280px] h-[280px] sm:w-[380px] sm:h-[380px] rounded-full bg-gradient-to-tr from-primary/15 to-blue-500/5 dark:from-primary/10 dark:to-transparent blur-3xl pointer-events-none" />
-              
-              {/* Elementos de órbitas de precisión (Líneas tecnológicas rotatorias) */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-visible">
-                {/* Órbita exterior */}
-                <div className="absolute w-[280px] h-[280px] sm:w-[380px] sm:h-[380px] lg:w-[420px] lg:h-[420px] rounded-full border border-dashed border-slate-300/40 dark:border-slate-700/30 animate-spin-slow" />
-                {/* Órbita media */}
-                <div className="absolute w-[220px] h-[220px] sm:w-[300px] sm:h-[300px] lg:w-[340px] lg:h-[340px] rounded-full border border-dotted border-slate-300/60 dark:border-slate-700/40 animate-spin-reverse-slow" />
-                {/* Órbita interior */}
-                <div className="absolute w-[160px] h-[160px] sm:w-[220px] sm:h-[220px] lg:w-[260px] lg:h-[260px] rounded-full border border-slate-200/50 dark:border-slate-800/40" />
-              </div>
-
-              {/* Robot Container (flota libremente directamente sobre el fondo) */}
-              <div className="relative z-10 w-[240px] sm:w-[320px] lg:w-[380px] aspect-square animate-float pointer-events-none select-none">
+            {/* Right Column: Lottie Robot (Original size and layout restored exactly) */}
+            <div className="w-full lg:w-1/2 px-[15px]">
+              <div className="text-center relative z-[20] mt-[30px] lg:mt-0 mx-auto lg:mx-0 lg:-translate-y-[15%]">
+                {/* Contenedor de la animación Lottie del robot saludando */}
                 <div
                   ref={lottieContainer}
-                  className="w-full h-full"
-                  aria-label="Asistente de ventas saludando"
+                  className="w-full max-w-[500px] aspect-square mx-auto inline-block"
+                  style={{ minHeight: '350px' }}
+                  aria-label="Animación de un robot saludando"
                   role="img"
                 />
               </div>
@@ -235,33 +214,33 @@ export default function HomePage() {
           </div>
           
           {/* Trust Strip - Stripe/Linear Style Dividers */}
-          <div className="mt-20 lg:mt-32 pt-8 border-t border-slate-250/60 dark:border-slate-800/60 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4">
-              <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-900 text-primary flex items-center justify-center shrink-0 border border-slate-200/50 dark:border-slate-800/50">
-                <span className="material-symbols-outlined text-[22px]">local_shipping</span>
+          <div className="mt-20 lg:mt-32 pt-10 border-t border-slate-200/40 dark:border-slate-800/40 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 text-center md:text-left">
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-6">
+              <div className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-900/80 text-primary flex items-center justify-center shrink-0 border border-slate-200/40 dark:border-slate-800/40 shadow-sm">
+                <span className="material-symbols-outlined text-[20px]">local_shipping</span>
               </div>
               <div>
-                <h4 className="text-sm font-semibold text-slate-900 dark:text-white tracking-tight">Envío a todo el país</h4>
+                <h4 className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">Envío a todo el país</h4>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Entrega rápida en El Salvador para todos tus accesorios.</p>
               </div>
             </div>
             
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 border-t md:border-t-0 md:border-l border-slate-250/60 dark:border-slate-800/60 pt-8 md:pt-0">
-              <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-900 text-primary flex items-center justify-center shrink-0 border border-slate-200/50 dark:border-slate-800/50">
-                <span className="material-symbols-outlined text-[22px]">verified</span>
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-6 md:border-l border-slate-200/40 dark:border-slate-800/40">
+              <div className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-900/80 text-primary flex items-center justify-center shrink-0 border border-slate-200/40 dark:border-slate-800/40 shadow-sm">
+                <span className="material-symbols-outlined text-[20px]">verified</span>
               </div>
               <div>
-                <h4 className="text-sm font-semibold text-slate-900 dark:text-white tracking-tight">Calidad Certificada</h4>
+                <h4 className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">Calidad Certificada</h4>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Garantía real en protectores, cargadores y cases premium.</p>
               </div>
             </div>
             
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 border-t md:border-t-0 md:border-l border-slate-250/60 dark:border-slate-800/60 pt-8 md:pt-0">
-              <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-900 text-primary flex items-center justify-center shrink-0 border border-slate-200/50 dark:border-slate-800/50">
-                <span className="material-symbols-outlined text-[22px]">chat</span>
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-6 md:border-l border-slate-200/40 dark:border-slate-800/40">
+              <div className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-900/80 text-primary flex items-center justify-center shrink-0 border border-slate-200/40 dark:border-slate-800/40 shadow-sm">
+                <span className="material-symbols-outlined text-[20px]">chat</span>
               </div>
               <div>
-                <h4 className="text-sm font-semibold text-slate-900 dark:text-white tracking-tight">Atención Directa</h4>
+                <h4 className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">Atención Directa</h4>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Cierre de compras personalizado de inmediato por WhatsApp.</p>
               </div>
             </div>
