@@ -5,7 +5,8 @@ import { useProducts } from '@/hooks/useProducts';
 import { useCategories } from '@/hooks/useCategories';
 import { Helmet } from 'react-helmet-async';
 import { BASE_URL } from '@/config/constants';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import lottie from 'lottie-web';
 
 const FALLBACK_HERO_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuC2utPyicqN_kUOlg_KMlF2AA1cqvefgwLmDWPoStz9OLaD7KrTngV5Z330vaSwZf_Ad-Va2vFoDwEj4lBCqcQF_O4oZyxM7HrmORUD6zpvKgOA0z6fzdO1HZ6FDAI6BOHCIeCRWCSiZu8u9TJ79hmbPK0DLNbKphBr3g-E6flprEImzUkY0AIKfn31wWv1HhkMfxaEYUmAZAXARQ2wqx1GSswK_9grPpT5H48RI4n8rkAexrzyjQuq7HR3Lyfy-voEibkI1gYHm5I';
 
@@ -13,6 +14,25 @@ export default function HomePage() {
   const { products: homeProducts, loading } = useProducts({ limit: 4 });
   const { categories: allCategories, loading: loadingCategories } = useCategories();
   const { settings } = useSettings();
+  const lottieContainer = useRef(null);
+
+  useEffect(() => {
+    let anim;
+    if (lottieContainer.current) {
+      anim = lottie.loadAnimation({
+        container: lottieContainer.current,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '/robot-animation.json'
+      });
+    }
+    return () => {
+      if (anim) {
+        anim.destroy();
+      }
+    };
+  }, []);
 
   const categories = (() => {
     const featured = allCategories.filter(c => c.featured);
@@ -175,11 +195,13 @@ export default function HomePage() {
               {/* .right-image: text-align:center, position:relative, z-index:20 (CSS líneas 942-946) */}
               {/* En mobile: margin:30px auto 0 auto (CSS línea 2011) */}
               <div className="text-center relative z-[20] mt-[30px] lg:mt-0 mx-auto lg:mx-0 lg:-translate-y-[15%]">
-                {/* .right-image img: max-width:710px (CSS línea 949) */}
-                <img
-                  src="/slider-dec.png"
-                  alt="I Nova SV"
-                  className="max-w-full lg:max-w-[710px] inline-block"
+                {/* Contenedor de la animación Lottie del robot saludando */}
+                <div
+                  ref={lottieContainer}
+                  className="w-full max-w-[500px] aspect-square mx-auto inline-block"
+                  style={{ minHeight: '350px' }}
+                  aria-label="Animación de un robot saludando"
+                  role="img"
                 />
               </div>
             </div>
