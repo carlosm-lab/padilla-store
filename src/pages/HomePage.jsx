@@ -106,32 +106,55 @@ export default function HomePage() {
                 transform: translateY(0);
             }
           }
-
-          /* .main-banner — Diseño moderno y de tono ejecutivo */
+          /* .main-banner — Diseño moderno y de tono ejecutivo */
           .main-banner {
             margin-top: calc(-1 * var(--navbar-height));
-            padding: calc(100px + var(--navbar-height)) 0px 100px 0px;
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
+            padding: calc(90px + var(--navbar-height)) 0px 110px 0px;
+            background: radial-gradient(circle at 80% 20%, #f8fafc 0%, #f1f5f9 60%, #ffffff 100%);
             position: relative;
             overflow: hidden;
-            display: flex;
-            align-items: center;
+            --color-border-line: rgba(148, 163, 184, 0.08);
           }
           .dark .main-banner {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            background: radial-gradient(circle at 80% 20%, #1e293b 0%, #0f172a 60%, #020617 100%);
+            --color-border-line: rgba(255, 255, 255, 0.03);
           }
           .executive-grid {
-            background-image: radial-gradient(rgba(148, 163, 184, 0.12) 1.5px, transparent 0);
-            background-size: 24px 24px;
+            background-image: radial-gradient(rgba(148, 163, 184, 0.06) 1.5px, transparent 0);
+            background-size: 32px 32px;
           }
           .dark .executive-grid {
-            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1.5px, transparent 0);
+            background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1.5px, transparent 0);
           }
-          /* Responsive <=992px */
-          @media (max-width: 992px) {
-            .main-banner {
-              padding: calc(60px + var(--navbar-height)) 0px 60px 0px;
-            }
+          
+          /* Líneas de maquetación técnica estilo Vercel */
+          .grid-line-v {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, var(--color-border-line) 15%, var(--color-border-line) 85%, transparent);
+            pointer-events: none;
+          }
+          .grid-line-h {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--color-border-line) 15%, var(--color-border-line) 85%, transparent);
+            pointer-events: none;
+          }
+
+          /* Animaciones de órbitas lentas */
+          @keyframes spin-slow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+          .animate-spin-slow {
+            animation: spin-slow 40s linear infinite;
+          }
+          .animate-spin-reverse-slow {
+            animation: spin-slow 50s linear infinite reverse;
           }
         `}</style>
       </Helmet>
@@ -139,64 +162,110 @@ export default function HomePage() {
       {/* Hero Section — Modern & Executive Redesign */}
       <section className="main-banner relative w-full overflow-hidden text-center lg:text-left">
         {/* Rejilla de puntos decorativa de fondo (Executive Tone) */}
-        <div className="absolute inset-0 executive-grid pointer-events-none z-[0]" />
+        <div className="absolute inset-0 executive-grid pointer-events-none z-[0] opacity-75" />
+
+        {/* Líneas de Guía de Estructura Técnica */}
+        <div className="grid-line-v left-[10%] lg:left-[15%]" />
+        <div className="grid-line-v right-[10%] lg:right-[15%]" />
+        <div className="grid-line-h bottom-[20%]" />
 
         {/* Esferas de desenfoque radial suave para dar profundidad 3D sin destellos ni neones */}
-        <div className="absolute top-[10%] right-[5%] w-[450px] h-[450px] rounded-full bg-primary/10 dark:bg-primary/5 blur-[130px] pointer-events-none z-[1]" />
-        <div className="absolute bottom-[5%] left-[5%] w-[350px] h-[350px] rounded-full bg-blue-500/8 dark:bg-blue-500/5 blur-[100px] pointer-events-none z-[1]" />
+        <div className="absolute top-[-10%] right-[-5%] w-[650px] h-[650px] rounded-full bg-primary/10 dark:bg-primary/5 blur-[160px] pointer-events-none z-[1]" />
+        <div className="absolute bottom-[10%] left-[-5%] w-[550px] h-[550px] rounded-full bg-blue-500/5 dark:bg-blue-500/5 blur-[140px] pointer-events-none z-[1]" />
 
-        {/* .container (Alineado con el contenedor principal del sitio para consistencia de márgenes) */}
-        <div className="max-w-[1440px] mx-auto px-[20px] md:px-[64px] relative z-[2] w-full">
-          <div className="flex flex-wrap">
-            {/* Columna izquierda (Texto y Acciones) */}
-            <div className="w-full lg:w-1/2 px-[15px] self-center">
-              <div className="lg:mr-[30px] text-center lg:text-left relative z-[2]">
-                {/* Badge Corporativo Superior */}
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary dark:bg-primary/20 dark:text-violet-300 mb-6 border border-primary/20">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  Premium Tech Accessories
+        {/* Main Hero Container — Open, spacious, and typographic-first */}
+        <div className="max-w-[1440px] mx-auto px-[24px] md:px-[80px] relative z-[2] w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            {/* Left Section: Typography & Actions */}
+            <div className="lg:col-span-7 flex flex-col justify-center text-center lg:text-left relative z-10">
+              {/* Badge Corporativo Superior */}
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-white/60 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 mb-6 self-center lg:self-start transition-all duration-300">
+                <span className="flex h-2 w-2 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
                 </span>
-                
-                {/* Título Principal — Degradado metálico sutil en modo claro/oscuro */}
-                <h2 className="font-extrabold text-[36px] leading-[46px] lg:text-[52px] lg:leading-[68px] mb-[20px] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 dark:from-white dark:via-slate-100 dark:to-slate-300">
-                  {settings?.hero_title || "Protege tu estilo"}
-                </h2>
-                
-                {/* Subtítulo — Color pizarra con excelente contraste y legibilidad */}
-                <p className="mb-[40px] text-[16px] leading-[28px] font-normal text-slate-600 dark:text-slate-300 max-w-[540px] mx-auto lg:mx-0">
-                  {settings?.hero_subtitle || "Descubre nuestra nueva colección de fundas premium. Diseño minimalista, máxima protección para tu dispositivo."}
-                </p>
+                Colección Premium 2026
+              </div>
+              
+              {/* Título Principal — Editorial, sofisticado y de alto nivel */}
+              <h1 className="font-sans font-light tracking-tight text-[42px] leading-[48px] sm:text-[56px] sm:leading-[64px] lg:text-[68px] lg:leading-[78px] mb-6 text-slate-900 dark:text-white">
+                Protege <span className="font-brand italic font-semibold text-primary block sm:inline">tu estilo</span> diario
+              </h1>
+              
+              {/* Subtítulo — Pizarra ejecutivo, descriptivo y enfocado */}
+              <p className="mb-10 text-[16px] leading-[28px] font-normal text-slate-500 dark:text-slate-400 max-w-[540px] mx-auto lg:mx-0">
+                {settings?.hero_subtitle || "Explora protectores, fundas y tecnología con diseño minimalista y máxima protección para tu dispositivo."}
+              </p>
 
-                {/* Botones Modernizados */}
-                <div className="flex flex-wrap gap-[16px] justify-center lg:justify-start">
-                  <Link
-                    to="/catalog"
-                    className="inline-flex items-center gap-[6px] px-[24px] py-[12px] bg-primary text-white hover:bg-primary/90 font-semibold text-[15px] rounded-full shadow-md hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
-                  >
-                    Comprar ahora
-                    <span className="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_right_alt</span>
-                  </Link>
-                  <Link
-                    to="/contact"
-                    className="inline-flex items-center gap-[6px] px-[24px] py-[12px] bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-slate-800/80 font-semibold text-[15px] rounded-full shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
-                  >
-                    Contáctanos
-                    <span className="material-symbols-outlined text-[18px]" aria-hidden="true">chat</span>
-                  </Link>
-                </div>
+              {/* Botones de Acción de Alta Gama (Monocromo y contorno fino) */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <Link
+                  to="/catalog"
+                  className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold text-[15px] rounded-xl hover:-translate-y-0.5 shadow-lg shadow-slate-900/10 dark:shadow-white/5 hover:shadow-xl transition-all duration-300 cursor-pointer border border-slate-900 dark:border-white"
+                >
+                  Explorar catálogo
+                  <span className="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_right_alt</span>
+                </Link>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-transparent text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900/40 hover:-translate-y-0.5 transition-all duration-300 cursor-pointer rounded-xl"
+                >
+                  Contáctanos
+                  <span className="material-symbols-outlined text-[18px]" aria-hidden="true">chat</span>
+                </Link>
               </div>
             </div>
+            
+            {/* Right Section: Robot (Flotando con órbitas tecnológicas lentas) */}
+            <div className="lg:col-span-5 flex items-center justify-center relative min-h-[380px] lg:min-h-[440px]">
+              {/* Órbita exterior punteada */}
+              <div className="absolute w-[340px] h-[340px] rounded-full border border-dashed border-slate-200/50 dark:border-slate-800/50 animate-spin-slow pointer-events-none" />
+              
+              {/* Órbita interior fina */}
+              <div className="absolute w-[250px] h-[250px] rounded-full border border-slate-300/30 dark:border-slate-800/30 animate-spin-reverse-slow pointer-events-none" />
 
-            {/* Columna derecha (Robot Lottie Animado) - Sin cuadro */}
-            <div className="w-full lg:w-1/2 px-[15px] self-center">
-              <div className="text-center relative z-[10] mt-[40px] lg:mt-0 mx-auto lg:mx-0">
-                <div
-                  ref={lottieContainer}
-                  className="w-full max-w-[480px] aspect-square mx-auto inline-block"
-                  style={{ minHeight: '320px' }}
-                  aria-label="Animación de un robot saludando"
-                  role="img"
-                />
+              {/* Sutil sombra/aura de fondo para integración visual sin bordes */}
+              <div className="absolute w-[280px] h-[280px] rounded-full bg-gradient-to-tr from-primary/10 to-blue-500/5 dark:from-primary/10 dark:to-transparent blur-3xl pointer-events-none" />
+              
+              {/* Robot Lottie Container */}
+              <div
+                ref={lottieContainer}
+                className="w-full max-w-[360px] aspect-square mx-auto relative z-10 transition-transform duration-500 hover:scale-[1.03]"
+                aria-label="Animación de un robot saludando"
+                role="img"
+              />
+            </div>
+          </div>
+          
+          {/* Bento-style Trust Strip - Con copywriting real y localizado */}
+          <div className="mt-16 lg:mt-24 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-6 rounded-2xl bg-white/40 dark:bg-slate-900/20 border border-slate-200/60 dark:border-slate-800/50 backdrop-blur-sm flex items-start gap-4 transition-all duration-300 hover:border-primary/20 dark:hover:border-primary/30">
+              <div className="w-10 h-10 rounded-lg bg-primary/5 dark:bg-primary/10 text-primary flex items-center justify-center shrink-0 border border-primary/10">
+                <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 0" }}>local_shipping</span>
+              </div>
+              <div className="text-left">
+                <h4 className="text-sm font-semibold text-slate-900 dark:text-white tracking-tight">Envío a todo el país</h4>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Entrega rápida en El Salvador para tus accesorios favoritos.</p>
+              </div>
+            </div>
+            
+            <div className="p-6 rounded-2xl bg-white/40 dark:bg-slate-900/20 border border-slate-200/60 dark:border-slate-800/50 backdrop-blur-sm flex items-start gap-4 transition-all duration-300 hover:border-primary/20 dark:hover:border-primary/30">
+              <div className="w-10 h-10 rounded-lg bg-primary/5 dark:bg-primary/10 text-primary flex items-center justify-center shrink-0 border border-primary/10">
+                <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 0" }}>verified</span>
+              </div>
+              <div className="text-left">
+                <h4 className="text-sm font-semibold text-slate-900 dark:text-white tracking-tight">Calidad Certificada</h4>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Garantía real en protectores, cargadores y cases premium.</p>
+              </div>
+            </div>
+            
+            <div className="p-6 rounded-2xl bg-white/40 dark:bg-slate-900/20 border border-slate-200/60 dark:border-slate-800/50 backdrop-blur-sm flex items-start gap-4 transition-all duration-300 hover:border-primary/20 dark:hover:border-primary/30">
+              <div className="w-10 h-10 rounded-lg bg-primary/5 dark:bg-primary/10 text-primary flex items-center justify-center shrink-0 border border-primary/10">
+                <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 0" }}>chat</span>
+              </div>
+              <div className="text-left">
+                <h4 className="text-sm font-semibold text-slate-900 dark:text-white tracking-tight">Atención Directa</h4>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Cierre de compras personalizado de inmediato por WhatsApp.</p>
               </div>
             </div>
           </div>
