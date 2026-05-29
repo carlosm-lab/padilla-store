@@ -111,8 +111,8 @@ export default function HomePage() {
           
           .main-banner {
             margin-top: calc(-1 * var(--navbar-height));
-            padding: calc(60px + var(--navbar-height)) 0px 60px 0px;
-            background-color: #f8fafc;
+            padding: calc(24px + var(--navbar-height)) 0px 24px 0px;
+            background-color: #fcf8f8;
             background-image: 
               radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
               radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
@@ -122,7 +122,7 @@ export default function HomePage() {
             font-family: 'Plus Jakarta Sans', sans-serif;
           }
           .dark .main-banner {
-            background-color: #080d16;
+            background-color: #0f172a;
             background-image: 
               radial-gradient(circle at 80% 20%, rgba(124, 58, 237, 0.12) 0%, transparent 50%),
               radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
@@ -130,7 +130,7 @@ export default function HomePage() {
           }
           @media (min-width: 1024px) {
             .main-banner {
-              padding: calc(120px + var(--navbar-height)) 0px 120px 0px;
+              padding: calc(40px + var(--navbar-height)) 0px 40px 0px;
             }
           }
           .executive-grid {
@@ -156,7 +156,7 @@ export default function HomePage() {
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-24 relative z-[2] w-full">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8 w-full">
             {/* Left Column: Typography & Actions (Aligned and Clean) */}
-            <div className="w-full lg:w-1/2 flex flex-col justify-center items-center lg:items-start text-center lg:text-left relative z-10 lg:-translate-y-[15%]">
+            <div className="w-full lg:w-1/2 flex flex-col justify-center items-center lg:items-start text-center lg:text-left relative z-10">
               
               {/* Título Principal */}
               <h1 className="font-sans font-black tracking-tight text-[38px] leading-[46px] sm:text-[54px] sm:leading-[62px] lg:text-[70px] lg:leading-[78px] mb-6 text-slate-900 dark:text-white">
@@ -192,7 +192,7 @@ export default function HomePage() {
             
             {/* Right Column: Lottie Robot (Original size and layout restored exactly) */}
             <div className="w-full lg:w-1/2 px-[15px]">
-              <div className="text-center relative z-[20] mt-[30px] lg:mt-0 mx-auto lg:mx-0 lg:-translate-y-[15%]">
+              <div className="text-center relative z-[20] mt-[30px] lg:mt-0 mx-auto lg:mx-0">
                 {/* Contenedor de la animación Lottie del robot saludando */}
                 <div
                   ref={lottieContainer}
