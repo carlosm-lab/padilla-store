@@ -125,21 +125,16 @@ export default function HomePage() {
           
           .main-banner {
             margin-top: calc(-1 * var(--navbar-height));
-            padding: calc(24px + var(--navbar-height)) 0px 24px 0px;
-            background-color: #fcf8f8;
+            padding: calc(var(--space-xl) + var(--navbar-height)) 0px var(--space-xl) 0px;
+            background-color: var(--color-background-light);
             background-image: none;
             position: relative;
             overflow: hidden;
             font-family: 'Plus Jakarta Sans', sans-serif;
           }
           .dark .main-banner {
-            background-color: #0f172a;
+            background-color: var(--color-background-dark);
             background-image: none;
-          }
-          @media (min-width: 1024px) {
-            .main-banner {
-              padding: calc(40px + var(--navbar-height)) 0px 40px 0px;
-            }
           }
         `}</style>
       </Helmet>
@@ -147,23 +142,23 @@ export default function HomePage() {
       {/* Hero Section — Modern & Executive Redesign */}
       <section className="main-banner relative w-full overflow-hidden">
         {/* Main Hero Container — Spaced and responsive */}
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-24 relative z-[2] w-full">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8 w-full">
+        <div className="max-w-[1440px] mx-auto relative z-[2] w-full" style={{ paddingLeft: 'var(--container-px)', paddingRight: 'var(--container-px)' }}>
+          <div className="flex flex-col lg:flex-row items-center w-full" style={{ gap: 'var(--space-2xl)' }}>
             {/* Left Column: Typography & Actions (Aligned and Clean) */}
             <div className="w-full lg:w-1/2 flex flex-col justify-center items-center lg:items-start text-center lg:text-left relative z-10">
               
               {/* Título Principal */}
-              <h1 className="font-sans font-black tracking-tight text-[32px] leading-[40px] sm:text-[54px] sm:leading-[62px] lg:text-[70px] lg:leading-[78px] mb-6 text-slate-900 dark:text-white inline-flex flex-col items-stretch mx-auto lg:mx-0">
+              <h1 className="font-sans font-black tracking-tight text-slate-900 dark:text-white inline-flex flex-col items-stretch mx-auto lg:mx-0" style={{ fontSize: 'var(--text-hero)', lineHeight: 1.1, marginBottom: 'var(--space-lg)' }}>
                 <span className="block whitespace-nowrap">
                   {settings?.hero_title || "Protege tu estilo"}
                 </span>
-                <span className="flex justify-between bg-clip-text text-transparent bg-gradient-to-r from-primary via-violet-500 to-blue-500 dark:from-violet-400 dark:via-primary dark:to-blue-400 select-none">
+                <span className="flex justify-between bg-clip-text text-transparent bg-gradient-to-r from-primary via-violet-500 to-blue-500 dark:from-violet-400 dark:via-primary dark:to-blue-400 select-none italic font-semibold" style={{ fontFamily: 'var(--font-brand)' }}>
                   <span>s</span><span>i</span><span>n</span><span>&nbsp;</span><span>l</span><span>í</span><span>m</span><span>i</span><span>t</span><span>e</span><span>s</span>
                 </span>
               </h1>
               
               {/* Mobile Robot: Visible only on mobile/tablet, hidden on desktop */}
-              <div className="lg:hidden w-full max-w-[340px] aspect-square mx-auto my-6 z-[20]">
+              <div className="lg:hidden w-full max-w-[340px] aspect-square mx-auto z-[20]" style={{ marginTop: 'var(--space-lg)', marginBottom: 'var(--space-lg)' }}>
                 <div
                   ref={lottieContainerMobile}
                   className="w-full h-full"
@@ -173,25 +168,27 @@ export default function HomePage() {
               </div>
               
               {/* Subtítulo — Nivel corporativo */}
-              <p className="mb-8 text-[16px] sm:text-[18px] leading-[28px] font-normal text-slate-500 dark:text-slate-400 max-w-[500px]">
+              <p className="font-normal text-slate-500 dark:text-slate-400 max-w-[500px]" style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, marginBottom: 'var(--space-xl)' }}>
                 {settings?.hero_subtitle || "Descubre nuestra nueva colección de fundas premium. Diseño minimalista, máxima protección para tu dispositivo."}
               </p>
 
               {/* Botones de Acción de Alta Gama */}
-              <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row w-full" style={{ gap: 'var(--space-md)' }}>
                 <Link
                   to="/catalog"
-                  className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 font-bold text-[15px] rounded-xl hover:scale-[1.02] shadow-lg shadow-slate-900/10 dark:shadow-white/5 active:scale-[0.98] transition-all duration-300 cursor-pointer border border-transparent"
+                  className="w-full sm:flex-1 inline-flex items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 font-bold rounded-xl hover:scale-[1.02] shadow-lg shadow-slate-900/10 dark:shadow-white/5 active:scale-[0.98] transition-all duration-300 cursor-pointer border border-transparent"
+                  style={{ padding: 'var(--space-md) var(--space-xl)', fontSize: 'var(--text-sm)', gap: 'var(--space-sm)' }}
                 >
                   Explorar catálogo
-                  <span className="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_right_alt</span>
+                  <span className="material-symbols-outlined" style={{ fontSize: 'var(--icon-sm)' }} aria-hidden="true">arrow_right_alt</span>
                 </Link>
                 <Link
                   to="/contact"
-                  className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-white/50 dark:bg-slate-950/40 hover:bg-slate-100/80 dark:hover:bg-slate-900/60 text-slate-800 dark:text-slate-200 border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer rounded-xl backdrop-blur-md"
+                  className="w-full sm:flex-1 inline-flex items-center justify-center bg-white/50 dark:bg-slate-950/40 hover:bg-slate-100/80 dark:hover:bg-slate-900/60 text-slate-800 dark:text-slate-200 border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer rounded-xl backdrop-blur-md"
+                  style={{ padding: 'var(--space-md) var(--space-xl)', fontSize: 'var(--text-sm)', gap: 'var(--space-sm)' }}
                 >
                   Contáctanos
-                  <span className="material-symbols-outlined text-[18px]" aria-hidden="true">chat</span>
+                  <span className="material-symbols-outlined" style={{ fontSize: 'var(--icon-sm)' }} aria-hidden="true">chat</span>
                 </Link>
               </div>
             </div>
@@ -246,7 +243,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <main className="max-w-[1440px] mx-auto bg-[#fcf8f8] dark:bg-background-dark text-[#1c1b1b] dark:text-slate-100 font-sans">
+      <main className="max-w-[1440px] mx-auto bg-background-light dark:bg-background-dark text-[#1c1b1b] dark:text-slate-100 font-sans">
         <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up">
           <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-8 text-center">Explorar por Categoría</h2>
           <div className="flex overflow-x-auto hide-scrollbar gap-[16px] snap-x snap-mandatory pb-4">
