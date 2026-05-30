@@ -2,7 +2,7 @@
 -- SEGURIDAD: Esta función DEBE validar autenticación y límites de cantidad.
 -- La versión anterior omitía estas validaciones, permitiendo invocación anónima.
 
-CREATE OR REPLACE FUNCTION public.generate_whatsapp_message(items jsonb, store_domain text DEFAULT 'https://inova-sv.com')
+CREATE OR REPLACE FUNCTION public.generate_whatsapp_message(items jsonb, store_domain text DEFAULT 'https://padillastore.com')
 RETURNS text
 LANGUAGE plpgsql
 SECURITY DEFINER

@@ -42,14 +42,14 @@
 export const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '50300000000';
 
 // Email de contacto. También desde env para facilitar migración.
-export const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || 'contacto@inova-sv.com';
+export const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || 'detallesymas.contacto@gmail.com';
 
 // URL base del sitio. Se usa para og:url, Schema.org y canonical links.
 // OJO: hardcoded al dominio de producción. Si se usa un dominio diferente
 // en staging, agregar VITE_BASE_URL a las env vars.
-export const BASE_URL = 'https://inova-sv.vercel.app';
+export const BASE_URL = 'https://padillastore.com';
 
-export const SITE_NAME = "I Nova SV";
+export const SITE_NAME = "Padilla's Store";
 export const CONTACT_LOCATION = "El Salvador";
 
 // ── Límites del carrito ──────────────────────────────────

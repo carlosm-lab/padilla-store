@@ -4,6 +4,7 @@ import { toast } from 'react-hot-toast';
 import MessageCard from '@/components/admin/MessageCard';
 import { logger } from '@/utils/logger';
 import { useConfirm } from '@/context/ConfirmContext';
+import FocusLock from 'react-focus-lock';
 
 
 export default function MessagesPage() {
@@ -166,51 +167,78 @@ export default function MessagesPage() {
       </div>
 
       {selectedMessage && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in" onClick={() => setSelectedMessage(null)}>
-          <div 
-            className="bg-white dark:bg-white/5 w-full max-w-2xl rounded-3xl shadow-360 flex flex-col overflow-hidden"
-            onClick={e => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-white/5">
-              <h2 className="text-xl font-bold flex items-center gap-2 text-slate-900 dark:text-white">
-                <span className="material-symbols-outlined text-primary">mail</span>
-                Asunto: {selectedMessage.subject || 'Sin asunto'}
-              </h2>
-              <button onClick={() => setSelectedMessage(null)} className="p-2 rounded-full hover:bg-gray-100 dark:bg-gray-800 transition-colors text-slate-500">
-                <span className="material-symbols-outlined">close</span>
-              </button>
-            </div>
-            
-            <div className="p-6 overflow-y-auto custom-scrollbar flex-1 max-h-[60vh]">
-              <div className="flex justify-between items-start mb-6 border-b border-slate-100 dark:border-white/5 pb-4">
-                <div>
-                  <h3 className="font-bold text-lg text-slate-900 dark:text-white">{selectedMessage.name}</h3>
-                  <a href={`mailto:${selectedMessage.email}`} className="text-primary hover:underline">{selectedMessage.email}</a>
-                </div>
-                <span className="text-sm text-slate-500">
-                  {new Date(selectedMessage.created_at).toLocaleString('es-ES', { dateStyle: 'medium', timeStyle: 'short' })}
-                </span>
+        <MessageDetailModal 
+          message={selectedMessage} 
+          onClose={() => setSelectedMessage(null)} 
+          onDelete={deleteMessage} 
+        />
+      )}
+    </div>
+  );
+}
+
+function MessageDetailModal({ message, onClose, onDelete }) {
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onClose]);
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in" onClick={onClose}>
+      <div 
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="message-detail-title"
+        className="bg-white dark:bg-white/5 w-full max-w-2xl rounded-3xl shadow-360 flex flex-col overflow-hidden"
+        onClick={e => e.stopPropagation()}
+      >
+        <FocusLock returnFocus className="flex flex-col w-full">
+          <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-white/5">
+            <h2 id="message-detail-title" className="text-xl font-bold flex items-center gap-2 text-slate-900 dark:text-white">
+              <span className="material-symbols-outlined text-primary">mail</span>
+              Asunto: {message.subject || 'Sin asunto'}
+            </h2>
+            <button onClick={onClose} aria-label="Cerrar mensaje" className="p-2 rounded-full hover:bg-gray-100 dark:bg-gray-800 transition-colors text-slate-500">
+              <span className="material-symbols-outlined">close</span>
+            </button>
+          </div>
+          
+          <div className="p-6 overflow-y-auto custom-scrollbar flex-1 max-h-[60vh]">
+            <div className="flex justify-between items-start mb-6 border-b border-slate-100 dark:border-white/5 pb-4">
+              <div>
+                <h3 className="font-bold text-lg text-slate-900 dark:text-white">{message.name}</h3>
+                <a href={`mailto:${message.email}`} className="text-primary hover:underline">{message.email}</a>
               </div>
-              <div className="text-slate-700 dark:text-slate-300 whitespace-pre-wrap leading-relaxed">
-                {selectedMessage.message}
-              </div>
+              <span className="text-sm text-slate-500">
+                {new Date(message.created_at).toLocaleString('es-ES', { dateStyle: 'medium', timeStyle: 'short' })}
+              </span>
             </div>
-            
-            <div className="p-4 border-t border-gray-100 dark:border-white/5 flex justify-end gap-3 bg-slate-50 dark:bg-white/5">
-               <button 
-                onClick={() => {
-                  deleteMessage(selectedMessage.id);
-                  setSelectedMessage(null);
-                }}
-                className="px-4 py-2 text-red-600 font-medium hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors flex items-center gap-2"
-               >
-                 <span className="material-symbols-outlined text-[18px]">delete</span>
-                 Eliminar
-               </button>
+            <div className="text-slate-700 dark:text-slate-300 whitespace-pre-wrap leading-relaxed">
+              {message.message}
             </div>
           </div>
-        </div>
-      )}
+          
+          <div className="p-4 border-t border-gray-100 dark:border-white/5 flex justify-end gap-3 bg-slate-50 dark:bg-white/5">
+             <button 
+              onClick={() => {
+                onDelete(message.id);
+                onClose();
+              }}
+              className="px-4 py-2 text-red-600 font-medium hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors flex items-center gap-2"
+             >
+               <span className="material-symbols-outlined text-[18px]">delete</span>
+               Eliminar
+             </button>
+          </div>
+        </FocusLock>
+      </div>
     </div>
   );
 }

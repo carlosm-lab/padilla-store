@@ -6,15 +6,21 @@ export default function Logo({ textOnly, iconOnlyMobile, className = '' }) {
       {!textOnly && (
         <img 
           src="/logo.svg" 
-          alt="I Nova logo" 
+          alt="Padilla's Store logo" 
           className="h-[clamp(1.5rem,2.5vw,2rem)] w-auto object-contain"
         />
       )}
       <div className={`flex flex-col justify-center ${iconOnlyMobile ? 'hidden sm:flex' : 'flex'}`}>
-        <div className="flex justify-between w-full text-slate-900 dark:text-slate-100 text-[clamp(0.875rem,1.4vw,1.125rem)] font-brand font-bold leading-none whitespace-nowrap tracking-tight">
-          <span>I</span> <span className="ml-1">N</span><span>o</span><span>v</span><span>a</span>
+        <span className="text-slate-900 dark:text-slate-100 text-[clamp(0.875rem,1.4vw,1.125rem)] font-brand font-bold leading-none whitespace-nowrap tracking-tight">
+          Padilla's
+        </span>
+        <div className="flex justify-between w-full text-primary text-[clamp(0.375rem,0.63vw,0.48rem)] font-extrabold uppercase whitespace-nowrap mt-[0.1875rem] select-none">
+          <span>S</span>
+          <span>T</span>
+          <span>O</span>
+          <span>R</span>
+          <span>E</span>
         </div>
-        <span className="text-primary text-[clamp(0.375rem,0.65vw,0.5rem)] font-bold tracking-[0.15em] uppercase whitespace-nowrap mt-[0.125rem] text-center">Accesorios</span>
       </div>
     </Link>
   );

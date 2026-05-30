@@ -246,16 +246,20 @@ export default function ProductModal({ isOpen, onClose, product, onSave, categor
       
       <div 
         ref={modalRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="product-modal-title"
         className="relative w-full max-w-2xl max-h-[85vh] mb-16 sm:mb-0 bg-white dark:bg-white/5 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200"
       >
         
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-white/5">
-          <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+          <h2 id="product-modal-title" className="text-xl font-bold text-slate-900 dark:text-white">
             {product ? 'Editar Producto' : 'Nuevo Producto'}
           </h2>
           <button 
             onClick={onClose}
+            aria-label="Cerrar modal"
             className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
           >
             <span className="material-symbols-outlined">close</span>
@@ -326,12 +330,13 @@ export default function ProductModal({ isOpen, onClose, product, onSave, categor
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Duración de la oferta</label>
+                    <span className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Duración de la oferta</span>
                     <div className="grid grid-cols-3 gap-2">
                       <div>
                         <input 
                           type="number" name="offer_days" value={formData.offer_days} onChange={handleChange} min="0" placeholder="0"
                           onWheel={(e) => e.target.blur()}
+                          aria-label="Días de duración de oferta"
                           className="w-full rounded-lg border-slate-200 dark:border-white/5 bg-white dark:bg-transparent text-slate-900 dark:text-white px-3 py-1.5 text-sm focus:ring-2 focus:ring-primary/20"
                         />
                         <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 block text-center">Días</span>
@@ -340,6 +345,7 @@ export default function ProductModal({ isOpen, onClose, product, onSave, categor
                         <input 
                           type="number" name="offer_hours" value={formData.offer_hours} onChange={handleChange} min="0" max="23" placeholder="0"
                           onWheel={(e) => e.target.blur()}
+                          aria-label="Horas de duración de oferta"
                           className="w-full rounded-lg border-slate-200 dark:border-white/5 bg-white dark:bg-transparent text-slate-900 dark:text-white px-3 py-1.5 text-sm focus:ring-2 focus:ring-primary/20"
                         />
                         <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 block text-center">Horas</span>
@@ -348,6 +354,7 @@ export default function ProductModal({ isOpen, onClose, product, onSave, categor
                         <input 
                           type="number" name="offer_minutes" value={formData.offer_minutes} onChange={handleChange} min="0" max="59" placeholder="0"
                           onWheel={(e) => e.target.blur()}
+                          aria-label="Minutos de duración de oferta"
                           className="w-full rounded-lg border-slate-200 dark:border-white/5 bg-white dark:bg-transparent text-slate-900 dark:text-white px-3 py-1.5 text-sm focus:ring-2 focus:ring-primary/20"
                         />
                         <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 block text-center">Minutos</span>
@@ -357,13 +364,14 @@ export default function ProductModal({ isOpen, onClose, product, onSave, categor
                   </div>
 
                   <div>
-                    <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">
+                    <label htmlFor="product-offer-starts-at" className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">
                       <span className="flex items-center gap-1">
                         <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>schedule</span>
                         Programar inicio (Opcional)
                       </span>
                     </label>
                     <input 
+                      id="product-offer-starts-at"
                       type="datetime-local" name="offer_starts_at" value={formData.offer_starts_at} onChange={handleChange}
                       className="w-full rounded-lg border-slate-200 dark:border-white/5 bg-white dark:bg-transparent text-slate-900 dark:text-white px-3 py-1.5 text-sm focus:ring-2 focus:ring-primary/20"
                     />
@@ -405,6 +413,7 @@ export default function ProductModal({ isOpen, onClose, product, onSave, categor
                         <button
                           type="button"
                           onClick={() => handleRemoveImage(idx)}
+                          aria-label={`Eliminar imagen ${idx + 1}`}
                           className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
                         >
                           <span className="material-symbols-outlined text-white text-[18px]">delete</span>
@@ -430,6 +439,7 @@ export default function ProductModal({ isOpen, onClose, product, onSave, categor
                     id="manual-image-url"
                     ref={manualUrlRef}
                     placeholder="https://ejemplo.com/imagen.jpg"
+                    aria-label="URL de imagen manual"
                     className="flex-1 rounded-lg border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-transparent/50 text-slate-900 dark:text-white px-3 py-1.5 text-sm focus:ring-1 focus:ring-primary/20"
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') {
@@ -482,14 +492,19 @@ export default function ProductModal({ isOpen, onClose, product, onSave, categor
                   {formData.tags.map(tag => (
                     <span key={tag} className="inline-flex items-center gap-1 bg-slate-100 dark:bg-white/10 text-slate-700 dark:text-slate-200 px-2 py-1 rounded text-xs font-medium">
                       {tag}
-                      <button type="button" onClick={() => removeTag(tag)} className="text-slate-400 hover:text-red-500">
+                      <button 
+                        type="button" 
+                        onClick={() => removeTag(tag)} 
+                        className="text-slate-400 hover:text-red-500"
+                        aria-label={`Quitar etiqueta ${tag}`}
+                      >
                         <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>close</span>
                       </button>
                     </span>
                   ))}
                 </div>
               </div>
-
+ 
               {/* Active Toggle */}
               <div className="md:col-span-2">
                 <label className="flex items-center gap-3 cursor-pointer">
@@ -497,6 +512,7 @@ export default function ProductModal({ isOpen, onClose, product, onSave, categor
                     <input 
                       type="checkbox" name="is_active" checked={formData.is_active} onChange={handleChange}
                       className="sr-only peer" 
+                      aria-label="Producto Activo (Visible en tienda)"
                     />
                     <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary/20 rounded-full peer dark:bg-white/10 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-white/5 peer-checked:bg-primary"></div>
                   </div>
@@ -505,7 +521,6 @@ export default function ProductModal({ isOpen, onClose, product, onSave, categor
                   </span>
                 </label>
               </div>
-
             </div>
           </form>
         </div>

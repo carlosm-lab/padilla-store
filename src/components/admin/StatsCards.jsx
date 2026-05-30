@@ -4,8 +4,17 @@ export default function StatsCards({ stats, onCardClick }) {
       {stats.map((stat, idx) => (
         <div 
           key={idx} 
+          role={onCardClick ? "button" : undefined}
+          tabIndex={onCardClick ? 0 : undefined}
           onClick={() => onCardClick && onCardClick(stat.id)}
-          className={`bg-white dark:bg-white/5 rounded-2xl p-4 md:p-5 shadow-360 border border-slate-100 dark:border-white/5 flex flex-col gap-3 md:gap-4 hover:shadow-2xl transition-all duration-300 group overflow-hidden ${onCardClick ? 'cursor-pointer' : ''}`}
+          onKeyDown={(e) => {
+            if (onCardClick && (e.key === 'Enter' || e.key === ' ')) {
+              e.preventDefault();
+              onCardClick(stat.id);
+            }
+          }}
+          aria-label={onCardClick ? `Ver detalles de ${stat.label}` : undefined}
+          className={`bg-white dark:bg-white/5 rounded-2xl p-4 md:p-5 shadow-360 border border-slate-100 dark:border-white/5 flex flex-col gap-3 md:gap-4 hover:shadow-2xl transition-all duration-300 group overflow-hidden focus:outline-none focus:ring-2 focus:ring-primary ${onCardClick ? 'cursor-pointer' : ''}`}
         >
           <div className="flex items-center justify-between w-full">
             <div className={`w-9 h-9 md:w-11 md:h-11 rounded-xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110 ${stat.colorClass || 'bg-slate-100 text-primary'}`}>

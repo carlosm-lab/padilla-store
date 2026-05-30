@@ -25,10 +25,10 @@ export default function TermsPage() {
                 Aceptación de los términos
               </h2>
               <p>
-                Al acceder, navegar o utilizar de cualquier manera la plataforma web de I Nova SV, usted declara haber leído, comprendido y aceptado en su totalidad los presentes Términos y Condiciones de Uso. Esta aceptación es inmediata y automática desde el momento en que usted accede a cualquier página de la plataforma, independientemente de si ha creado una cuenta, de si ha realizado alguna compra, o de si ha interactuado con alguna funcionalidad específica del servicio. Si usted no está de acuerdo con alguno de los términos aquí establecidos, debe abstenerse de utilizar la plataforma de forma inmediata y no volver a acceder a ella hasta que los términos sean de su conformidad o hasta que haya obtenido una aclaración por escrito del operador del servicio.
+                Al acceder, navegar o utilizar de cualquier manera la plataforma web de Padilla's Store, usted declara haber leído, comprendido y aceptado en su totalidad los presentes Términos y Condiciones de Uso. Esta aceptación es inmediata y automática desde el momento en que usted accede a cualquier página de la plataforma, independientemente de si ha creado una cuenta, de si ha realizado alguna compra, o de si ha interactuado con alguna funcionalidad específica del servicio. Si usted no está de acuerdo con alguno de los términos aquí establecidos, debe abstenerse de utilizar la plataforma de forma inmediata y no volver a acceder a ella hasta que los términos sean de su conformidad o hasta que haya obtenido una aclaración por escrito del operador del servicio.
               </p>
               <p>
-                Estos términos constituyen un acuerdo legalmente vinculante entre usted, en su calidad de usuario de la plataforma, y I Nova SV, en su calidad de operador del servicio. La relación entre las partes se rige exclusivamente por los presentes términos y por la legislación aplicable de la República de El Salvador. Cualquier uso continuado de la plataforma después de la publicación de modificaciones a estos términos constituirá aceptación tácita de dichas modificaciones.
+                Estos términos constituyen un acuerdo legalmente vinculante entre usted, en su calidad de usuario de la plataforma, y Padilla's Store, en su calidad de operador del servicio. La relación entre las partes se rige exclusivamente por los presentes términos y por la legislación aplicable de la República de El Salvador. Cualquier uso continuado de la plataforma después de la publicación de modificaciones a estos términos constituirá aceptación tácita de dichas modificaciones.
               </p>
             </section>
 
@@ -41,7 +41,7 @@ export default function TermsPage() {
                 Descripción del servicio y naturaleza de la plataforma
               </h2>
               <p>
-                I Nova SV opera como una plataforma de catálogo comercial en línea cuyo propósito es exhibir productos disponibles para la venta y facilitar el contacto entre compradores interesados y la administración del negocio. La plataforma no es una tienda en línea en el sentido convencional del término: no procesa pagos, no gestiona inventario en tiempo real, no garantiza la disponibilidad inmediata de ningún producto, y no constituye por sí misma un contrato de compraventa. La plataforma es un medio de presentación y comunicación, no un sistema de transacciones comerciales automatizadas.
+                Padilla's Store opera como una plataforma de catálogo comercial en línea cuyo propósito es exhibir productos disponibles para la venta y facilitar el contacto entre compradores interesados y la administración del negocio. La plataforma no es una tienda en línea en el sentido convencional del término: no procesa pagos, no gestiona inventario en tiempo real, no garantiza la disponibilidad inmediata de ningún producto, y no constituye por sí misma un contrato de compraventa. La plataforma es un medio de presentación y comunicación, no un sistema de transacciones comerciales automatizadas.
               </p>
               <p>
                 Todo el proceso de compra, desde la confirmación de disponibilidad del producto hasta el acuerdo sobre el precio final, la modalidad de pago, las condiciones de entrega y cualquier otro aspecto de la transacción, se realiza directamente entre el comprador y la administración del negocio a través de WhatsApp u otros canales de comunicación directa. La plataforma web actúa únicamente como puente inicial que facilita ese contacto, y su función termina en el momento en que el usuario genera el mensaje de pedido y lo envía a través de WhatsApp. Lo que ocurre a partir de ese momento es una transacción privada entre las partes, sujeta a los acuerdos que ellas mismas establezcan.
@@ -249,7 +249,7 @@ export default function TermsPage() {
                 Exoneración de responsabilidad del desarrollador
               </h2>
               <p>
-                El desarrollador del sistema que construyó y mantiene la infraestructura tecnológica de la plataforma actúa en calidad de prestador de servicios técnicos y no tiene participación alguna en las decisiones comerciales del negocio, en la determinación de los precios, en la gestión del inventario, en las políticas de devolución, ni en ningún otro aspecto operativo del negocio de I Nova SV. El desarrollador no es responsable por ninguna pérdida, daño, perjuicio o reclamación de ningún tipo que derive del uso de la plataforma, de las transacciones realizadas a través de ella, de la información publicada en el catálogo, o de cualquier otro aspecto del funcionamiento del negocio. El usuario reconoce expresamente que el desarrollador es un tercero ajeno a cualquier relación comercial que pudiera establecerse entre el usuario y el negocio, y renuncia expresamente a cualquier reclamación contra el desarrollador relacionada con el uso de la plataforma o con cualquier transacción comercial.
+                El desarrollador del sistema que construyó y mantiene la infraestructura tecnológica de la plataforma actúa en calidad de prestador de servicios técnicos y no tiene participación alguna en las decisiones comerciales del negocio, en la determinación de los precios, en la gestión del inventario, en las políticas de devolución, ni en ningún otro aspecto operativo del negocio de Padilla's Store. El desarrollador no es responsable por ninguna pérdida, daño, perjuicio o reclamación de ningún tipo que derive del uso de la plataforma, de las transacciones realizadas a través de ella, de la información publicada en el catálogo, o de cualquier otro aspecto del funcionamiento del negocio. El usuario reconoce expresamente que el desarrollador es un tercero ajeno a cualquier relación comercial que pudiera establecerse entre el usuario y el negocio, y renuncia expresamente a cualquier reclamación contra el desarrollador relacionada con el uso de la plataforma o con cualquier transacción comercial.
               </p>
             </section>
 
@@ -439,7 +439,7 @@ export default function TermsPage() {
 
             {/* ── Footer ── */}
             <div className="mt-[var(--space-2xl)] p-[var(--space-md)] bg-gray-50 dark:bg-white/5 rounded-xl text-sm italic">
-              Los presentes Términos y Condiciones de Uso están vigentes desde su publicación y son aplicables a todos los usuarios de la plataforma I Nova SV. Última actualización: Marzo 2026.
+              Los presentes Términos y Condiciones de Uso están vigentes desde su publicación y son aplicables a todos los usuarios de la plataforma Padilla's Store. Última actualización: Marzo 2026.
             </div>
 
           </div>

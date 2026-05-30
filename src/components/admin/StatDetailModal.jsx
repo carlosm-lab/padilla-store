@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { logger } from '@/utils/logger';
+import FocusLock from 'react-focus-lock';
 
 export default function StatDetailModal({ isOpen, onClose, type }) {
   const [data, setData] = useState([]);
@@ -171,24 +172,46 @@ export default function StatDetailModal({ isOpen, onClose, type }) {
     );
   };
 
+  // Manejo de la tecla Escape para cerrar el modal
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in" onClick={onClose}>
       <div 
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="stat-detail-title"
         className="bg-white dark:bg-white/5 w-full max-w-lg rounded-3xl shadow-360 flex flex-col overflow-hidden max-h-[80vh]"
         onClick={e => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-white/5 shrink-0">
-          <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-            {getTitle()}
-          </h2>
-          <button onClick={onClose} className="p-2 rounded-full hover:bg-gray-100 dark:bg-gray-800 transition-colors text-slate-500">
-            <span className="material-symbols-outlined">close</span>
-          </button>
-        </div>
-        
-        <div className="flex-1 overflow-y-auto custom-scrollbar">
-          {renderContent()}
-        </div>
+        <FocusLock returnFocus className="flex flex-col w-full overflow-hidden max-h-[80vh]">
+          <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-white/5 shrink-0">
+            <h2 id="stat-detail-title" className="text-xl font-bold text-slate-900 dark:text-white">
+              {getTitle()}
+            </h2>
+            <button onClick={onClose} aria-label="Cerrar detalles" className="p-2 rounded-full hover:bg-gray-100 dark:bg-gray-800 transition-colors text-slate-500">
+              <span className="material-symbols-outlined">close</span>
+            </button>
+          </div>
+          
+          <div className="flex-1 overflow-y-auto custom-scrollbar">
+            {renderContent()}
+          </div>
+        </FocusLock>
       </div>
     </div>
   );

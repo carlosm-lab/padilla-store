@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const DIRS_TO_SCAN = ['src', 'landing', 'public'];
+const DIRS_TO_SCAN = ['src', 'public'];
 const IGNORED = ['node_modules', '.git', 'dist', 'cypress', 'assets'];
 
 function walkDir(dir) {
@@ -24,7 +24,7 @@ function walkDir(dir) {
 
 let changedFilesCount = 0;
 
-['src', 'landing', 'public'].forEach(d => {
+['src', 'public'].forEach(d => {
   const p = path.join(process.cwd(), d);
   if (!fs.existsSync(p)) return;
   const files = walkDir(p);
@@ -33,13 +33,10 @@ let changedFilesCount = 0;
     const originalContent = fs.readFileSync(file, 'utf-8');
     let newContent = originalContent;
     
-    if (file.includes('landing')) {
-      newContent = newContent.replace(/ESSENTIALS ACCESSORIES/g, 'I Nova SV');
-      newContent = newContent.replace(/ESSENTIALS/g, 'I Nova SV');
-    }
+
     
-    // Replace "I Nova Sv" globally
-    newContent = newContent.replace(/I Nova Sv/g, 'I Nova SV');
+    // Replace "Padilla's Store" globally
+    newContent = newContent.replace(/Padilla's Store/g, 'Padilla's Store');
     
     // Specifically for package.json or if there is any lowercase without space "inova-sv" that shouldn't be touched.
     

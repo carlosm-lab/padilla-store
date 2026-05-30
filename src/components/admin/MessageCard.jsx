@@ -6,8 +6,17 @@ export default function MessageCard({ message, onClick, onDelete }) {
 
   return (
     <div 
-      className={`p-4 border-b border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer ${!message.is_read ? 'bg-blue-50/80 dark:bg-white/10' : ''}`}
+      role="button"
+      tabIndex={0}
+      className={`p-4 border-b border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary ${!message.is_read ? 'bg-blue-50/80 dark:bg-white/10' : ''}`}
       onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick();
+        }
+      }}
+      aria-label={`Leer mensaje de ${message.name}. Asunto: ${message.subject || 'Sin asunto'}`}
     >
       <div className="flex flex-col sm:flex-row sm:items-center gap-4">
         

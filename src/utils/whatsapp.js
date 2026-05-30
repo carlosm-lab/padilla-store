@@ -59,3 +59,13 @@ export function buildWhatsAppUrl(phone, rawMessage) {
     isMobile
   };
 }
+
+/**
+ * Retorna el precio formateado o "Precio a consultar" si el precio no es válido o es cero.
+ */
+export function getPriceText(price, formatFn) {
+  if (price === null || price === undefined || price === 0 || isNaN(Number(price))) {
+    return 'Precio a consultar';
+  }
+  return formatFn ? formatFn(Number(price)) : `$${Number(price).toFixed(2)}`;
+}

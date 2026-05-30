@@ -164,8 +164,9 @@ export default function CategoriesPage() {
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nombre</label>
+              <label htmlFor="cat-name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nombre</label>
               <input 
+                id="cat-name"
                 type="text" required
                 value={currentCat.name} onChange={handleNameChange}
                 placeholder="Ej. Anillos de Boda"
@@ -173,8 +174,9 @@ export default function CategoriesPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Slug (URL amigable)</label>
+              <label htmlFor="cat-slug" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Slug (URL amigable)</label>
               <input 
+                id="cat-slug"
                 type="text" required
                 value={currentCat.slug} onChange={(e) => setCurrentCat({...currentCat, slug: e.target.value})}
                 placeholder="anillos-boda"
@@ -184,10 +186,11 @@ export default function CategoriesPage() {
             </div>
             <div>
               <div className="flex justify-between items-end mb-1">
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">Descripción</label>
+                <label htmlFor="cat-description" className="block text-sm font-medium text-slate-700 dark:text-slate-300">Descripción</label>
                 <span className="text-xs text-slate-500">{currentCat.description?.length || 0}/100</span>
               </div>
               <textarea 
+                id="cat-description"
                 maxLength={100}
                 value={currentCat.description || ''} onChange={(e) => setCurrentCat({...currentCat, description: e.target.value})}
                 placeholder="Explora nuestros hermosos detalles..."
@@ -233,6 +236,7 @@ export default function CategoriesPage() {
                     <button
                       onClick={() => handleToggleFeatured(cat)}
                       title={cat.featured ? 'Quitar de inicio' : 'Mostrar en inicio'}
+                      aria-label={cat.featured ? 'Quitar de inicio' : 'Mostrar en inicio'}
                       className={`p-1.5 rounded-lg transition-all ${cat.featured 
                         ? 'text-amber-500 bg-amber-50 dark:bg-amber-900/20 hover:bg-amber-100 dark:hover:bg-amber-900/30' 
                         : 'text-slate-300 dark:text-slate-600 hover:text-amber-400 hover:bg-slate-100 dark:hover:bg-white/10'}`}
@@ -247,12 +251,14 @@ export default function CategoriesPage() {
                   <div className="flex gap-2">
                     <button 
                       onClick={() => handleEdit(cat)}
+                      aria-label={`Editar categoría ${cat.name}`}
                       className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
                     >
                       <span className="material-symbols-outlined text-[20px]">edit</span>
                     </button>
                     <button 
                       onClick={() => handleDelete(cat.id)}
+                      aria-label={`Eliminar categoría ${cat.name}`}
                       className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
                     >
                       <span className="material-symbols-outlined text-[20px]">delete</span>

@@ -89,9 +89,9 @@ export default function ProductDetailPage() {
   return (
     <>
       <Helmet>
-        <title>{product.name} | I Nova SV</title>
+        <title>{product.name} | Padilla's Store</title>
         <meta name="description" content={getOgDescription()} />
-        <meta property="og:title" content={`${product.name} | I Nova SV`} />
+        <meta property="og:title" content={`${product.name} | Padilla's Store`} />
         <meta property="og:image" content={mainImg} />
         <meta property="og:description" content={getOgDescription()} />
         <meta property="og:url" content={`${BASE_URL}/product/${product.slug}`} />
@@ -181,14 +181,14 @@ export default function ProductDetailPage() {
                 </div>
               </div>
               <div className="space-y-[var(--space-md)] border-t border-slate-200 dark:border-white/5 pt-[var(--space-md)] mt-[var(--space-md)]">
-                <h3 className="font-bold text-[var(--text-sm)] uppercase tracking-wider text-slate-900 dark:text-slate-100">Personaliza tu regalo</h3>
+                <h3 className="font-bold text-[var(--text-sm)] uppercase tracking-wider text-slate-900 dark:text-slate-100">Personaliza tu pedido</h3>
 
                 <div>
-                  <label className="block text-[var(--text-sm)] font-medium mb-[var(--space-xs)] text-slate-700 dark:text-slate-300" htmlFor="custom-note">Nota de regalo personalizada</label>
+                  <label className="block text-[var(--text-sm)] font-medium mb-[var(--space-xs)] text-slate-700 dark:text-slate-300" htmlFor="custom-note">Nota o especificaciones del producto</label>
                   <textarea
                     className="w-full p-3 rounded-lg bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 focus:border-primary dark:focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-[var(--text-sm)] text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                     id="custom-note"
-                    placeholder="Escribe tu mensaje aquí... (Máx. 500 caracteres)"
+                    placeholder="Ej. Talla de anillo, grabado especial, modelo de celular exacto para la funda... (Máx. 500 caracteres)"
                     rows="3"
                     maxLength={500}
                     value={customNote}

@@ -22,12 +22,12 @@ const auditRules = {
   ],
   brand: [
     { regex: /ESSENTIALS/g, name: 'Brand Inconsistency: ESSENTIALS', bad: true, severity: 'CRÍTICO' },
-    { regex: /I Nova Sv/g, name: 'Brand Inconsistency: I Nova Sv (should be I Nova SV)', bad: true, severity: 'ALTO' },
+    { regex: /Padilla's Store/g, name: 'Brand Inconsistency: Padilla's Store (should be Padilla's Store)', bad: true, severity: 'ALTO' },
     { regex: /#2563eb/g, name: 'Brand Color Inconsistency (Blue vs Red)', bad: true, severity: 'ALTO' }
   ]
 };
 
-const DIRS_TO_SCAN = ['src', 'landing', 'public', '.'];
+const DIRS_TO_SCAN = ['src', 'public', '.'];
 const IGNORED = ['node_modules', '.git', 'dist', 'cypress', 'assets', 'public/hero_aura_cases.png'];
 
 let totalFiles = 0;
@@ -81,7 +81,7 @@ function auditFile(filePath) {
 }
 
 // Empezar escaneo
-['src', 'landing'].forEach(d => {
+['src'].forEach(d => {
   const p = path.join(process.cwd(), d);
   if (fs.existsSync(p)) {
     walkDir(p).forEach(auditFile);

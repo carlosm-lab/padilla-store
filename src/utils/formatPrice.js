@@ -22,6 +22,7 @@ const formatter = new Intl.NumberFormat(LOCALE_LANG, {
  * Retorna '$0.00' si el valor no es numérico — nunca lanza.
  */
 export const formatPrice = (price) => {
+  if (price === null || price === undefined) return '';
   const num = Number(price);
   if (isNaN(num)) return formatter.format(0);
   return formatter.format(num);

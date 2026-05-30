@@ -90,6 +90,7 @@ export default defineConfig(({ mode }) => {
       environment: 'jsdom',
       globals: true,
       setupFiles: './src/__tests__/setup.js',
+      exclude: ['**/node_modules/**', '**/dist/**', '**/tests/e2e/**', '**/cypress/**'],
       resolve: {
         alias: {
           '@': path.resolve('./src'),

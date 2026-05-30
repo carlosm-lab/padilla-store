@@ -21,7 +21,7 @@ const contextMessages = {
   },
   generic: {
     icon: 'account_circle',
-    title: 'Bienvenido a PaGe\'s',
+    title: "Bienvenido a Padilla's Store",
     message: 'Inicia sesión para poder guardar tus listas de favoritos y personalizar tu experiencia.',
   },
 };

@@ -20,7 +20,7 @@ export const createOrganizationSchema = (settings) => {
   return {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "I Nova SV",
+  "name": "Padilla's Store",
   "url": origin,
   "logo": `${origin}/logo.png`,
   "contactPoint": {
@@ -31,9 +31,9 @@ export const createOrganizationSchema = (settings) => {
     "availableLanguage": "es"
   },
   "sameAs": [
-    settings?.social_instagram || "https://www.instagram.com/inovasv",
-    settings?.social_facebook || "https://www.facebook.com/inovasv",
-    settings?.social_tiktok || "https://www.tiktok.com/@inovasv"
+    settings?.social_instagram || "https://www.instagram.com/padillastore",
+    settings?.social_facebook || "https://www.facebook.com/padillastore",
+    settings?.social_tiktok || "https://www.tiktok.com/@padillastore"
   ]
   };
 };

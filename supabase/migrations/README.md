@@ -15,12 +15,8 @@
 7. **`010_enable_realtime_settings.sql`** — Habilita Realtime en store_settings
 8. **`011_pg_cron_fallback.sql`** — Cleanup probabilístico de carritos (fallback sin pg_cron)
 9. **`012_final_db_tweaks.sql`** — Unique index en products.slug + constraint en user_carts
-10. **`014_consolidate_all.sql`** — 🔴 **FUENTE DE VERDAD ÚNICA** para:
-    - `is_admin()` function
-    - ALL RLS policies (products, categories, store_settings, contact_messages, profiles, user_favorites, user_carts)
-    - ALL storage policies (product-images bucket with MIME + size validation)
-    - `change_user_role()` with admin limit (max 3)
-    - `generate_whatsapp_message()` RPC with offer_starts_at validation
+10. **`014_consolidate_all.sql`** — 🔴 **FUENTE DE VERDAD ÚNICA** para RLS, storage y is_admin()
+11. **`017_update_store_data.sql`** — Agrega la columna featured a categories, limpia tablas, añade categorías/productos de teléfonos y joyería, y actualiza la configuración global de Padilla's Store.
 
 ## Archivados
 

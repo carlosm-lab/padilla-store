@@ -48,10 +48,21 @@ async function flushErrors() {
 function trackErrorToDB(message, context) {
   if (isDev) return; // No contaminar la DB en desarrollo
 
+  // Intentamos parsear el contexto si es un JSON string, de lo contrario lo guardamos en un objeto.
+  let detailsObj = null;
+  if (context) {
+    try {
+      detailsObj = JSON.parse(context);
+    } catch {
+      detailsObj = { raw_context: context };
+    }
+  }
+
   errorQueue.push({
     level: 'error',
     message: String(message).substring(0, 500),
     context: context ? String(context).substring(0, 500) : null,
+    details: detailsObj,
     source: 'frontend',
     created_at: new Date().toISOString(),
   });
@@ -74,6 +85,9 @@ function trackErrorToDB(message, context) {
 export const logger = {
   log: (...args) => {
     if (isDev) console.log(...args);
+  },
+  info: (...args) => {
+    if (isDev) console.info(...args);
   },
   warn: (...args) => {
     if (isDev) console.warn(...args);

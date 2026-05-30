@@ -15,15 +15,19 @@ export default function UserAvatar({ user, size = 'md', className = '' }) {
 
   const src = user?.user_metadata?.avatar_url || user?.user_metadata?.picture || getFallbackUrl(user);
 
+  const altText = user?.user_metadata?.full_name 
+    ? `Avatar de ${user.user_metadata.full_name}` 
+    : "Avatar de usuario";
+
   return (
-    <img alt="" src={src}
+    <img src={src}
       onError={(e) => {
         e.target.onerror = null;
         e.target.src = getFallbackUrl(user);
       }}
       referrerPolicy="no-referrer"
       className={`${sizeClasses[size] || sizeClasses.md} rounded-full border border-slate-200 dark:border-white/5 object-cover ${className}`}
-      alt="Avatar"
+      alt={altText}
     />
   );
 }

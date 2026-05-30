@@ -1,7 +1,7 @@
 // ──────────────────────────────────────────────────────────────
 // CONTEXTO DEL CARRITO
 // ──────────────────────────────────────────────────────────────
-// El corazón de la lógica de ventas en I Nova SV. Maneja:
+// El corazón de la lógica de ventas en Padilla's Store. Maneja:
 //   - Persistencia en localStorage (guest-first, sin tabla de carritos)
 //   - Sincronización con Supabase (user_carts) cuando hay usuario logueado
 //   - Revalidación de precios cada 60 segundos

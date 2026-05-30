@@ -29,7 +29,7 @@ export default function Footer() {
             className="w-full text-center whitespace-nowrap overflow-hidden font-medium" 
             style={{ fontSize: 'clamp(10px, 3.3vw, 14px)' }}
           >
-            © {new Date().getFullYear()} I Nova SV. Todos los derechos reservados.
+            © {new Date().getFullYear()} Padilla's Store. Todos los derechos reservados.
           </p>
           
           {/* Credits - Edge to Edge, Auto-scaling */}
@@ -59,7 +59,7 @@ export default function Footer() {
         <div className="hidden md:flex flex-row justify-between items-center w-full gap-[var(--space-md)]">
           <div className="flex items-center gap-4">
             <p className="whitespace-nowrap">
-              © {new Date().getFullYear()} I Nova SV. Todos los derechos reservados.
+              © {new Date().getFullYear()} Padilla's Store. Todos los derechos reservados.
             </p>
             <span className="text-slate-300 dark:text-slate-700">|</span>
             <div className="inline-flex items-center transition-colors">

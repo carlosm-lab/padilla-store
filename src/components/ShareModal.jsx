@@ -58,8 +58,8 @@ export default function ShareModal({ isOpen, onClose, product, url }) {
   };
 
   const shareText = product 
-    ? `Mira este producto en I Nova SV: ${product.name}` 
-    : `Mira esto en I Nova SV`;
+    ? `Mira este producto en Padilla's Store: ${product.name}` 
+    : `Mira esto en Padilla's Store`;
 
   const handleWhatsAppShare = () => {
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(`${shareText} ${url}`)}`, '_blank');

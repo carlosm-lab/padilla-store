@@ -168,7 +168,7 @@ BEGIN
         IF store_domain != '' THEN
           order_text := order_text || '  Link: ' || store_domain || '/product/' || item.slug || E'\n\n';
         ELSE
-          order_text := order_text || '  Link: https://inova-sv.com/product/' || item.slug || E'\n\n';
+          order_text := order_text || '  Link: https://padillastore.com/product/' || item.slug || E'\n\n';
         END IF;
       ELSE
         order_text := order_text || E'\n\n';

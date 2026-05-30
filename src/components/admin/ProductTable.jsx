@@ -70,6 +70,7 @@ export default function ProductTable({ products, onEdit, onDelete, onBulkDelete,
                   checked={products.length > 0 && selectedIds.length === products.length}
                   onChange={toggleSelectAll}
                   className="rounded border-slate-300 dark:border-white/5 text-primary focus:ring-primary/20"
+                  aria-label="Seleccionar todos los productos"
                 />
               </th>
               <th className="px-6 py-4 font-semibold w-24">Imagen</th>
@@ -89,6 +90,7 @@ export default function ProductTable({ products, onEdit, onDelete, onBulkDelete,
                     checked={selectedIds.includes(product.id)}
                     onChange={() => toggleSelect(product.id)}
                     className="rounded border-slate-300 dark:border-white/5 text-primary focus:ring-primary/20"
+                    aria-label={`Seleccionar producto ${product.name}`}
                   />
                 </td>
                 <td className="px-6 py-4">
@@ -140,6 +142,7 @@ export default function ProductTable({ products, onEdit, onDelete, onBulkDelete,
                       onClick={() => onEdit(product)}
                       className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
                       title="Editar"
+                      aria-label={`Editar producto ${product.name}`}
                     >
                       <span className="material-symbols-outlined text-[20px]">edit</span>
                     </button>
@@ -147,6 +150,7 @@ export default function ProductTable({ products, onEdit, onDelete, onBulkDelete,
                       onClick={() => onDelete(product.id)}
                       className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
                       title="Eliminar"
+                      aria-label={`Eliminar producto ${product.name}`}
                     >
                       <span className="material-symbols-outlined text-[20px]">delete</span>
                     </button>

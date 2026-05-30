@@ -296,7 +296,7 @@ $$;
 -- 11. WhatsApp RPC — CANONICAL definition (supersedes 006 and supabase_sql_executed)
 --     Includes offer_starts_at check that was missing in the original.
 -- ---------------------------------------------------------------------------
-CREATE OR REPLACE FUNCTION public.generate_whatsapp_message(items jsonb, store_domain text DEFAULT 'https://inova-sv.com')
+CREATE OR REPLACE FUNCTION public.generate_whatsapp_message(items jsonb, store_domain text DEFAULT 'https://padillastore.com')
 RETURNS text
 LANGUAGE plpgsql
 SECURITY DEFINER

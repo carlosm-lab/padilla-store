@@ -7,8 +7,7 @@ import { useAuth } from '@/context/AuthContext';
 import toast from 'react-hot-toast';
 import { WHATSAPP_NUMBER, CONTACT_EMAIL, BASE_URL } from '@/config/constants';
 import { logger } from '@/utils/logger';
-
-
+import { safeLocalStorage } from '@/utils/storage';
 import { Turnstile } from '@marsidev/react-turnstile';
 
 // MED-004: Warn loudly if Turnstile key is missing in production
@@ -64,7 +63,7 @@ export default function ContactPage() {
     }
     
     // Frontend rate limiting check
-    const lastSent = localStorage.getItem('last_contact_sent');
+    const lastSent = safeLocalStorage.getItem('last_contact_sent');
     if (lastSent && Date.now() - parseInt(lastSent, 10) < 60000) { // 1 min buffer client-side
       toast.error('Por favor espera 1 minuto antes de enviar otro mensaje.');
       return;
@@ -118,7 +117,7 @@ export default function ContactPage() {
         throw error;
       }
       
-      localStorage.setItem('last_contact_sent', Date.now().toString());
+      safeLocalStorage.setItem('last_contact_sent', Date.now().toString());
       toast.success('¡Mensaje enviado con éxito! Te contactaremos pronto.');
       setFormData({ name: '', email: '', subject: '', message: '', contact_phone_ext: '' }); // Clear form
       setTurnstileToken(null); // Reset captcha on success
@@ -134,10 +133,10 @@ export default function ContactPage() {
   return (
     <div className="bg-background-light dark:bg-background-dark min-h-screen py-[var(--space-xl)] md:py-[var(--space-2xl)]">
       <Helmet>
-        <title>Contacto | I Nova SV</title>
+        <title>Contacto | Padilla's Store</title>
         <meta property="og:url" content={`${BASE_URL}/contact`} />
         <meta property="og:image" content={`${BASE_URL}/og-image.png`} />
-        <meta name="description" content="Contáctanos para resolver tus dudas sobre compras, pedidos personalizados o envíos en El Salvador." />
+        <meta name="description" content="Contáctanos para resolver tus dudas sobre compras de joyería, accesorios de celular o envíos en El Salvador en Padilla's Store." />
       </Helmet>
       
       <div className="w-full mx-auto px-container">

@@ -5,48 +5,48 @@ import { useProducts } from '@/hooks/useProducts';
 import { useCategories } from '@/hooks/useCategories';
 import { Helmet } from 'react-helmet-async';
 import { BASE_URL, WHATSAPP_NUMBER } from '@/config/constants';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import lottie from 'lottie-web';
 
 const FALLBACK_HERO_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuC2utPyicqN_kUOlg_KMlF2AA1cqvefgwLmDWPoStz9OLaD7KrTngV5Z330vaSwZf_Ad-Va2vFoDwEj4lBCqcQF_O4oZyxM7HrmORUD6zpvKgOA0z6fzdO1HZ6FDAI6BOHCIeCRWCSiZu8u9TJ79hmbPK0DLNbKphBr3g-E6flprEImzUkY0AIKfn31wWv1HhkMfxaEYUmAZAXARQ2wqx1GSswK_9grPpT5H48RI4n8rkAexrzyjQuq7HR3Lyfy-voEibkI1gYHm5I';
+
+const ANIMATION_PATH = '/new-animation.json';
 
 export default function HomePage() {
   const { products: homeProducts, loading } = useProducts({ limit: 4 });
   const { categories: allCategories, loading: loadingCategories } = useCategories();
   const { settings } = useSettings();
-  const lottieContainer = useRef(null);
-  const lottieContainerMobile = useRef(null);
+  
+  // Desktop animation ref
+  const lottieRef = useRef(null);
+  const animInstance = useRef(null);
+  
+  // Mobile animation ref
+  const lottieMobileRef = useRef(null);
+  const animMobileInstance = useRef(null);
 
-  useEffect(() => {
-    let anim;
-    let animMobile;
-    if (lottieContainer.current) {
-      anim = lottie.loadAnimation({
-        container: lottieContainer.current,
-        renderer: 'svg',
-        loop: true,
-        autoplay: true,
-        path: '/robot-animation.json'
-      });
-    }
-    if (lottieContainerMobile.current) {
-      animMobile = lottie.loadAnimation({
-        container: lottieContainerMobile.current,
-        renderer: 'svg',
-        loop: true,
-        autoplay: true,
-        path: '/robot-animation.json'
-      });
-    }
-    return () => {
-      if (anim) {
-        anim.destroy();
-      }
-      if (animMobile) {
-        animMobile.destroy();
-      }
-    };
+  // Load a lottie animation into a container
+  const loadAnim = useCallback((container, path) => {
+    if (!container) return null;
+    return lottie.loadAnimation({
+      container,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path,
+    });
   }, []);
+
+  // Initialize animation on mount
+  useEffect(() => {
+    animInstance.current = loadAnim(lottieRef.current, ANIMATION_PATH);
+    animMobileInstance.current = loadAnim(lottieMobileRef.current, ANIMATION_PATH);
+
+    return () => {
+      animInstance.current?.destroy();
+      animMobileInstance.current?.destroy();
+    };
+  }, [loadAnim]);
 
   const categories = (() => {
     const featured = allCategories.filter(c => c.featured);
@@ -84,10 +84,10 @@ export default function HomePage() {
   return (
     <>
       <Helmet>
-        <title>Inicio | I Nova SV</title>
-        <meta name="description" content="Encuentra los mejores accesorios para tu celular en I Nova SV." />
-        <meta property="og:title" content="I Nova SV" />
-        <meta property="og:description" content="Accesorios para celular y tecnología." />
+        <title>Inicio | Padilla's Store</title>
+        <meta name="description" content="Encuentra los mejores accesorios para tu celular y joyería fina en Padilla's Store." />
+        <meta property="og:title" content="Padilla's Store" />
+        <meta property="og:description" content="Accesorios para celular y joyería fina premium." />
         <meta property="og:image" content={settings?.hero_image_url || FALLBACK_HERO_IMG} />
         <meta property="og:url" content={BASE_URL} />
         <link rel="canonical" href={`${BASE_URL}/`} />
@@ -143,7 +143,7 @@ export default function HomePage() {
       <section className="main-banner relative w-full overflow-hidden">
         {/* Main Hero Container — Spaced and responsive */}
         <div className="max-w-[1440px] mx-auto relative z-[2] w-full" style={{ paddingLeft: 'var(--container-px)', paddingRight: 'var(--container-px)' }}>
-          <div className="flex flex-col lg:flex-row items-center w-full" style={{ gap: 'var(--space-2xl)' }}>
+          <div className="flex flex-col lg:flex-row-reverse items-center w-full" style={{ gap: 'var(--space-2xl)' }}>
             {/* Left Column: Typography & Actions (Aligned and Clean) */}
             <div className="w-full lg:w-1/2 flex flex-col justify-center items-center lg:items-start text-center lg:text-left relative z-10">
               
@@ -157,19 +157,19 @@ export default function HomePage() {
                 </span>
               </h1>
               
-              {/* Mobile Robot: Visible only on mobile/tablet, hidden on desktop */}
-              <div className="lg:hidden w-full max-w-[340px] aspect-square mx-auto z-[20]" style={{ marginTop: 'var(--space-lg)', marginBottom: 'var(--space-lg)' }}>
+              {/* Mobile Animation */}
+              <div className="lg:hidden w-full max-w-[340px] aspect-square mx-auto z-[20] relative" style={{ marginTop: 'var(--space-lg)', marginBottom: 'var(--space-lg)' }}>
                 <div
-                  ref={lottieContainerMobile}
-                  className="w-full h-full"
-                  aria-label="Animación de un robot saludando"
+                  ref={lottieMobileRef}
+                  className="w-full h-full absolute inset-0"
+                  aria-label="Animación decorativa"
                   role="img"
                 />
               </div>
               
               {/* Subtítulo — Nivel corporativo */}
               <p className="font-normal text-slate-500 dark:text-slate-400 max-w-[500px]" style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, marginBottom: 'var(--space-xl)' }}>
-                {settings?.hero_subtitle || "Descubre nuestra nueva colección de fundas premium. Diseño minimalista, máxima protección para tu dispositivo."}
+                {settings?.hero_subtitle || "Descubre nuestra colección exclusiva de joyería fina y accesorios premium para tu celular."}
               </p>
 
               {/* Botones de Acción de Alta Gama */}
@@ -193,17 +193,17 @@ export default function HomePage() {
               </div>
             </div>
             
-            {/* Right Column: Lottie Robot (Original size and layout restored exactly) */}
+            {/* Animation Column (Left logically due to flex-row-reverse) */}
             <div className="hidden lg:block w-full lg:w-1/2 px-[15px]">
               <div className="text-center relative z-[20] mt-[30px] lg:mt-0 mx-auto lg:mx-0">
-                {/* Contenedor de la animación Lottie del robot saludando */}
-                <div
-                  ref={lottieContainer}
-                  className="w-full max-w-[500px] aspect-square mx-auto inline-block"
-                  style={{ minHeight: '350px' }}
-                  aria-label="Animación de un robot saludando"
-                  role="img"
-                />
+                <div className="w-full max-w-[500px] aspect-square mx-auto inline-block relative" style={{ minHeight: '350px' }}>
+                  <div
+                    ref={lottieRef}
+                    className="w-full h-full absolute inset-0"
+                    aria-label="Animación decorativa"
+                    role="img"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -216,7 +216,7 @@ export default function HomePage() {
               </div>
               <div>
                 <h4 className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">Envío a todo el país</h4>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Entrega rápida en El Salvador para todos tus accesorios.</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Entrega rápida en El Salvador para todos tus pedidos.</p>
               </div>
             </div>
             
@@ -226,7 +226,7 @@ export default function HomePage() {
               </div>
               <div>
                 <h4 className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">Calidad Certificada</h4>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Garantía real en protectores, cargadores y cases premium.</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Garantía real en joyería, protectores y cases premium.</p>
               </div>
             </div>
             
@@ -314,10 +314,10 @@ export default function HomePage() {
             </div>
             <div className="bg-[#f6f3f2] dark:bg-white/5 p-8 rounded-2xl flex flex-col items-center text-center gap-4 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-shadow">
               <div className="w-16 h-16 rounded-full bg-[#f1edec] dark:bg-white/10 flex items-center justify-center text-[#5d5f5f] dark:text-white mb-2">
-                <span className="material-symbols-outlined text-[32px]" style={{ fontVariationSettings: "'FILL' 0" }}>lock</span>
+                <span className="material-symbols-outlined text-[32px]" style={{ fontVariationSettings: "'FILL' 0" }}>chat_bubble</span>
               </div>
-              <h3 className="text-[18px] leading-[28px] font-medium text-[#1c1b1b] dark:text-white">Pago seguro</h3>
-              <p className="text-[16px] leading-[24px] text-[#444748] dark:text-slate-400">Transacciones 100% seguras con encriptación SSL.</p>
+              <h3 className="text-[18px] leading-[28px] font-medium text-[#1c1b1b] dark:text-white">Pedido sin Tarjeta</h3>
+              <p className="text-[16px] leading-[24px] text-[#444748] dark:text-slate-400">Todos los pedidos se completan conversando directamente por WhatsApp.</p>
             </div>
           </div>
         </section>
