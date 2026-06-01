@@ -192,7 +192,10 @@ export default function HomePage() {
               {/* Título Principal */}
               <h1 className="tracking-tight text-slate-900 dark:text-white inline-flex flex-col items-stretch mx-auto lg:mx-0 font-bold font-brand" style={{ fontSize: 'var(--text-hero)', lineHeight: 1.1, marginBottom: 'var(--space-lg)', fontFamily: 'var(--font-brand)' }}>
                 <span className="block font-brand text-balance" style={{ fontFamily: 'var(--font-brand)' }}>
-                  Cases para Celular, Cargadores y Joyería de Acero | Padilla Store — Envío 24h San Miguel
+                  Protege tu celular. Luce tu estilo.
+                  <span className="block text-lg md:text-xl lg:text-2xl mt-3 font-sans font-medium text-slate-500 dark:text-slate-400">
+                    Cases premium, cargadores rápidos y joyería de acero en San Miguel
+                  </span>
                 </span>
                 <span className="flex justify-between bg-clip-text text-transparent bg-gradient-to-r from-primary via-violet-500 to-blue-500 dark:from-violet-400 dark:via-primary dark:to-blue-400 select-none italic font-semibold" style={{ fontFamily: 'var(--font-brand)' }}>
                   <span>s</span><span>i</span><span>n</span><span>&nbsp;</span><span>l</span><span>í</span><span>m</span><span>i</span><span>t</span><span>e</span><span>s</span>
