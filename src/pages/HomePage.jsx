@@ -190,7 +190,7 @@ export default function HomePage() {
             {/* Left Column: Typography & Actions (Aligned and Clean) */}
             <div className="w-full lg:w-1/2 flex flex-col justify-center items-center lg:items-start text-center lg:text-left relative z-10">
               {/* Contenedor Tarjeta Liquid Glass para el Título */}
-              <div className="w-full bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-dotted border-white/50 dark:border-slate-700/50 rounded-3xl p-6 md:p-8 shadow-2xl shadow-primary/5 relative overflow-hidden mb-6">
+              <div className="w-full bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border-2 border-dotted border-slate-400/70 dark:border-slate-600/70 rounded-3xl p-6 md:p-8 shadow-2xl shadow-primary/5 relative overflow-hidden mb-6">
                 {/* Glow líquido interno */}
                 <div className="absolute -right-16 -top-16 w-32 h-32 rounded-full bg-primary/20 blur-3xl pointer-events-none" />
                 <div className="absolute -left-16 -bottom-16 w-32 h-32 rounded-full bg-indigo-500/20 blur-3xl pointer-events-none" />
