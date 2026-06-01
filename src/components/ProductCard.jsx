@@ -78,24 +78,24 @@ const ProductCardComponent = function ProductCard({ product }) {
       </div>
 
       {/* Content */}
-      <div className="p-[var(--space-md)] flex flex-col gap-[var(--space-xs)]">
-        <h3 className="text-slate-900 dark:text-slate-100 font-bold group-hover:text-primary transition-colors truncate relative z-[2] pointer-events-none">{product.name}</h3>
+      <div className="p-4 flex flex-col gap-1.5">
+        <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 group-hover:text-primary transition-colors truncate relative z-[2] pointer-events-none">{product.name}</h3>
 
-        <p className="text-slate-500 dark:text-slate-400 text-[var(--text-xs)] line-clamp-1 relative z-[2] pointer-events-none">{product.description}</p>
+        <p className="text-slate-500 dark:text-slate-400 text-[11px] line-clamp-1 relative z-[2] pointer-events-none">{product.description}</p>
 
-        <div className="flex flex-wrap items-center gap-[var(--space-xs)] mt-auto pt-[var(--space-xs)] select-none">
-          <span className="text-lg sm:text-xl font-bold text-primary relative z-[2] pointer-events-none">{formatPrice(product.price)}</span>
+        <div className="flex flex-wrap items-center gap-1 mt-auto pt-1 select-none">
+          <span className="text-base font-bold text-primary relative z-[2] pointer-events-none">{formatPrice(product.price)}</span>
           {isOfferActive && (
-            <span className="text-sm text-slate-400 line-through decoration-slate-400/50 relative z-[2] pointer-events-none">
+            <span className="text-xs text-slate-400 line-through decoration-slate-400/50 relative z-[2] pointer-events-none">
               {formatPrice(product.old_price)}
             </span>
           )}
           <button
             onClick={handleAddToCart}
-            className="p-[var(--space-xs)] bg-slate-100 hover:bg-primary text-primary hover:text-white rounded-lg transition-all relative z-[2] ml-auto"
+            className="p-1 bg-slate-100 hover:bg-primary text-primary hover:text-white rounded-lg transition-all relative z-[2] ml-auto"
             aria-label="Añadir al carrito"
           >
-            <span className="material-symbols-outlined" style={{ fontSize: 'var(--icon-md)' }}>add_shopping_cart</span>
+            <span className="material-symbols-outlined text-[18px]">add_shopping_cart</span>
           </button>
         </div>
         {(isOfferActive || isScheduled) && product.offer_ends_at && (

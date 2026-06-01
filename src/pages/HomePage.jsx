@@ -46,7 +46,7 @@ const FAQ_ITEMS = [
 ];
 
 export default function HomePage() {
-  const { products: homeProducts, loading } = useProducts({ limit: 4 });
+  const { products: homeProducts, loading } = useProducts({ limit: 5 });
   const { categories: allCategories, loading: loadingCategories } = useCategories();
   const { settings } = useSettings();
   
@@ -336,7 +336,7 @@ export default function HomePage() {
               <span className="material-symbols-outlined text-[14px] transition-transform group-hover:translate-x-0.5" aria-hidden="true">arrow_forward</span>
             </Link>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-[16px] md:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             {loading ? (
               <div className="col-span-full py-12 flex justify-center"><div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div></div>
             ) : homeProducts.length > 0 ? (
