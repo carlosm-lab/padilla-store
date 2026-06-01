@@ -194,16 +194,14 @@ export default function HomePage() {
             </div>
             
             {/* Animation Column (Left logically due to flex-row-reverse) */}
-            <div className="hidden lg:block w-full lg:w-1/2 px-[15px]">
-              <div className="text-center relative z-[20] mt-[30px] lg:mt-0 mx-auto lg:mx-0">
-                <div className="w-full max-w-[500px] aspect-square mx-auto inline-block relative" style={{ minHeight: '350px' }}>
-                  <div
-                    ref={lottieRef}
-                    className="w-full h-full absolute inset-0"
-                    aria-label="Animación decorativa"
-                    role="img"
-                  />
-                </div>
+            <div className="hidden lg:flex w-full lg:w-1/2 p-0 justify-start">
+              <div className="relative z-[20] mt-[30px] lg:mt-0 w-full max-w-[500px] aspect-square" style={{ minHeight: '350px' }}>
+                <div
+                  ref={lottieRef}
+                  className="w-full h-full absolute inset-0"
+                  aria-label="Animación decorativa"
+                  role="img"
+                />
               </div>
             </div>
           </div>
