@@ -185,7 +185,7 @@ export default function HomePage() {
       {/* Hero Section — Modern & Executive Redesign */}
       <section className="main-banner relative w-full overflow-hidden">
         {/* Main Hero Container — Spaced and responsive */}
-        <div className="max-w-[1440px] mx-auto relative z-[2] w-full" style={{ paddingLeft: 'var(--container-px)', paddingRight: 'var(--container-px)' }}>
+        <div className="max-w-[1440px] mx-auto relative z-[2] w-full px-[20px] md:px-[64px]">
           <div className="flex flex-col lg:flex-row-reverse items-center w-full" style={{ gap: 'var(--space-2xl)' }}>
             {/* Left Column: Typography & Actions (Aligned and Clean) */}
             <div className="w-full lg:w-1/2 flex flex-col justify-center items-center lg:items-start text-center lg:text-left relative z-10">
