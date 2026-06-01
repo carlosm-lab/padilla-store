@@ -73,7 +73,6 @@ export default function Navbar() {
           <nav className="hidden md:flex items-center gap-[clamp(0.25rem,0.5vw,0.5rem)]">
             <NavLink to="/" className={({ isActive }) => `select-none px-[clamp(0.75rem,1.5vw,1rem)] py-[clamp(0.375rem,0.8vw,0.5rem)] rounded-full text-[var(--text-sm)] font-bold transition-all ${isActive ? 'bg-primary text-white shadow-md tracking-wide' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 hover:text-primary'}`}>Inicio</NavLink>
             <NavLink to="/catalog" className={({ isActive }) => `select-none px-[clamp(0.75rem,1.5vw,1rem)] py-[clamp(0.375rem,0.8vw,0.5rem)] rounded-full text-[var(--text-sm)] font-bold transition-all ${isActive ? 'bg-primary text-white shadow-md tracking-wide' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 hover:text-primary'}`}>Catálogo</NavLink>
-            <NavLink to="/contact" className={({ isActive }) => `select-none px-[clamp(0.75rem,1.5vw,1rem)] py-[clamp(0.375rem,0.8vw,0.5rem)] rounded-full text-[var(--text-sm)] font-bold transition-all ${isActive ? 'bg-primary text-white shadow-md tracking-wide' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 hover:text-primary'}`}>Contacto</NavLink>
           </nav>
         </div>
         <div className="flex items-center gap-[clamp(0.25rem,1vw,1rem)]">
@@ -178,10 +177,6 @@ export default function Navbar() {
             <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>search</span>
             <span className="text-[10px] font-semibold">Buscar</span>
           </button>
-          <NavLink to="/contact" className={({ isActive }) => `flex flex-col items-center justify-center gap-0.5 w-full h-full transition-colors ${isActive ? 'text-primary' : 'text-black dark:text-white'}`}>
-            <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>mail</span>
-            <span className="text-[10px] font-semibold">Contacto</span>
-          </NavLink>
           <button data-testid="cart-button-mobile" onClick={() => setIsCartOpen(true)} className="relative flex flex-col items-center justify-center gap-0.5 w-full h-full text-black dark:text-white transition-colors">
             <span className={`material-symbols-outlined transition-transform duration-300 ${isBouncing ? 'scale-125 text-primary' : ''}`} style={{ fontSize: '24px' }}>shopping_cart</span>
             {cartCount > 0 && (
