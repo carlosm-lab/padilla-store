@@ -450,32 +450,39 @@ export default function HomePage() {
 
         {/* ── Cobertura de Envío (SEO Local) ──────────────────── */}
         <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="cobertura">
-          <div className="bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-white/5 shadow-sm rounded-2xl p-8 md:p-10">
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-xl md:text-2xl font-bold tracking-tight text-slate-900 dark:text-white mb-4 text-left font-brand" style={{ fontFamily: 'var(--font-brand)' }}>Cobertura de envío en San Miguel</h2>
-              <p className="text-[16px] leading-[26px] text-slate-500 dark:text-slate-400 mb-8 text-left italic">
-                Padilla Store realiza entregas a domicilio en <strong className="text-[#1c1b1b] dark:text-white">San Miguel, municipios cercanos y zonas aledañas</strong>. Nuestro servicio de envío cuenta con motorista propio, lo que garantiza mayor control del proceso, comunicación directa y entrega personalizada.
-              </p>
-              <div className="grid grid-cols-2 gap-x-8 gap-y-6 text-left">
-                <div>
-                  <div className="text-2xl md:text-3xl font-extrabold text-primary font-sans">24h</div>
-                  <p className="text-sm font-semibold text-slate-900 dark:text-white mt-1">Tiempo de entrega</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Estimado para San Miguel y zonas aledañas.</p>
-                </div>
-                <div>
-                  <div className="text-2xl md:text-3xl font-extrabold text-primary font-sans">$1–$3</div>
-                  <p className="text-sm font-semibold text-slate-900 dark:text-white mt-1">Costo de envío</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Tarifa económica según la ubicación exacta.</p>
-                </div>
-                <div>
-                  <div className="text-2xl md:text-3xl font-extrabold text-primary font-sans">Propio</div>
-                  <p className="text-sm font-semibold text-slate-900 dark:text-white mt-1">Motorista personal</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Mayor control del proceso y entrega segura.</p>
-                </div>
-                <div>
-                  <div className="text-2xl md:text-3xl font-extrabold text-primary font-sans">Directo</div>
-                  <p className="text-sm font-semibold text-slate-900 dark:text-white mt-1">Chat de WhatsApp</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Coordinación de entrega y soporte al instante.</p>
+          <div className="bg-white dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/60 shadow-sm rounded-2xl p-8 md:p-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+              {/* Left Column: Heading and description */}
+              <div className="lg:col-span-5 space-y-4">
+                <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white font-brand" style={{ fontFamily: 'var(--font-brand)' }}>Cobertura de envío en San Miguel</h2>
+                <p className="text-[16px] leading-[26px] text-slate-500 dark:text-slate-400 italic">
+                  Padilla Store realiza entregas a domicilio en <strong className="text-slate-900 dark:text-white">San Miguel, municipios cercanos y zonas aledañas</strong>. Nuestro servicio de envío cuenta con motorista propio, lo que garantiza mayor control del proceso, comunicación directa y entrega personalizada.
+                </p>
+              </div>
+
+              {/* Right Column: Grid metrics */}
+              <div className="lg:col-span-7 lg:border-l lg:border-slate-200/60 lg:dark:border-slate-800/60 lg:pl-12">
+                <div className="grid grid-cols-2 gap-x-8 gap-y-8 text-left">
+                  <div>
+                    <div className="text-3xl md:text-4xl font-extrabold text-primary font-sans tracking-tight">24h</div>
+                    <p className="text-sm font-semibold text-slate-900 dark:text-white mt-1.5">Tiempo de entrega</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Estimado para San Miguel y zonas aledañas.</p>
+                  </div>
+                  <div>
+                    <div className="text-3xl md:text-4xl font-extrabold text-primary font-sans tracking-tight">$1–$3</div>
+                    <p className="text-sm font-semibold text-slate-900 dark:text-white mt-1.5">Costo de envío</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Tarifa económica según la ubicación exacta.</p>
+                  </div>
+                  <div>
+                    <div className="text-3xl md:text-4xl font-extrabold text-primary font-sans tracking-tight">Propio</div>
+                    <p className="text-sm font-semibold text-slate-900 dark:text-white mt-1.5">Motorista personal</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Mayor control del proceso y entrega segura.</p>
+                  </div>
+                  <div>
+                    <div className="text-3xl md:text-4xl font-extrabold text-primary font-sans tracking-tight">Directo</div>
+                    <p className="text-sm font-semibold text-slate-900 dark:text-white mt-1.5">Chat de WhatsApp</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Coordinación de entrega y soporte al instante.</p>
+                  </div>
                 </div>
               </div>
             </div>
