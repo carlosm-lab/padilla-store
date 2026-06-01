@@ -353,63 +353,62 @@ export default function HomePage() {
         <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="sobre-nosotros">
           <article>
             <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white mb-6 text-left font-brand" style={{ fontFamily: 'var(--font-brand)' }}>Sobre Padilla Store</h2>
-            <div className="bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-white/5 shadow-sm rounded-2xl p-8 md:p-10">
-              <div className="max-w-3xl mx-auto space-y-6">
-                <p className="text-[16px] leading-[26px] text-[#444748] dark:text-slate-400">
-                  <strong className="text-[#1c1b1b] dark:text-white">Padilla Store</strong> es una tienda en línea especializada en la comercialización de accesorios tecnológicos, accesorios para teléfonos celulares, productos electrónicos y bisutería fina. Operamos desde <strong className="text-[#1c1b1b] dark:text-white">San Miguel, El Salvador</strong>, bajo la razón social <strong className="text-[#1c1b1b] dark:text-white">Padilla S.A. de C.V.</strong>, con un modelo de negocio orientado a facilitar el proceso de compra sin necesidad de desplazamientos.
-                </p>
-                <p className="text-[16px] leading-[26px] text-[#444748] dark:text-slate-400">
-                  La empresa fue fundada por <strong className="text-[#1c1b1b] dark:text-white">{FOUNDER_NAME}</strong> con el propósito de simplificar la experiencia de compra de productos tecnológicos y accesorios personales. La idea nace al identificar la necesidad de muchas personas de adquirir productos de calidad sin abandonar sus actividades diarias, evitando desplazamientos innecesarios y optimizando el tiempo.
-                </p>
+            <div className="bg-white dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/60 shadow-sm rounded-2xl p-8 md:p-12">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+                {/* Left Column: History & Mission */}
+                <div className="lg:col-span-7 space-y-6">
+                  <p className="text-[16px] leading-[26px] text-slate-600 dark:text-slate-400">
+                    <strong className="text-slate-900 dark:text-white">Padilla Store</strong> es una tienda en línea especializada en la comercialización de accesorios tecnológicos, accesorios para teléfonos celulares, productos electrónicos y bisutería fina. Operamos desde <strong className="text-slate-900 dark:text-white">San Miguel, El Salvador</strong>, bajo la razón social <strong className="text-slate-900 dark:text-white">Padilla S.A. de C.V.</strong>, con un modelo de negocio orientado a facilitar el proceso de compra sin necesidad de desplazamientos.
+                  </p>
+                  <p className="text-[16px] leading-[26px] text-slate-600 dark:text-slate-400">
+                    La empresa fue fundada por <strong className="text-slate-900 dark:text-white">{FOUNDER_NAME}</strong> con el propósito de simplificar la experiencia de compra de productos tecnológicos y accesorios personales. La idea nace al identificar la necesidad de muchas personas de adquirir productos de calidad sin abandonar sus actividades diarias, evitando desplazamientos innecesarios y optimizando el tiempo.
+                  </p>
 
-                <h3 className="text-[18px] leading-[28px] font-semibold text-[#1c1b1b] dark:text-white pt-2 font-brand" style={{ fontFamily: 'var(--font-brand)' }}>Nuestra misión</h3>
-                <p className="text-[16px] leading-[26px] text-[#444748] dark:text-slate-400">
-                  Facilitar el acceso a productos electrónicos, accesorios tecnológicos y bisutería fina mediante un proceso de compra cómodo, rápido y confiable, permitiendo que nuestros clientes realicen sus compras desde la comodidad de su hogar y reciban sus pedidos en el menor tiempo posible.
-                </p>
+                  <div className="pt-4 border-t border-slate-100 dark:border-slate-800/60">
+                    <h3 className="text-[18px] leading-[28px] font-bold text-slate-900 dark:text-white mb-3 font-brand" style={{ fontFamily: 'var(--font-brand)' }}>Nuestra misión</h3>
+                    <p className="text-[16px] leading-[26px] text-slate-600 dark:text-slate-400">
+                      Facilitar el acceso a productos electrónicos, accesorios tecnológicos y bisutería fina mediante un proceso de compra cómodo, rápido y confiable, permitiendo que nuestros clientes realicen sus compras desde la comodidad de su hogar y reciban sus pedidos en el menor tiempo posible.
+                    </p>
+                  </div>
+                </div>
 
-                <h3 className="text-[18px] leading-[28px] font-semibold text-[#1c1b1b] dark:text-white pt-2 font-brand" style={{ fontFamily: 'var(--font-brand)' }}>¿Por qué elegir Padilla Store?</h3>
-                <ul className="space-y-2 text-[16px] leading-[26px] text-[#444748] dark:text-slate-400">
-                  <li className="flex items-start gap-3">
-                    <span className="material-symbols-outlined text-primary text-[20px] mt-0.5 shrink-0" aria-hidden="true">check_circle</span>
-                    <span><strong className="text-[#1c1b1b] dark:text-white">Atención personalizada</strong> — Comunicación directa con el negocio a través de WhatsApp.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="material-symbols-outlined text-primary text-[20px] mt-0.5 shrink-0" aria-hidden="true">check_circle</span>
-                    <span><strong className="text-[#1c1b1b] dark:text-white">Entrega a domicilio en 24 horas</strong> — Motorista propio para mayor control y seguimiento.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="material-symbols-outlined text-primary text-[20px] mt-0.5 shrink-0" aria-hidden="true">check_circle</span>
-                    <span><strong className="text-[#1c1b1b] dark:text-white">Garantía local</strong> — Respaldo directo en todos los productos.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="material-symbols-outlined text-primary text-[20px] mt-0.5 shrink-0" aria-hidden="true">check_circle</span>
-                    <span><strong className="text-[#1c1b1b] dark:text-white">Empaque premium</strong> — Caja rígida con logotipo y papel de seda protector.</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="material-symbols-outlined text-primary text-[20px] mt-0.5 shrink-0" aria-hidden="true">check_circle</span>
-                    <span><strong className="text-[#1c1b1b] dark:text-white">Comprobante y factura electrónica</strong> — Transparencia total en cada transacción.</span>
-                  </li>
-                </ul>
+                {/* Right Column: Differentiators & Values */}
+                <div className="lg:col-span-5 space-y-8 lg:border-l lg:border-slate-200/60 lg:dark:border-slate-800/60 lg:pl-10">
+                  <div>
+                    <h3 className="text-[18px] leading-[28px] font-bold text-slate-900 dark:text-white mb-4 font-brand" style={{ fontFamily: 'var(--font-brand)' }}>¿Por qué elegir Padilla Store?</h3>
+                    <ul className="space-y-3 text-[14px] leading-[22px] text-slate-600 dark:text-slate-400">
+                      {[
+                        { title: 'Atención personalizada', text: 'Comunicación directa con el negocio a través de WhatsApp.' },
+                        { title: 'Entrega en 24 horas', text: 'Motorista propio para mayor control y seguimiento local.' },
+                        { title: 'Garantía local', text: 'Respaldo directo en todos los productos adquiridos.' },
+                        { title: 'Empaque premium', text: 'Caja rígida con logotipo corporativo y papel protector.' },
+                        { title: 'Comprobante y factura', text: 'Transparencia y formalidad total en cada compra.' },
+                      ].map((item, i) => (
+                        <li key={i} className="flex items-start gap-2.5">
+                          <span className="material-symbols-outlined text-primary text-[18px] mt-0.5 shrink-0" aria-hidden="true">check_circle</span>
+                          <span><strong className="text-slate-900 dark:text-white">{item.title}</strong> — {item.text}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-                <h3 className="text-[18px] leading-[28px] font-semibold text-[#1c1b1b] dark:text-white pt-2 font-brand" style={{ fontFamily: 'var(--font-brand)' }}>Nuestros valores</h3>
-                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <dt className="font-semibold text-[#1c1b1b] dark:text-white text-[16px]">Honestidad</dt>
-                    <dd className="text-[14px] leading-[22px] text-[#444748] dark:text-slate-400 mt-1">Transparencia total en información de productos, materiales, entregas y condiciones comerciales.</dd>
+                  <div className="pt-6 border-t border-slate-100 dark:border-slate-800/60">
+                    <h3 className="text-[18px] leading-[28px] font-bold text-slate-900 dark:text-white mb-4 font-brand" style={{ fontFamily: 'var(--font-brand)' }}>Nuestros valores</h3>
+                    <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {[
+                        { val: 'Honestidad', desc: 'Transparencia en información, entregas y condiciones.' },
+                        { val: 'Servicio', desc: 'Consultas atendidas con enfoque en la solución.' },
+                        { val: 'Compromiso', desc: 'Respuestas ágiles ante cada requerimiento.' },
+                        { val: 'Confianza', desc: 'Garantía local y contacto personalizado.' },
+                      ].map((item, i) => (
+                        <div key={i}>
+                          <dt className="font-bold text-slate-900 dark:text-white text-[14px]">{item.val}</dt>
+                          <dd className="text-[12px] leading-[18px] text-slate-500 dark:text-slate-400 mt-0.5">{item.desc}</dd>
+                        </div>
+                      ))}
+                    </dl>
                   </div>
-                  <div>
-                    <dt className="font-semibold text-[#1c1b1b] dark:text-white text-[16px]">Atención al cliente</dt>
-                    <dd className="text-[14px] leading-[22px] text-[#444748] dark:text-slate-400 mt-1">Cada consulta es atendida con el objetivo de brindar soluciones oportunas y una experiencia satisfactoria.</dd>
-                  </div>
-                  <div>
-                    <dt className="font-semibold text-[#1c1b1b] dark:text-white text-[16px]">Compromiso</dt>
-                    <dd className="text-[14px] leading-[22px] text-[#444748] dark:text-slate-400 mt-1">Respondemos a las necesidades de nuestros clientes mediante un servicio ágil y eficiente.</dd>
-                  </div>
-                  <div>
-                    <dt className="font-semibold text-[#1c1b1b] dark:text-white text-[16px]">Confianza</dt>
-                    <dd className="text-[14px] leading-[22px] text-[#444748] dark:text-slate-400 mt-1">Comunicación directa, comprobantes de compra y garantía local en cada pedido.</dd>
-                  </div>
-                </dl>
+                </div>
               </div>
             </div>
           </article>
