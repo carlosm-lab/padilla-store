@@ -423,16 +423,27 @@ export default function HomePage() {
           </p>
           <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[16px] md:gap-6 list-none p-0 m-0">
             {[
-              { step: '1', icon: 'touch_app', title: 'Selecciona tu producto', desc: 'Explora nuestro catálogo y elige los productos que más te gusten.' },
-              { step: '2', icon: 'chat', title: 'Escríbenos por WhatsApp', desc: 'Inicia una conversación con nosotros para confirmar tu pedido y calcular el envío.' },
-              { step: '3', icon: 'payments', title: 'Realiza tu pago', desc: 'Paga por transferencia a Banco Agrícola, BAC o efectivo contra entrega.' },
-              { step: '4', icon: 'package_2', title: 'Recibe en tu domicilio', desc: 'Entregamos en 24 horas en San Miguel con motorista propio. Recibes comprobante PDF y factura electrónica.' },
+              { step: '01', icon: 'touch_app', title: 'Selecciona tu producto', desc: 'Explora nuestro catálogo y elige los productos que más te gusten.' },
+              { step: '02', icon: 'chat', title: 'Escríbenos por WhatsApp', desc: 'Inicia una conversación con nosotros para confirmar tu pedido y calcular el envío.' },
+              { step: '03', icon: 'payments', title: 'Realiza tu pago', desc: 'Paga por transferencia a Banco Agrícola, BAC o efectivo contra entrega.' },
+              { step: '04', icon: 'package_2', title: 'Recibe en tu domicilio', desc: 'Entregamos en 24 horas en San Miguel con motorista propio. Recibes comprobante PDF y factura electrónica.' },
             ].map(item => (
-              <li key={item.step} className="bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-white/5 shadow-sm p-6 rounded-2xl flex flex-col items-center text-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-primary/10 dark:bg-primary/20 text-primary flex items-center justify-center text-[20px] font-bold">{item.step}</div>
-                <span className="material-symbols-outlined text-[28px] text-[#5d5f5f] dark:text-white" style={{ fontVariationSettings: "'FILL' 0" }} aria-hidden="true">{item.icon}</span>
-                <h3 className="text-[16px] leading-[24px] font-semibold text-[#1c1b1b] dark:text-white">{item.title}</h3>
-                <p className="text-[14px] leading-[22px] text-[#444748] dark:text-slate-400">{item.desc}</p>
+              <li key={item.step} className="bg-white dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/60 shadow-sm p-6 rounded-2xl flex flex-col items-start text-left gap-4 hover:-translate-y-1 hover:shadow-md transition-all duration-300 relative overflow-hidden group">
+                {/* Elegant Subtle Step Number */}
+                <span className="absolute top-4 right-6 text-4xl font-extrabold text-slate-100 dark:text-slate-800/40 select-none font-brand tracking-tight transition-transform group-hover:scale-105 duration-300">
+                  {item.step}
+                </span>
+                
+                {/* Premium Icon Container */}
+                <div className="w-12 h-12 rounded-xl bg-slate-50 dark:bg-slate-900 text-primary flex items-center justify-center shrink-0 border border-slate-200/40 dark:border-slate-800/40 shadow-sm transition-colors group-hover:bg-primary/5 dark:group-hover:bg-primary/10">
+                  <span className="material-symbols-outlined text-[24px]" aria-hidden="true">{item.icon}</span>
+                </div>
+
+                {/* Text Content */}
+                <div className="space-y-2">
+                  <h3 className="text-[16px] leading-[24px] font-bold text-slate-900 dark:text-white">{item.title}</h3>
+                  <p className="text-[14px] leading-[22px] text-slate-500 dark:text-slate-400 font-normal">{item.desc}</p>
+                </div>
               </li>
             ))}
           </ol>
