@@ -14,6 +14,7 @@ export default function CatalogPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { favorites } = useFavorites();
   const filterMode = searchParams.get('filter') || '';
+  const typeParam = searchParams.get('type') || '';
   
   const ITEMS_PER_PAGE = 15;
 
@@ -32,8 +33,26 @@ export default function CatalogPage() {
     onSaleOnly: searchParams.get('onSaleOnly') === 'true'
   }));
 
+  // Determine active categories based on catalog type (tecnologia vs joyeria)
+  const activeCatalogSlugs = useMemo(() => {
+    if (typeParam === 'tecnologia') {
+      return ['tecnologia', 'electronicos'];
+    }
+    if (typeParam === 'joyeria') {
+      return ['joyeria'];
+    }
+    return [];
+  }, [typeParam]);
+
+  const queryCategories = useMemo(() => {
+    if (filters.categories.length > 0) {
+      return filters.categories;
+    }
+    return activeCatalogSlugs;
+  }, [filters.categories, activeCatalogSlugs]);
+
   const { products: paginatedProducts, totalCount, loading: prodsLoading } = useProducts({
-    categories: filters.categories,
+    categories: queryCategories,
     search: filters.search,
     minPrice: filters.minPrice,
     maxPrice: filters.maxPrice,
@@ -120,12 +139,18 @@ export default function CatalogPage() {
 
   // Category data dynamically
   const sidebarCategories = useMemo(() => {
-    return dbCategories.map(cat => ({
+    let filtered = dbCategories;
+    if (typeParam === 'tecnologia') {
+      filtered = dbCategories.filter(cat => ['tecnologia', 'electronicos'].includes(cat.slug));
+    } else if (typeParam === 'joyeria') {
+      filtered = dbCategories.filter(cat => ['joyeria'].includes(cat.slug));
+    }
+    return filtered.map(cat => ({
       id: cat.slug,
       name: cat.name,
       icon: cat.icon || 'category'
     }));
-  }, [dbCategories]);
+  }, [dbCategories, typeParam]);
 
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
 
@@ -166,6 +191,67 @@ export default function CatalogPage() {
 
         {/* Product Grid Area */}
         <div className="flex-1">
+          {/* Catalog Type Switcher (Tabs) */}
+          <div className="flex items-center gap-2 pb-4 border-b border-slate-200/80 dark:border-slate-800/80 mb-6">
+            <button
+              onClick={() => {
+                setSearchParams(prev => {
+                  const copy = new URLSearchParams(prev);
+                  copy.delete('type');
+                  copy.delete('page');
+                  copy.delete('category');
+                  return copy;
+                });
+                setFilters(prev => ({ ...prev, categories: [] }));
+              }}
+              className={`px-4 py-2 rounded-xl font-bold text-xs md:text-sm tracking-wide transition-all cursor-pointer ${
+                !typeParam
+                  ? 'bg-primary text-white shadow-md'
+                  : 'bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/10'
+              }`}
+            >
+              Todos
+            </button>
+            <button
+              onClick={() => {
+                setSearchParams(prev => {
+                  const copy = new URLSearchParams(prev);
+                  copy.set('type', 'tecnologia');
+                  copy.delete('page');
+                  copy.delete('category');
+                  return copy;
+                });
+                setFilters(prev => ({ ...prev, categories: [] }));
+              }}
+              className={`px-4 py-2 rounded-xl font-bold text-xs md:text-sm tracking-wide transition-all cursor-pointer ${
+                typeParam === 'tecnologia'
+                  ? 'bg-primary text-white shadow-md'
+                  : 'bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/10'
+              }`}
+            >
+              Tecnología
+            </button>
+            <button
+              onClick={() => {
+                setSearchParams(prev => {
+                  const copy = new URLSearchParams(prev);
+                  copy.set('type', 'joyeria');
+                  copy.delete('page');
+                  copy.delete('category');
+                  return copy;
+                });
+                setFilters(prev => ({ ...prev, categories: [] }));
+              }}
+              className={`px-4 py-2 rounded-xl font-bold text-xs md:text-sm tracking-wide transition-all cursor-pointer ${
+                typeParam === 'joyeria'
+                  ? 'bg-primary text-white shadow-md'
+                  : 'bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/10'
+              }`}
+            >
+              Joyería
+            </button>
+          </div>
+
           {/* Desktop sort bar */}
           <div className="hidden lg:flex justify-between items-center mb-[var(--space-lg)]">
             <p className="text-[var(--text-sm)] text-slate-500 dark:text-slate-400 font-medium">

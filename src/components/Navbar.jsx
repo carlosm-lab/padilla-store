@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import { useFavorites } from '@/context/FavoritesContext';
 import { useAuth } from '@/context/AuthContext';
@@ -12,6 +12,8 @@ import UserAvatar from './ui/UserAvatar';
 
 
 export default function Navbar() {
+  const location = useLocation();
+  const currentType = new URLSearchParams(location.search).get('type');
   const { cartCount, setIsCartOpen } = useCart();
   const { favorites } = useFavorites();
   const { user, isAdmin, signOut, authModalContext, showAuthModal, hideAuthModal } = useAuth();
@@ -72,7 +74,24 @@ export default function Navbar() {
           <Logo />
           <nav className="hidden md:flex items-center gap-[clamp(0.25rem,0.5vw,0.5rem)]">
             <NavLink to="/" className={({ isActive }) => `select-none px-[clamp(0.75rem,1.5vw,1rem)] py-[clamp(0.375rem,0.8vw,0.5rem)] rounded-full text-[var(--text-sm)] font-bold transition-all ${isActive ? 'bg-primary text-white shadow-md tracking-wide' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 hover:text-primary'}`}>Inicio</NavLink>
-            <NavLink to="/catalog" className={({ isActive }) => `select-none px-[clamp(0.75rem,1.5vw,1rem)] py-[clamp(0.375rem,0.8vw,0.5rem)] rounded-full text-[var(--text-sm)] font-bold transition-all ${isActive ? 'bg-primary text-white shadow-md tracking-wide' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 hover:text-primary'}`}>Catálogo</NavLink>
+            <NavLink
+              to="/catalog?type=tecnologia"
+              className={() => {
+                const isAct = location.pathname === '/catalog' && currentType === 'tecnologia';
+                return `select-none px-[clamp(0.75rem,1.5vw,1rem)] py-[clamp(0.375rem,0.8vw,0.5rem)] rounded-full text-[var(--text-sm)] font-bold transition-all ${isAct ? 'bg-primary text-white shadow-md tracking-wide' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 hover:text-primary'}`;
+              }}
+            >
+              Tecnología
+            </NavLink>
+            <NavLink
+              to="/catalog?type=joyeria"
+              className={() => {
+                const isAct = location.pathname === '/catalog' && currentType === 'joyeria';
+                return `select-none px-[clamp(0.75rem,1.5vw,1rem)] py-[clamp(0.375rem,0.8vw,0.5rem)] rounded-full text-[var(--text-sm)] font-bold transition-all ${isAct ? 'bg-primary text-white shadow-md tracking-wide' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 hover:text-primary'}`;
+              }}
+            >
+              Joyería
+            </NavLink>
           </nav>
         </div>
         <div className="flex items-center gap-[clamp(0.25rem,1vw,1rem)]">
@@ -169,7 +188,13 @@ export default function Navbar() {
             <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>home</span>
             <span className="text-[10px] font-semibold">Inicio</span>
           </NavLink>
-          <NavLink to="/catalog" className={({ isActive }) => `flex flex-col items-center justify-center gap-0.5 w-full h-full transition-colors ${isActive ? 'text-primary' : 'text-black dark:text-white'}`}>
+          <NavLink
+            to="/catalog"
+            className={() => {
+              const isAct = location.pathname === '/catalog';
+              return `flex flex-col items-center justify-center gap-0.5 w-full h-full transition-colors ${isAct ? 'text-primary' : 'text-black dark:text-white'}`;
+            }}
+          >
             <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>storefront</span>
             <span className="text-[10px] font-semibold">Catálogo</span>
           </NavLink>
