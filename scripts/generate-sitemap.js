@@ -11,7 +11,8 @@ const BASE_URL = 'https://padillastore.com';
 // Local routes (static)
 const routes = [
   { path: '/', lastmod: new Date().toISOString() },
-  { path: '/catalog', lastmod: new Date().toISOString() },
+  { path: '/catalog-tecnologia', lastmod: new Date().toISOString() },
+  { path: '/catalog-joyeria', lastmod: new Date().toISOString() },
   { path: '/contact', lastmod: new Date().toISOString() },
   { path: '/terms', lastmod: new Date().toISOString() },
   { path: '/privacy', lastmod: new Date().toISOString() }

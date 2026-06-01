@@ -106,7 +106,7 @@ export default function FavoritesModal({ isOpen, onClose }) {
                 onClick={() => { onClose(); navigate('/'); }} 
                 className="mt-6 px-8 py-3 bg-primary text-white rounded-full font-bold hover:bg-primary-dark shadow-md transition-all hover:scale-105"
               >
-                Volver a la Tienda
+                Volver al Inicio
               </button>
             </div>
           ) : (

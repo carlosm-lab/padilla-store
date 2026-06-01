@@ -261,7 +261,7 @@ export default function CartDrawer() {
                 onClick={closeDrawer}
                 className="bg-white dark:bg-white/10 text-slate-900 dark:text-white font-bold py-3 px-8 rounded-full shadow-sm border border-slate-100 dark:border-white/5 hover:bg-slate-50 transition-colors"
               >
-                Volver a la tienda
+                Volver al inicio
               </button>
             </div>
           ) : (

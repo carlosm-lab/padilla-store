@@ -36,7 +36,7 @@ export default function SearchModal({ isOpen, onClose }) {
   };
 
   const handleDisplayAll = () => {
-    navigate(`/catalog?search=${encodeURIComponent(query)}`);
+    navigate(`/catalog-tecnologia?search=${encodeURIComponent(query)}`);
     onClose();
   };
 

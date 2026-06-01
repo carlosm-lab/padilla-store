@@ -35,7 +35,7 @@ export default function AdminLayout() {
             <Link 
               to="/"
               className="flex items-center justify-center rounded-lg aspect-square w-[clamp(2rem,5vw,2.5rem)] bg-white dark:bg-white/10 shadow-sm border border-slate-100 dark:border-white/5 text-slate-900 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-white/20 transition-colors shrink-0"
-              title="Volver a la tienda"
+              title="Volver al inicio"
             >
               <span className="material-symbols-outlined">storefront</span>
             </Link>
@@ -55,7 +55,7 @@ export default function AdminLayout() {
             <Link 
               to="/"
               className="flex items-center justify-center rounded-lg aspect-square w-[clamp(2rem,5vw,2.5rem)] bg-white dark:bg-white/10 shadow-sm border border-slate-100 dark:border-white/5 text-slate-900 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-white/20 transition-colors shrink-0"
-              title="Volver a la tienda"
+              title="Volver al inicio"
             >
               <span className="material-symbols-outlined">storefront</span>
             </Link>

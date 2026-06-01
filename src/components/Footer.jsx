@@ -15,7 +15,8 @@ export default function Footer() {
           <h4 className="font-bold text-slate-900 dark:text-slate-100 mb-[var(--space-md)]">Navegación</h4>
           <ul className="text-[var(--text-sm)] text-slate-500 dark:text-slate-400 space-y-[var(--space-xs)]">
             <li><Link className="hover:text-primary font-medium transition-colors" to="/">Inicio</Link></li>
-            <li><Link className="hover:text-primary font-medium transition-colors" to="/catalog">Catálogo de productos</Link></li>
+            <li><Link className="hover:text-primary font-medium transition-colors" to="/catalog-tecnologia">Catálogo Tecnología</Link></li>
+            <li><Link className="hover:text-primary font-medium transition-colors" to="/catalog-joyeria">Catálogo Joyería</Link></li>
             <li><Link className="hover:text-primary font-medium transition-colors" to="/contact">Contacto</Link></li>
             <li><Link className="hover:text-primary font-medium transition-colors" to="/privacy">Política de Privacidad</Link></li>
             <li><Link className="hover:text-primary font-medium transition-colors" to="/terms">Términos de Servicio</Link></li>
