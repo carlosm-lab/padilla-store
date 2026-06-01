@@ -223,7 +223,7 @@ export default function HomePage() {
               {/* Botones de Acción de Alta Gama */}
               <div className="flex flex-row w-full" style={{ gap: 'var(--space-sm)' }}>
                 <Link
-                  to="/catalog"
+                  to="/catalog-tecnologia"
                   className="flex-1 inline-flex items-center justify-center bg-white/50 dark:bg-slate-950/40 hover:bg-slate-100/80 dark:hover:bg-slate-900/60 text-slate-800 dark:text-slate-200 border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer rounded-xl backdrop-blur-md"
                   style={{ padding: 'var(--space-md) var(--space-md)', fontSize: 'var(--text-sm)' }}
                 >
