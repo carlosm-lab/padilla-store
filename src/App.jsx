@@ -33,7 +33,6 @@ import { BASE_URL } from '@/config/constants';
 
 // ── Páginas públicas (lazy) ──────────────────────────────
 const HomePage = lazy(() => import('./pages/HomePage'));
-const CatalogPage = lazy(() => import('./pages/CatalogPage'));
 const TechCatalogPage = lazy(() => import('./pages/TechCatalogPage'));
 const JewelryCatalogPage = lazy(() => import('./pages/JewelryCatalogPage'));
 const ProductDetailPage = lazy(() => import('./pages/ProductDetailPage'));
@@ -129,7 +128,6 @@ function App() {
         {/* ── Rutas Públicas (tienda) ────────────────────── */}
         {/* Cada ruta está envuelta en ShopLayout (Navbar + Footer + CartDrawer) */}
         <Route path="/" element={<ErrorBoundary><Suspense fallback={<PageLoading />}><ShopLayout><HomePage /></ShopLayout></Suspense></ErrorBoundary>} />
-        <Route path="/catalog" element={<ErrorBoundary><Suspense fallback={<PageLoading />}><ShopLayout><CatalogPage /></ShopLayout></Suspense></ErrorBoundary>} />
         <Route path="/catalog-tecnologia" element={<ErrorBoundary><Suspense fallback={<PageLoading />}><ShopLayout><TechCatalogPage /></ShopLayout></Suspense></ErrorBoundary>} />
         <Route path="/catalog-joyeria" element={<ErrorBoundary><Suspense fallback={<PageLoading />}><ShopLayout><JewelryCatalogPage /></ShopLayout></Suspense></ErrorBoundary>} />
         <Route path="/product/:slug" element={<ErrorBoundary><Suspense fallback={<PageLoading />}><ShopLayout><ProductDetailPage /></ShopLayout></Suspense></ErrorBoundary>} />
