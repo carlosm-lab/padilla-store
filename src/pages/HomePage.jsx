@@ -190,7 +190,7 @@ export default function HomePage() {
             {/* Left Column: Typography & Actions (Aligned and Clean) */}
             <div className="w-full lg:w-1/2 flex flex-col justify-center items-center lg:items-start text-center lg:text-left relative z-10">
               {/* Título Principal */}
-              <h1 className="tracking-tight text-slate-900 dark:text-white inline-flex flex-col items-stretch mx-auto lg:mx-0 font-bold font-brand text-3xl sm:text-4xl md:text-5xl lg:text-6xl" style={{ lineHeight: 1.1, marginBottom: 'var(--space-lg)', fontFamily: 'var(--font-brand)' }}>
+              <h1 className="tracking-tight text-slate-900 dark:text-white w-full lg:w-auto flex lg:inline-flex flex-col items-stretch mx-auto lg:mx-0 font-bold font-brand text-3xl sm:text-4xl md:text-5xl lg:text-6xl" style={{ lineHeight: 1.1, marginBottom: 'var(--space-lg)', fontFamily: 'var(--font-brand)' }}>
                 <span className="block font-brand text-balance" style={{ fontFamily: 'var(--font-brand)' }}>
                   Protege tu celular. Luce tu estilo.
                   <span className="block text-lg md:text-xl lg:text-2xl mt-3 font-sans font-medium text-slate-500 dark:text-slate-400">
