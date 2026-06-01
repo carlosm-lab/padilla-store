@@ -49,11 +49,11 @@ export default function HomePage() {
   const { products: homeProducts, loading } = useProducts({ limit: 5 });
   const { categories: allCategories, loading: loadingCategories } = useCategories();
   const { settings } = useSettings();
-  
+
   // Desktop animation ref
   const lottieRef = useRef(null);
   const animInstance = useRef(null);
-  
+
   // Mobile animation ref
   const lottieMobileRef = useRef(null);
   const animMobileInstance = useRef(null);
@@ -197,7 +197,7 @@ export default function HomePage() {
                   Cases premium, cargadores rápidos y joyería de acero en San Miguel
                 </span>
               </h1>
-              
+
               {/* Mobile Animation */}
               <div className="lg:hidden w-full max-w-[340px] aspect-square mx-auto z-[20] relative" style={{ marginTop: 'var(--space-lg)', marginBottom: 'var(--space-lg)' }}>
                 <div
@@ -207,7 +207,7 @@ export default function HomePage() {
                   role="img"
                 />
               </div>
-              
+
               {/* Subtítulo — Nivel corporativo con SEO */}
               <p className="text-slate-500 dark:text-slate-400 max-w-[500px] font-normal italic" style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, marginBottom: 'var(--space-xl)' }}>
                 {settings?.hero_subtitle || "Descubre nuestra colección de bisutería fina de acero y plata, accesorios premium para celular y productos electrónicos. Entrega a domicilio en 24 horas en San Miguel, El Salvador."}
@@ -233,7 +233,7 @@ export default function HomePage() {
                 </Link>
               </div>
             </div>
-            
+
             {/* Animation Column (Left logically due to flex-row-reverse) */}
             <div className="hidden lg:flex w-full lg:w-1/2 p-0 justify-start">
               <div className="relative z-[20] mt-[30px] lg:mt-0 w-full max-w-[500px] aspect-square" style={{ minHeight: '350px' }}>
@@ -246,7 +246,7 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-          
+
           {/* Trust Strip - Modern Floating Card Transition */}
           <div className="mt-10 lg:mt-14 bg-white dark:bg-slate-900/50 backdrop-blur-md rounded-2xl border border-slate-200/60 dark:border-slate-800/60 p-6 lg:p-8 shadow-sm grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8 md:gap-0 text-center md:text-left">
             <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 md:px-6">
@@ -258,7 +258,7 @@ export default function HomePage() {
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Envío con motorista propio en San Miguel y zonas aledañas desde $1.00.</p>
               </div>
             </div>
-            
+
             <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 md:px-6 md:border-l border-slate-200/40 dark:border-slate-800/40">
               <div className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-900/80 text-primary flex items-center justify-center shrink-0 border border-slate-200/40 dark:border-slate-800/40 shadow-sm">
                 <span className="material-symbols-outlined text-[20px]">verified</span>
@@ -268,7 +268,7 @@ export default function HomePage() {
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Bisutería de acero y plata, fundas, cargadores y accesorios con respaldo directo.</p>
               </div>
             </div>
-            
+
             <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 md:px-6 md:border-l border-slate-200/40 dark:border-slate-800/40">
               <div className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-900/80 text-primary flex items-center justify-center shrink-0 border border-slate-200/40 dark:border-slate-800/40 shadow-sm">
                 <span className="material-symbols-outlined text-[20px]">chat</span>
@@ -278,7 +278,7 @@ export default function HomePage() {
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Atención personalizada con {FOUNDER_NAME}. Proceso sencillo, rápido y sin complicaciones.</p>
               </div>
             </div>
-            
+
             <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 md:px-6 md:border-l border-slate-200/40 dark:border-slate-800/40">
               <div className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-900/80 text-primary flex items-center justify-center shrink-0 border border-slate-200/40 dark:border-slate-800/40 shadow-sm">
                 <span className="material-symbols-outlined text-[20px]">redeem</span>
@@ -431,7 +431,7 @@ export default function HomePage() {
                 <span className="absolute top-4 right-6 text-4xl font-extrabold text-slate-400 dark:text-slate-500 select-none font-brand tracking-tight transition-transform group-hover:scale-105 duration-300">
                   {item.step}
                 </span>
-                
+
                 {/* Premium Icon Container */}
                 <div className="w-12 h-12 rounded-xl bg-slate-50 dark:bg-slate-900 text-primary flex items-center justify-center shrink-0 border border-slate-200/40 dark:border-slate-800/40 shadow-sm transition-colors group-hover:bg-primary/5 dark:group-hover:bg-primary/10">
                   <span className="material-symbols-outlined text-[24px]" aria-hidden="true">{item.icon}</span>
