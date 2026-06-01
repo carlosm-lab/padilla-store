@@ -191,8 +191,8 @@ export default function HomePage() {
             <div className="w-full lg:w-1/2 flex flex-col justify-center items-center lg:items-start text-center lg:text-left relative z-10">
               {/* Título Principal */}
               <h1 className="tracking-tight text-slate-900 dark:text-white inline-flex flex-col items-stretch mx-auto lg:mx-0 font-bold font-brand" style={{ fontSize: 'var(--text-hero)', lineHeight: 1.1, marginBottom: 'var(--space-lg)', fontFamily: 'var(--font-brand)' }}>
-                <span className="block whitespace-nowrap font-brand" style={{ fontFamily: 'var(--font-brand)' }}>
-                  {settings?.hero_title || "Protege tu estilo"}
+                <span className="block font-brand text-balance" style={{ fontFamily: 'var(--font-brand)' }}>
+                  Cases para Celular, Cargadores y Joyería de Acero | Padilla Store — Envío 24h San Miguel
                 </span>
                 <span className="flex justify-between bg-clip-text text-transparent bg-gradient-to-r from-primary via-violet-500 to-blue-500 dark:from-violet-400 dark:via-primary dark:to-blue-400 select-none italic font-semibold" style={{ fontFamily: 'var(--font-brand)' }}>
                   <span>s</span><span>i</span><span>n</span><span>&nbsp;</span><span>l</span><span>í</span><span>m</span><span>i</span><span>t</span><span>e</span><span>s</span>
