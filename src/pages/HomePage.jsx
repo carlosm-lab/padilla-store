@@ -197,9 +197,6 @@ export default function HomePage() {
                     Cases premium, cargadores rápidos y joyería de acero en San Miguel
                   </span>
                 </span>
-                <span className="flex justify-between bg-clip-text text-transparent bg-gradient-to-r from-primary via-violet-500 to-blue-500 dark:from-violet-400 dark:via-primary dark:to-blue-400 select-none italic font-semibold" style={{ fontFamily: 'var(--font-brand)' }}>
-                  <span>s</span><span>i</span><span>n</span><span>&nbsp;</span><span>l</span><span>í</span><span>m</span><span>i</span><span>t</span><span>e</span><span>s</span>
-                </span>
               </h1>
               
               {/* Mobile Animation */}
