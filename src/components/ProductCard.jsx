@@ -35,7 +35,7 @@ const ProductCardComponent = function ProductCard({ product }) {
   return (
     <article
       data-testid="product-card"
-      className="group relative block overflow-hidden bg-white dark:bg-white/5 rounded-2xl border border-slate-100 dark:border-white/5 shadow-360 hover:shadow-2xl transition-all duration-300"
+      className="group relative block overflow-hidden bg-white dark:bg-slate-900/50 rounded-2xl border border-slate-100 dark:border-white/5 shadow-sm hover:shadow-md transition-all duration-300"
     >
       <Link to={`/product/${product.slug}`} className="absolute inset-0 z-[1]" aria-label={`Ver detalles de ${product.name}`} />
 

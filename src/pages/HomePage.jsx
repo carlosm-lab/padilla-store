@@ -4,13 +4,46 @@ import ProductCard from '@/components/ProductCard';
 import { useProducts } from '@/hooks/useProducts';
 import { useCategories } from '@/hooks/useCategories';
 import { Helmet } from 'react-helmet-async';
-import { BASE_URL, WHATSAPP_NUMBER } from '@/config/constants';
+import { BASE_URL, WHATSAPP_NUMBER, SITE_NAME, FOUNDER_NAME, BUSINESS_PHONE, CONTACT_EMAIL } from '@/config/constants';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import lottie from 'lottie-web';
+import StructuredData, { createFAQSchema, createBreadcrumbSchema } from '@/components/StructuredData';
 
 const FALLBACK_HERO_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuC2utPyicqN_kUOlg_KMlF2AA1cqvefgwLmDWPoStz9OLaD7KrTngV5Z330vaSwZf_Ad-Va2vFoDwEj4lBCqcQF_O4oZyxM7HrmORUD6zpvKgOA0z6fzdO1HZ6FDAI6BOHCIeCRWCSiZu8u9TJ79hmbPK0DLNbKphBr3g-E6flprEImzUkY0AIKfn31wWv1HhkMfxaEYUmAZAXARQ2wqx1GSswK_9grPpT5H48RI4n8rkAexrzyjQuq7HR3Lyfy-voEibkI1gYHm5I';
 
 const ANIMATION_PATH = '/new-animation.json';
+
+// ── Datos FAQ (del TXT maestro) ──────────────────────────
+const FAQ_ITEMS = [
+  {
+    question: '¿Los productos de Padilla Store son originales?',
+    answer: 'Sí. En Padilla Store comercializamos productos de calidad con garantía local. Cada artículo es seleccionado cuidadosamente para garantizar que nuestros clientes reciban productos auténticos y duraderos. Si tienes dudas sobre un producto específico, contáctanos directamente por WhatsApp y te brindamos toda la información.'
+  },
+  {
+    question: '¿De qué material está elaborada la bisutería?',
+    answer: 'Nuestra bisutería fina está elaborada principalmente en acero y plata. Estos materiales ofrecen alta durabilidad, resistencia y un acabado elegante. Todos nuestros anillos, collares y aretes están diseñados para uso diario manteniendo su brillo y calidad.'
+  },
+  {
+    question: '¿La bisutería de Padilla Store se oxida?',
+    answer: 'La bisutería de acero es altamente resistente a la oxidación. Para mantener tus piezas en óptimas condiciones, te recomendamos: no aplicar perfumes directamente sobre la joyería, evitar el uso durante actividades físicas intensas, y limpiar las piezas con paños ecológicos suaves.'
+  },
+  {
+    question: '¿Cuáles son los métodos de pago disponibles?',
+    answer: 'Aceptamos transferencia bancaria a Banco Agrícola, transferencia a BAC, y pago en efectivo contra entrega. El proceso de pago es sencillo y seguro: seleccionas tu producto, nos contactas por WhatsApp, te enviamos los datos de pago y procesamos tu orden de inmediato.'
+  },
+  {
+    question: '¿Cuánto cuesta el envío y cuánto tarda la entrega?',
+    answer: 'El costo de envío va desde $1.00 hasta $3.00, dependiendo de la ubicación. El tiempo estimado de entrega es de 24 horas. Realizamos entregas a domicilio en San Miguel y zonas aledañas con motorista propio, lo que nos permite un mayor control del proceso y comunicación directa contigo.'
+  },
+  {
+    question: '¿Cuál es la política de cambios y devoluciones?',
+    answer: 'Los cambios pueden solicitarse dentro de los primeros 5 días posteriores a la compra. No realizamos devoluciones en efectivo; cuando corresponda, se otorga saldo a favor para futuras compras. Si tu pedido llega dañado, envíanos fotografías o videos, validamos la incidencia y realizamos el reemplazo correspondiente.'
+  },
+  {
+    question: '¿Cómo puedo realizar un pedido en Padilla Store?',
+    answer: 'El proceso es muy sencillo: (1) Selecciona el producto que deseas. (2) Inicia una conversación con nosotros por WhatsApp. (3) Te calculamos el costo de envío. (4) Te facilitamos los datos de pago. (5) Procesamos tu orden. (6) Coordinamos la entrega a domicilio. (7) Recibes tu comprobante PDF y factura electrónica.'
+  }
+];
 
 export default function HomePage() {
   const { products: homeProducts, loading } = useProducts({ limit: 4 });
@@ -81,15 +114,20 @@ export default function HomePage() {
     };
   }, []);
 
+  // Estado para FAQ abierta
+  const [openFaq, setOpenFaq] = useState(null);
+
   return (
     <>
       <Helmet>
-        <title>Inicio | Padilla's Store</title>
-        <meta name="description" content="Encuentra los mejores accesorios para tu celular y joyería fina en Padilla's Store." />
-        <meta property="og:title" content="Padilla's Store" />
-        <meta property="og:description" content="Accesorios para celular y joyería fina premium." />
+        <title>Padilla Store | Accesorios para Celular, Bisutería Fina y Electrónicos en San Miguel, El Salvador</title>
+        <meta name="description" content="Padilla Store: tienda en línea en San Miguel, El Salvador. Bisutería fina de acero y plata, fundas para celular, cargadores, audífonos y electrónicos. Entrega a domicilio en 24 horas. Compra fácil por WhatsApp." />
+        <meta property="og:title" content="Padilla Store — Accesorios para Celular, Bisutería Fina y Electrónicos en San Miguel" />
+        <meta property="og:description" content="Tienda en línea de accesorios tecnológicos, bisutería de acero y plata con entrega a domicilio en 24h en San Miguel, El Salvador." />
         <meta property="og:image" content={settings?.hero_image_url || FALLBACK_HERO_IMG} />
         <meta property="og:url" content={BASE_URL} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content={SITE_NAME} />
         <link rel="canonical" href={`${BASE_URL}/`} />
         <link rel="preload" as="image" href={settings?.hero_image_url || FALLBACK_HERO_IMG} />
         <style>{`
@@ -139,6 +177,11 @@ export default function HomePage() {
         `}</style>
       </Helmet>
 
+      {/* FAQ Structured Data */}
+      <StructuredData data={createFAQSchema(FAQ_ITEMS)} />
+      {/* Breadcrumb: Inicio */}
+      <StructuredData data={createBreadcrumbSchema([{ name: 'Inicio', url: '/' }])} />
+
       {/* Hero Section — Modern & Executive Redesign */}
       <section className="main-banner relative w-full overflow-hidden">
         {/* Main Hero Container — Spaced and responsive */}
@@ -162,14 +205,14 @@ export default function HomePage() {
                 <div
                   ref={lottieMobileRef}
                   className="w-full h-full absolute inset-0"
-                  aria-label="Animación decorativa"
+                  aria-label="Animación decorativa de Padilla Store"
                   role="img"
                 />
               </div>
               
-              {/* Subtítulo — Nivel corporativo */}
+              {/* Subtítulo — Nivel corporativo con SEO */}
               <p className="font-normal text-slate-500 dark:text-slate-400 max-w-[500px]" style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, marginBottom: 'var(--space-xl)' }}>
-                {settings?.hero_subtitle || "Descubre nuestra colección exclusiva de joyería fina y accesorios premium para tu celular."}
+                {settings?.hero_subtitle || "Descubre nuestra colección de bisutería fina de acero y plata, accesorios premium para celular y productos electrónicos. Entrega a domicilio en 24 horas en San Miguel, El Salvador."}
               </p>
 
               {/* Botones de Acción de Alta Gama */}
@@ -199,42 +242,52 @@ export default function HomePage() {
                 <div
                   ref={lottieRef}
                   className="w-full h-full absolute inset-0"
-                  aria-label="Animación decorativa"
+                  aria-label="Animación decorativa de Padilla Store"
                   role="img"
                 />
               </div>
             </div>
           </div>
           
-          {/* Trust Strip - Stripe/Linear Style Dividers */}
-          <div className="mt-20 lg:mt-32 pt-10 border-t border-slate-200/40 dark:border-slate-800/40 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 text-center md:text-left">
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-6">
+          {/* Trust Strip - Modern Floating Card Transition */}
+          <div className="mt-10 lg:mt-14 bg-white dark:bg-slate-900/50 backdrop-blur-md rounded-2xl border border-slate-200/60 dark:border-slate-800/60 p-6 lg:p-8 shadow-sm grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8 md:gap-0 text-center md:text-left">
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 md:px-6">
               <div className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-900/80 text-primary flex items-center justify-center shrink-0 border border-slate-200/40 dark:border-slate-800/40 shadow-sm">
                 <span className="material-symbols-outlined text-[20px]">local_shipping</span>
               </div>
               <div>
-                <h4 className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">Envío a todo el país</h4>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Entrega rápida en El Salvador para todos tus pedidos.</p>
+                <h2 className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">Entrega a domicilio en 24 horas</h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Envío con motorista propio en San Miguel y zonas aledañas desde $1.00.</p>
               </div>
             </div>
             
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-6 md:border-l border-slate-200/40 dark:border-slate-800/40">
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 md:px-6 md:border-l border-slate-200/40 dark:border-slate-800/40">
               <div className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-900/80 text-primary flex items-center justify-center shrink-0 border border-slate-200/40 dark:border-slate-800/40 shadow-sm">
                 <span className="material-symbols-outlined text-[20px]">verified</span>
               </div>
               <div>
-                <h4 className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">Calidad Certificada</h4>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Garantía real en joyería, protectores y cases premium.</p>
+                <h2 className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">Garantía local en todos los productos</h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Bisutería de acero y plata, fundas, cargadores y accesorios con respaldo directo.</p>
               </div>
             </div>
             
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-6 md:border-l border-slate-200/40 dark:border-slate-800/40">
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 md:px-6 md:border-l border-slate-200/40 dark:border-slate-800/40">
               <div className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-900/80 text-primary flex items-center justify-center shrink-0 border border-slate-200/40 dark:border-slate-800/40 shadow-sm">
                 <span className="material-symbols-outlined text-[20px]">chat</span>
               </div>
               <div>
-                <h4 className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">Atención Directa</h4>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Cierre de compras personalizado de inmediato por WhatsApp.</p>
+                <h2 className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">Compra directa por WhatsApp</h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Atención personalizada con {FOUNDER_NAME}. Proceso sencillo, rápido y sin complicaciones.</p>
+              </div>
+            </div>
+
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 md:px-6 md:border-l border-slate-200/40 dark:border-slate-800/40">
+              <div className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-900/80 text-primary flex items-center justify-center shrink-0 border border-slate-200/40 dark:border-slate-800/40 shadow-sm">
+                <span className="material-symbols-outlined text-[20px]">redeem</span>
+              </div>
+              <div>
+                <h2 className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">Empaque protector premium</h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Entregado en caja rígida con logotipo corporativo y papel de seda protector.</p>
               </div>
             </div>
           </div>
@@ -244,6 +297,9 @@ export default function HomePage() {
       <main className="max-w-[1440px] mx-auto bg-background-light dark:bg-background-dark text-[#1c1b1b] dark:text-slate-100 font-sans">
         <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up">
           <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-8 text-center">Explorar por Categoría</h2>
+          <p className="text-center text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mb-8 text-[16px] leading-[24px]">
+            Encuentra accesorios tecnológicos para tu celular, bisutería fina de acero y plata, y productos electrónicos seleccionados. Todo disponible con entrega a domicilio en San Miguel.
+          </p>
           <div className="flex overflow-x-auto hide-scrollbar gap-[16px] snap-x snap-mandatory pb-4">
             {loadingCategories ? (
               <div className="w-full py-12 flex justify-center"><div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div></div>
@@ -258,12 +314,12 @@ export default function HomePage() {
                 <Link
                   key={cat.id}
                   to={`/catalog?category=${cat.slug}`}
-                  className="snap-start shrink-0 w-64 md:w-1/3 group relative rounded-2xl overflow-hidden bg-[#f6f3f2] dark:bg-white/5 aspect-[4/5] md:aspect-square flex flex-col hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-shadow duration-300"
+                  className="snap-start shrink-0 w-64 md:w-1/3 group relative rounded-2xl overflow-hidden bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-white/5 shadow-sm aspect-[4/5] md:aspect-square flex flex-col hover:shadow-md transition-all duration-300"
                 >
-                  <div className="flex-grow p-8 flex items-center justify-center">
-                    <img alt={cat.name} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" src={imgSrc} />
+                  <div className="flex-grow p-8 flex items-center justify-center bg-white dark:bg-slate-950/20">
+                    <img alt={`${cat.name} — Padilla Store San Miguel`} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" src={imgSrc} />
                   </div>
-                  <div className="p-6 bg-[#f1edec]/50 dark:bg-black/50 backdrop-blur-sm absolute bottom-0 w-full">
+                  <div className="p-6 bg-white/90 dark:bg-slate-900/90 border-t border-slate-100 dark:border-white/5 backdrop-blur-sm absolute bottom-0 w-full">
                     <h3 className="text-[18px] leading-[28px] font-medium text-[#1c1b1b] dark:text-white text-center">{cat.name}</h3>
                   </div>
                 </Link>
@@ -276,8 +332,9 @@ export default function HomePage() {
         <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="shop">
           <div className="flex justify-between items-end mb-8">
             <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white">Los Más Deseados</h2>
-            <Link to="/catalog" className="text-[16px] leading-[24px] text-[#5d5f5f] dark:text-primary hover:text-[#444748] dark:hover:text-white transition-colors underline decoration-1 underline-offset-4">
-              Ver todos
+            <Link to="/catalog" className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full text-xs font-bold bg-white dark:bg-slate-900/50 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-800/60 shadow-sm hover:bg-primary hover:text-white hover:border-primary dark:hover:bg-primary dark:hover:border-primary transition-all duration-300 group">
+              Más
+              <span className="material-symbols-outlined text-[14px] transition-transform group-hover:translate-x-0.5" aria-hidden="true">arrow_forward</span>
             </Link>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-[16px] md:gap-8">
@@ -293,30 +350,152 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Trust Section */}
-        <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-[16px] md:gap-6">
-            <div className="bg-[#f6f3f2] dark:bg-white/5 p-8 rounded-2xl flex flex-col items-center text-center gap-4 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-shadow">
-              <div className="w-16 h-16 rounded-full bg-[#f1edec] dark:bg-white/10 flex items-center justify-center text-[#5d5f5f] dark:text-white mb-2">
-                <span className="material-symbols-outlined text-[32px]" style={{ fontVariationSettings: "'FILL' 0" }}>local_shipping</span>
+        {/* ── Sobre Padilla Store (EEAT) ──────────────────────── */}
+        <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="sobre-nosotros">
+          <article>
+            <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-6 text-center">Sobre Padilla Store</h2>
+            <div className="bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-white/5 shadow-sm rounded-2xl p-8 md:p-10">
+              <div className="max-w-3xl mx-auto space-y-6">
+                <p className="text-[16px] leading-[26px] text-[#444748] dark:text-slate-400">
+                  <strong className="text-[#1c1b1b] dark:text-white">Padilla Store</strong> es una tienda en línea especializada en la comercialización de accesorios tecnológicos, accesorios para teléfonos celulares, productos electrónicos y bisutería fina. Operamos desde <strong className="text-[#1c1b1b] dark:text-white">San Miguel, El Salvador</strong>, bajo la razón social <strong className="text-[#1c1b1b] dark:text-white">Padilla S.A. de C.V.</strong>, con un modelo de negocio orientado a facilitar el proceso de compra sin necesidad de desplazamientos.
+                </p>
+                <p className="text-[16px] leading-[26px] text-[#444748] dark:text-slate-400">
+                  La empresa fue fundada por <strong className="text-[#1c1b1b] dark:text-white">{FOUNDER_NAME}</strong> con el propósito de simplificar la experiencia de compra de productos tecnológicos y accesorios personales. La idea nace al identificar la necesidad de muchas personas de adquirir productos de calidad sin abandonar sus actividades diarias, evitando desplazamientos innecesarios y optimizando el tiempo.
+                </p>
+
+                <h3 className="text-[18px] leading-[28px] font-semibold text-[#1c1b1b] dark:text-white pt-2">Nuestra misión</h3>
+                <p className="text-[16px] leading-[26px] text-[#444748] dark:text-slate-400">
+                  Facilitar el acceso a productos electrónicos, accesorios tecnológicos y bisutería fina mediante un proceso de compra cómodo, rápido y confiable, permitiendo que nuestros clientes realicen sus compras desde la comodidad de su hogar y reciban sus pedidos en el menor tiempo posible.
+                </p>
+
+                <h3 className="text-[18px] leading-[28px] font-semibold text-[#1c1b1b] dark:text-white pt-2">¿Por qué elegir Padilla Store?</h3>
+                <ul className="space-y-2 text-[16px] leading-[26px] text-[#444748] dark:text-slate-400">
+                  <li className="flex items-start gap-3">
+                    <span className="material-symbols-outlined text-primary text-[20px] mt-0.5 shrink-0" aria-hidden="true">check_circle</span>
+                    <span><strong className="text-[#1c1b1b] dark:text-white">Atención personalizada</strong> — Comunicación directa con el negocio a través de WhatsApp.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="material-symbols-outlined text-primary text-[20px] mt-0.5 shrink-0" aria-hidden="true">check_circle</span>
+                    <span><strong className="text-[#1c1b1b] dark:text-white">Entrega a domicilio en 24 horas</strong> — Motorista propio para mayor control y seguimiento.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="material-symbols-outlined text-primary text-[20px] mt-0.5 shrink-0" aria-hidden="true">check_circle</span>
+                    <span><strong className="text-[#1c1b1b] dark:text-white">Garantía local</strong> — Respaldo directo en todos los productos.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="material-symbols-outlined text-primary text-[20px] mt-0.5 shrink-0" aria-hidden="true">check_circle</span>
+                    <span><strong className="text-[#1c1b1b] dark:text-white">Empaque premium</strong> — Caja rígida con logotipo y papel de seda protector.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="material-symbols-outlined text-primary text-[20px] mt-0.5 shrink-0" aria-hidden="true">check_circle</span>
+                    <span><strong className="text-[#1c1b1b] dark:text-white">Comprobante y factura electrónica</strong> — Transparencia total en cada transacción.</span>
+                  </li>
+                </ul>
+
+                <h3 className="text-[18px] leading-[28px] font-semibold text-[#1c1b1b] dark:text-white pt-2">Nuestros valores</h3>
+                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <dt className="font-semibold text-[#1c1b1b] dark:text-white text-[16px]">Honestidad</dt>
+                    <dd className="text-[14px] leading-[22px] text-[#444748] dark:text-slate-400 mt-1">Transparencia total en información de productos, materiales, entregas y condiciones comerciales.</dd>
+                  </div>
+                  <div>
+                    <dt className="font-semibold text-[#1c1b1b] dark:text-white text-[16px]">Atención al cliente</dt>
+                    <dd className="text-[14px] leading-[22px] text-[#444748] dark:text-slate-400 mt-1">Cada consulta es atendida con el objetivo de brindar soluciones oportunas y una experiencia satisfactoria.</dd>
+                  </div>
+                  <div>
+                    <dt className="font-semibold text-[#1c1b1b] dark:text-white text-[16px]">Compromiso</dt>
+                    <dd className="text-[14px] leading-[22px] text-[#444748] dark:text-slate-400 mt-1">Respondemos a las necesidades de nuestros clientes mediante un servicio ágil y eficiente.</dd>
+                  </div>
+                  <div>
+                    <dt className="font-semibold text-[#1c1b1b] dark:text-white text-[16px]">Confianza</dt>
+                    <dd className="text-[14px] leading-[22px] text-[#444748] dark:text-slate-400 mt-1">Comunicación directa, comprobantes de compra y garantía local en cada pedido.</dd>
+                  </div>
+                </dl>
               </div>
-              <h3 className="text-[18px] leading-[28px] font-medium text-[#1c1b1b] dark:text-white">Envío gratis</h3>
-              <p className="text-[16px] leading-[24px] text-[#444748] dark:text-slate-400">En todos los pedidos superiores a $50. Recíbelo en 24/48h.</p>
             </div>
-            <div className="bg-[#f6f3f2] dark:bg-white/5 p-8 rounded-2xl flex flex-col items-center text-center gap-4 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-shadow">
-              <div className="w-16 h-16 rounded-full bg-[#f1edec] dark:bg-white/10 flex items-center justify-center text-[#5d5f5f] dark:text-white mb-2">
-                <span className="material-symbols-outlined text-[32px]" style={{ fontVariationSettings: "'FILL' 0" }}>verified</span>
+          </article>
+        </section>
+
+        {/* ── Cómo Comprar ──────────────────────────────────── */}
+        <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="como-comprar">
+          <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-6 text-center">Cómo comprar en Padilla Store</h2>
+          <p className="text-center text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mb-8 text-[16px] leading-[24px]">
+            Comprar en Padilla Store es rápido y sencillo. Todo el proceso se realiza a través de WhatsApp con atención personalizada.
+          </p>
+          <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[16px] md:gap-6 list-none p-0 m-0">
+            {[
+              { step: '1', icon: 'touch_app', title: 'Selecciona tu producto', desc: 'Explora nuestro catálogo y elige los productos que más te gusten.' },
+              { step: '2', icon: 'chat', title: 'Escríbenos por WhatsApp', desc: 'Inicia una conversación con nosotros para confirmar tu pedido y calcular el envío.' },
+              { step: '3', icon: 'payments', title: 'Realiza tu pago', desc: 'Paga por transferencia a Banco Agrícola, BAC o efectivo contra entrega.' },
+              { step: '4', icon: 'package_2', title: 'Recibe en tu domicilio', desc: 'Entregamos en 24 horas en San Miguel con motorista propio. Recibes comprobante PDF y factura electrónica.' },
+            ].map(item => (
+              <li key={item.step} className="bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-white/5 shadow-sm p-6 rounded-2xl flex flex-col items-center text-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-primary/10 dark:bg-primary/20 text-primary flex items-center justify-center text-[20px] font-bold">{item.step}</div>
+                <span className="material-symbols-outlined text-[28px] text-[#5d5f5f] dark:text-white" style={{ fontVariationSettings: "'FILL' 0" }} aria-hidden="true">{item.icon}</span>
+                <h3 className="text-[16px] leading-[24px] font-semibold text-[#1c1b1b] dark:text-white">{item.title}</h3>
+                <p className="text-[14px] leading-[22px] text-[#444748] dark:text-slate-400">{item.desc}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {/* ── Cobertura de Envío (SEO Local) ──────────────────── */}
+        <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="cobertura">
+          <div className="bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-white/5 shadow-sm rounded-2xl p-8 md:p-10">
+            <div className="max-w-3xl mx-auto">
+              <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-6 text-center">Cobertura de envío en San Miguel</h2>
+              <p className="text-[16px] leading-[26px] text-[#444748] dark:text-slate-400 mb-6 text-center">
+                Padilla Store realiza entregas a domicilio en <strong className="text-[#1c1b1b] dark:text-white">San Miguel, municipios cercanos y zonas aledañas</strong>. Nuestro servicio de envío cuenta con motorista propio, lo que garantiza mayor control del proceso, comunicación directa y entrega personalizada.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+                <div>
+                  <div className="text-[28px] font-bold text-primary">24h</div>
+                  <p className="text-[14px] text-[#444748] dark:text-slate-400 mt-1">Tiempo estimado de entrega</p>
+                </div>
+                <div>
+                  <div className="text-[28px] font-bold text-primary">$1–$3</div>
+                  <p className="text-[14px] text-[#444748] dark:text-slate-400 mt-1">Costo de envío a domicilio</p>
+                </div>
+                <div>
+                  <div className="text-[28px] font-bold text-primary">
+                    <span className="material-symbols-outlined text-[28px]" aria-hidden="true">two_wheeler</span>
+                  </div>
+                  <p className="text-[14px] text-[#444748] dark:text-slate-400 mt-1">Motorista propio con seguimiento</p>
+                </div>
               </div>
-              <h3 className="text-[18px] leading-[28px] font-medium text-[#1c1b1b] dark:text-white">Garantía 1 año</h3>
-              <p className="text-[16px] leading-[24px] text-[#444748] dark:text-slate-400">Todos nuestros productos cuentan con garantía de calidad.</p>
             </div>
-            <div className="bg-[#f6f3f2] dark:bg-white/5 p-8 rounded-2xl flex flex-col items-center text-center gap-4 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-shadow">
-              <div className="w-16 h-16 rounded-full bg-[#f1edec] dark:bg-white/10 flex items-center justify-center text-[#5d5f5f] dark:text-white mb-2">
-                <span className="material-symbols-outlined text-[32px]" style={{ fontVariationSettings: "'FILL' 0" }}>chat_bubble</span>
+          </div>
+        </section>
+
+        {/* ── Preguntas Frecuentes (FAQ + Schema) ─────────────── */}
+        <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="preguntas-frecuentes">
+          <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-6 text-center">Preguntas frecuentes</h2>
+          <p className="text-center text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mb-8 text-[16px] leading-[24px]">
+            Resolvemos las dudas más comunes de nuestros clientes en San Miguel y El Salvador sobre productos, envíos, pagos y garantías.
+          </p>
+          <div className="max-w-3xl mx-auto space-y-3">
+            {FAQ_ITEMS.map((item, index) => (
+              <div key={index} className="bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-white/5 shadow-sm rounded-xl overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  className="w-full flex items-center justify-between p-5 text-left cursor-pointer"
+                  aria-expanded={openFaq === index}
+                  aria-controls={`faq-answer-${index}`}
+                >
+                  <h3 className="text-[16px] leading-[24px] font-semibold text-[#1c1b1b] dark:text-white pr-4">{item.question}</h3>
+                  <span className={`material-symbols-outlined text-[20px] text-slate-500 transition-transform duration-200 shrink-0 ${openFaq === index ? 'rotate-180' : ''}`} aria-hidden="true">expand_more</span>
+                </button>
+                <div
+                  id={`faq-answer-${index}`}
+                  className={`overflow-hidden transition-all duration-300 ${openFaq === index ? 'max-h-96 pb-5' : 'max-h-0'}`}
+                  role="region"
+                  aria-labelledby={`faq-question-${index}`}
+                >
+                  <p className="px-5 text-[15px] leading-[24px] text-[#444748] dark:text-slate-400">{item.answer}</p>
+                </div>
               </div>
-              <h3 className="text-[18px] leading-[28px] font-medium text-[#1c1b1b] dark:text-white">Pedido sin Tarjeta</h3>
-              <p className="text-[16px] leading-[24px] text-[#444748] dark:text-slate-400">Todos los pedidos se completan conversando directamente por WhatsApp.</p>
-            </div>
+            ))}
           </div>
         </section>
       </main>

@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import CartDrawer from '../CartDrawer';
-import StructuredData, { createOrganizationSchema } from '../StructuredData';
+import StructuredData, { createLocalBusinessSchema, createWebSiteSchema } from '../StructuredData';
 import ErrorBoundary from '../ErrorBoundary';
 import { Helmet } from 'react-helmet-async';
 import { useSettings } from '../../context/SettingsContext';
@@ -21,7 +21,8 @@ export default function ShopLayout({ children }) {
       <Helmet>
         <link rel="canonical" href={canonicalUrl} />
       </Helmet>
-      <StructuredData data={createOrganizationSchema(settings)} />
+      <StructuredData data={createLocalBusinessSchema(settings)} />
+      <StructuredData data={createWebSiteSchema()} />
       <Navbar />
       <CartDrawer />
       <main className="flex-1 shrink-0 flex flex-col">
@@ -39,3 +40,4 @@ export default function ShopLayout({ children }) {
     </div>
   );
 }
+

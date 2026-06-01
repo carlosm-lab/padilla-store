@@ -5,10 +5,11 @@ import { sanitizeInput } from '@/utils/sanitize';
 import { useSettings } from '@/context/SettingsContext';
 import { useAuth } from '@/context/AuthContext';
 import toast from 'react-hot-toast';
-import { WHATSAPP_NUMBER, CONTACT_EMAIL, BASE_URL } from '@/config/constants';
+import { WHATSAPP_NUMBER, CONTACT_EMAIL, BASE_URL, SITE_NAME, BUSINESS_PHONE } from '@/config/constants';
 import { logger } from '@/utils/logger';
 import { safeLocalStorage } from '@/utils/storage';
 import { Turnstile } from '@marsidev/react-turnstile';
+import StructuredData, { createBreadcrumbSchema } from '@/components/StructuredData';
 
 // MED-004: Warn loudly if Turnstile key is missing in production
 if (import.meta.env.PROD && !import.meta.env.VITE_TURNSTILE_SITE_KEY) {
@@ -133,16 +134,25 @@ export default function ContactPage() {
   return (
     <div className="bg-background-light dark:bg-background-dark min-h-screen py-[var(--space-xl)] md:py-[var(--space-2xl)]">
       <Helmet>
-        <title>Contacto | Padilla's Store</title>
+        <title>Contacto | Padilla Store — WhatsApp, Correo y Atención en San Miguel, El Salvador</title>
+        <meta name="description" content="Contáctanos en Padilla Store: WhatsApp +503 7486-6909, correo padillastoresv@gmail.com. Atención de lunes a viernes 08:00-18:00 y sábados 08:00-13:00. Resolvemos dudas sobre bisutería, accesorios para celular y envíos en San Miguel." />
+        <meta property="og:title" content={`Contacto | ${SITE_NAME} — Atención en San Miguel`} />
+        <meta property="og:description" content="Escríbenos por WhatsApp o correo electrónico. Atención personalizada en San Miguel, El Salvador." />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content={SITE_NAME} />
         <meta property="og:url" content={`${BASE_URL}/contact`} />
         <meta property="og:image" content={`${BASE_URL}/og-image.png`} />
-        <meta name="description" content="Contáctanos para resolver tus dudas sobre compras de joyería, accesorios de celular o envíos en El Salvador en Padilla's Store." />
+        <link rel="canonical" href={`${BASE_URL}/contact`} />
       </Helmet>
+      <StructuredData data={createBreadcrumbSchema([
+        { name: 'Inicio', url: '/' },
+        { name: 'Contacto', url: '/contact' }
+      ])} />
       
       <div className="w-full mx-auto px-container">
         
         {/* Hero Banner */}
-        <div className="relative rounded-[2rem] overflow-hidden bg-white dark:bg-white/5 mb-[var(--space-2xl)] text-slate-900 dark:text-white p-[var(--space-xl)] md:p-[var(--space-3xl)] flex items-center justify-center text-center shadow-sm border border-slate-100 dark:border-white/5">
+        <div className="relative rounded-[2rem] overflow-hidden bg-white dark:bg-slate-900/50 mb-[var(--space-2xl)] text-slate-900 dark:text-white p-[var(--space-xl)] md:p-[var(--space-3xl)] flex items-center justify-center text-center shadow-sm border border-slate-200/60 dark:border-slate-800/60">
           {/* Decorative Elements */}
           <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-slate-100 blur-3xl"></div>
           <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-slate-100 dark:bg-black/10 blur-3xl"></div>
@@ -150,10 +160,10 @@ export default function ContactPage() {
           
           <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
             <span className="bg-slate-100 text-slate-700 dark:text-white dark:bg-white/10 font-bold tracking-widest uppercase text-[var(--text-xs)] mb-[var(--space-md)] px-4 py-1.5 rounded-full border border-slate-200 dark:border-white/5">Contacto</span>
-            <h1 className="text-[var(--text-4xl)] md:text-[var(--text-hero)] font-black tracking-tight mb-[var(--space-md)]">Estamos aquí para ayudarte</h1>
+            <h1 className="text-[var(--text-4xl)] md:text-[var(--text-hero)] font-black tracking-tight mb-[var(--space-md)]">Contacta con Padilla Store en San Miguel</h1>
             <p className="text-[var(--text-lg)] text-slate-500 dark:text-slate-400 leading-relaxed max-w-2xl font-medium">
-              ¿Tienes dudas sobre un pedido personalizado, envíos o nuestros productos? 
-              Nos encantaría escucharte. Escríbenos directamente o visítanos en nuestras redes.
+              ¿Tienes dudas sobre bisutería fina, accesorios para celular, envíos o métodos de pago? 
+              Estamos en San Miguel, El Salvador. Escríbenos por WhatsApp, envíanos un correo o llena el formulario.
             </p>
           </div>
         </div>
@@ -162,7 +172,7 @@ export default function ContactPage() {
           
           {/* Info Side */}
           <div className="flex flex-col gap-[var(--space-lg)]">
-            <div className="bg-white dark:bg-white/5 p-[var(--space-xl)] rounded-2xl shadow-sm border border-slate-100 dark:border-white/5 flex flex-col gap-[var(--space-lg)]">
+            <div className="bg-white dark:bg-slate-900/50 p-[var(--space-xl)] rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-800/60 flex flex-col gap-[var(--space-lg)]">
               <h2 className="text-[var(--text-2xl)] font-bold text-slate-900 dark:text-white mb-[var(--space-xs)]">Información Directa</h2>
               
               <a 
@@ -200,23 +210,53 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="font-bold text-slate-900 dark:text-slate-100">Horario de Atención</h3>
-                  <p className="text-slate-500 dark:text-slate-400 mt-[0.25rem]">Lunes a Viernes: 9:00 AM - 6:00 PM</p>
-                  <p className="text-slate-500 dark:text-slate-400">Sábado: 10:00 AM - 2:00 PM</p>
+                  <p className="text-slate-500 dark:text-slate-400 mt-[0.25rem]">Lunes a Viernes: 8:00 AM - 6:00 PM</p>
+                  <p className="text-slate-500 dark:text-slate-400">Sábado: 8:00 AM - 1:00 PM</p>
                 </div>
               </div>
             </div>
 
-            {/* Freq Questions Hint */}
-            <div className="bg-white dark:bg-white/5 rounded-3xl p-[var(--space-xl)] text-slate-900 dark:text-white shadow-sm border border-slate-100 dark:border-white/5 relative overflow-hidden">
+              {/* Ubicación y Cobertura */}
+              <div className="flex items-start gap-[var(--space-md)] p-[var(--space-md)] rounded-2xl">
+                <div className="w-[clamp(2.5rem,6vw,3rem)] aspect-square bg-slate-100 text-slate-600 rounded-xl flex items-center justify-center shrink-0">
+                  <span className="material-symbols-outlined" style={{ fontSize: 'var(--icon-lg)' }}>location_on</span>
+                </div>
+                <div>
+                  <h3 className="font-bold text-slate-900 dark:text-slate-100">Ubicación y cobertura</h3>
+                  <p className="text-slate-500 dark:text-slate-400 mt-[0.25rem]">San Miguel, El Salvador</p>
+                  <p className="text-slate-500 dark:text-slate-400 text-[var(--text-sm)]">Entrega a domicilio en San Miguel y municipios cercanos. Envío desde $1.00, entrega en 24 horas con motorista propio.</p>
+                </div>
+              </div>
+
+              {/* Métodos de Pago */}
+              <div className="flex items-start gap-[var(--space-md)] p-[var(--space-md)] rounded-2xl">
+                <div className="w-[clamp(2.5rem,6vw,3rem)] aspect-square bg-slate-100 text-slate-600 rounded-xl flex items-center justify-center shrink-0">
+                  <span className="material-symbols-outlined" style={{ fontSize: 'var(--icon-lg)' }}>payments</span>
+                </div>
+                <div>
+                  <h3 className="font-bold text-slate-900 dark:text-slate-100">Métodos de pago</h3>
+                  <ul className="text-slate-500 dark:text-slate-400 mt-[0.25rem] text-[var(--text-sm)] space-y-1">
+                    <li>Transferencia Banco Agrícola</li>
+                    <li>Transferencia BAC</li>
+                    <li>Efectivo contra entrega</li>
+                  </ul>
+                </div>
+              </div>
+
+            {/* Políticas resumidas */}
+            <div className="bg-white dark:bg-slate-900/50 rounded-3xl p-[var(--space-xl)] text-slate-900 dark:text-white shadow-sm border border-slate-200/60 dark:border-slate-800/60 relative overflow-hidden">
                <div className="absolute top-0 right-0 p-[var(--space-md)] opacity-5 dark:opacity-10">
-                 <span className="material-symbols-outlined" style={{ fontSize: 'var(--icon-hero)' }}>help_center</span>
+                 <span className="material-symbols-outlined" style={{ fontSize: 'var(--icon-hero)' }}>shield</span>
                </div>
-               <h3 className="text-[var(--text-xl)] font-bold mb-[var(--space-sm)] relative z-10">¿Buscas respuestas rápidas?</h3>
-               <p className="text-slate-500 dark:text-slate-400 mb-[var(--space-lg)] relative z-10">
-                 Si tienes preguntas sobre envíos, materiales y tiempos de entrega envianos un mensaje por whatsapp, llena el formulario o usa nuestras redes sociales.
-               </p>
+               <h3 className="text-[var(--text-xl)] font-bold mb-[var(--space-sm)] relative z-10">Políticas y garantías</h3>
+               <ul className="text-slate-500 dark:text-slate-400 mb-[var(--space-lg)] relative z-10 space-y-2 text-[var(--text-sm)]">
+                 <li><strong className="text-slate-700 dark:text-slate-200">Cambios:</strong> Solicítalos dentro de los primeros 5 días posteriores a la compra.</li>
+                 <li><strong className="text-slate-700 dark:text-slate-200">Devoluciones:</strong> Se otorga saldo a favor para futuras compras (no se realizan devoluciones en efectivo).</li>
+                 <li><strong className="text-slate-700 dark:text-slate-200">Pedido dañado:</strong> Envía fotos o video, validamos la incidencia y realizamos el reemplazo.</li>
+                 <li><strong className="text-slate-700 dark:text-slate-200">Protección de datos:</strong> Tu información es utilizada exclusivamente para gestión de pedidos y entregas. No compartimos datos con terceros.</li>
+               </ul>
                <a 
-                 href={`https://wa.me/${(settings?.contact_phone || WHATSAPP_NUMBER).replace(/\D/g, '')}?text=${encodeURIComponent('¡Hola! Necesito hacer una pregunta frecuente.')}`} 
+                 href={`https://wa.me/${(settings?.contact_phone || WHATSAPP_NUMBER).replace(/\D/g, '')}?text=${encodeURIComponent('¡Hola! Necesito hacer una pregunta sobre un pedido.')}`} 
                  target="_blank" rel="noopener noreferrer"
                  className="bg-primary text-white px-[var(--space-lg)] py-[var(--space-sm)] rounded-xl font-bold text-[var(--text-sm)] tracking-wide uppercase hover:bg-primary/90 transition-colors relative z-10 inline-block shadow-md shadow-black/10"
                >
@@ -226,7 +266,7 @@ export default function ContactPage() {
           </div>
 
           {/* Form Side */}
-          <div className="bg-white dark:bg-white/5 rounded-2xl shadow-360 border border-slate-100 dark:border-white/5 p-[var(--space-xl)] md:p-[var(--space-2xl)] h-full">
+          <div className="bg-white dark:bg-slate-900/50 rounded-2xl shadow-sm border border-slate-200/60 dark:border-slate-800/60 p-[var(--space-xl)] md:p-[var(--space-2xl)] h-full">
             <h2 className="text-[var(--text-2xl)] font-bold text-slate-900 dark:text-white mb-[var(--space-lg)]">Envíanos un mensaje</h2>
             
             <form onSubmit={handleSubmit} className="flex flex-col h-full space-y-[var(--space-lg)] pb-[var(--space-3xl)]">

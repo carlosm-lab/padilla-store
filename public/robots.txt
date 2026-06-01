@@ -3,5 +3,7 @@ Allow: /
 Allow: /product/
 Allow: /catalog
 Allow: /contact
+Disallow: /admin
+Disallow: /admin/
 
 Sitemap: https://padillastore.com/sitemap.xml

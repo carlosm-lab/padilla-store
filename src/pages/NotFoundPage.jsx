@@ -5,7 +5,7 @@ export default function NotFoundPage() {
   return (
     <>
       <Helmet>
-        <title>Página no encontrada - Padilla's Store</title>
+        <title>Página no encontrada - Padilla Store</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
@@ -14,10 +14,19 @@ export default function NotFoundPage() {
         <p className="text-slate-500 max-w-md mx-auto mb-8">
           Lo sentimos, no pudimos encontrar la página que buscas. Es posible que el enlace sea incorrecto o que la página haya sido eliminada.
         </p>
-        <Link to="/" className="bg-white dark:bg-white/10 text-slate-900 dark:text-white font-bold py-3 px-8 rounded-full shadow-sm border border-slate-100 dark:border-white/5 hover:bg-slate-50 transition-colors">
-          Volver a la Tienda
-        </Link>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Link to="/" className="bg-white dark:bg-white/10 text-slate-900 dark:text-white font-bold py-3 px-8 rounded-full shadow-sm border border-slate-100 dark:border-white/5 hover:bg-slate-50 transition-colors">
+            Volver a la Tienda
+          </Link>
+          <Link to="/catalog" className="bg-white dark:bg-white/10 text-slate-900 dark:text-white font-bold py-3 px-8 rounded-full shadow-sm border border-slate-100 dark:border-white/5 hover:bg-slate-50 transition-colors">
+            Ver Catálogo
+          </Link>
+          <Link to="/contact" className="bg-white dark:bg-white/10 text-slate-900 dark:text-white font-bold py-3 px-8 rounded-full shadow-sm border border-slate-100 dark:border-white/5 hover:bg-slate-50 transition-colors">
+            Contacto
+          </Link>
+        </div>
       </div>
     </>
   );
 }
+

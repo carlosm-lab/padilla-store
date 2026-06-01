@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { SITE_NAME, LEGAL_NAME, BUSINESS_PHONE, CONTACT_EMAIL, CONTACT_LOCATION } from '@/config/constants';
 
 export default function Footer() {
 
@@ -6,10 +7,21 @@ export default function Footer() {
     <footer className="mt-[var(--space-2xl)] border-t border-slate-200 dark:border-transparent bg-background-light dark:bg-background-dark py-[var(--space-xl)] px-container">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-[var(--space-xl)]">
         <div className="flex flex-col gap-[var(--space-md)]">
-          <span className="text-slate-900 dark:text-slate-100 font-bold text-[var(--text-base)]">Para tí</span>
-          <p className="text-[var(--text-sm)] text-slate-500 dark:text-slate-400">Creando recuerdos que duran toda la vida con las mejores creaciones para ti.</p>
+          <span className="text-slate-900 dark:text-slate-100 font-bold text-[var(--text-base)]">{SITE_NAME}</span>
+          <p className="text-[var(--text-sm)] text-slate-500 dark:text-slate-400">Tienda en línea de accesorios tecnológicos, bisutería fina de acero y plata, y productos electrónicos en San Miguel, El Salvador. Entrega a domicilio en 24 horas.</p>
+          <p className="text-[var(--text-xs)] text-slate-400 dark:text-slate-500">{LEGAL_NAME}</p>
         </div>
-        <div className="md:col-span-2">
+        <div>
+          <h4 className="font-bold text-slate-900 dark:text-slate-100 mb-[var(--space-md)]">Navegación</h4>
+          <ul className="text-[var(--text-sm)] text-slate-500 dark:text-slate-400 space-y-[var(--space-xs)]">
+            <li><Link className="hover:text-primary font-medium transition-colors" to="/">Inicio</Link></li>
+            <li><Link className="hover:text-primary font-medium transition-colors" to="/catalog">Catálogo de productos</Link></li>
+            <li><Link className="hover:text-primary font-medium transition-colors" to="/contact">Contacto</Link></li>
+            <li><Link className="hover:text-primary font-medium transition-colors" to="/privacy">Política de Privacidad</Link></li>
+            <li><Link className="hover:text-primary font-medium transition-colors" to="/terms">Términos de Servicio</Link></li>
+          </ul>
+        </div>
+        <div>
           <h4 className="font-bold text-slate-900 dark:text-slate-100 mb-[var(--space-md)]">Soporte y Atención</h4>
           <p className="text-[var(--text-sm)] text-slate-500 dark:text-slate-400 mb-[var(--space-md)]">
             ¿Tienes alguna duda sobre nuestros productos, envíos o devoluciones? Nuestro equipo está listo para ayudarte en cualquier momento.
@@ -17,6 +29,15 @@ export default function Footer() {
           <ul className="text-[var(--text-sm)] text-slate-500 dark:text-slate-400 space-y-[var(--space-xs)]">
             <li><Link className="hover:text-primary font-medium transition-colors" to="/contact">Contactar por WhatsApp o Correo</Link></li>
           </ul>
+        </div>
+        <div>
+          <h4 className="font-bold text-slate-900 dark:text-slate-100 mb-[var(--space-md)]">Contacto</h4>
+          <address className="not-italic text-[var(--text-sm)] text-slate-500 dark:text-slate-400 space-y-[var(--space-xs)]">
+            <p><a href={`tel:${BUSINESS_PHONE.replace(/\s/g, '')}`} className="hover:text-primary transition-colors">{BUSINESS_PHONE}</a></p>
+            <p><a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-primary transition-colors break-all">{CONTACT_EMAIL}</a></p>
+            <p>{CONTACT_LOCATION}</p>
+            <p className="text-[var(--text-xs)] text-slate-400 dark:text-slate-500 pt-1">L-V: 8:00 AM – 6:00 PM | Sáb: 8:00 AM – 1:00 PM</p>
+          </address>
         </div>
       </div>
       {/* Bottom Section - Copyright & Links */}
@@ -29,7 +50,7 @@ export default function Footer() {
             className="w-full text-center whitespace-nowrap overflow-hidden font-medium" 
             style={{ fontSize: 'clamp(10px, 3.3vw, 14px)' }}
           >
-            © {new Date().getFullYear()} Padilla's Store. Todos los derechos reservados.
+            © {new Date().getFullYear()} {SITE_NAME}. Todos los derechos reservados.
           </p>
           
           {/* Credits - Edge to Edge, Auto-scaling */}
@@ -59,7 +80,7 @@ export default function Footer() {
         <div className="hidden md:flex flex-row justify-between items-center w-full gap-[var(--space-md)]">
           <div className="flex items-center gap-4">
             <p className="whitespace-nowrap">
-              © {new Date().getFullYear()} Padilla's Store. Todos los derechos reservados.
+              © {new Date().getFullYear()} {SITE_NAME}. Todos los derechos reservados.
             </p>
             <span className="text-slate-300 dark:text-slate-700">|</span>
             <div className="inline-flex items-center transition-colors">
@@ -85,3 +106,4 @@ export default function Footer() {
     </footer>
   );
 }
+

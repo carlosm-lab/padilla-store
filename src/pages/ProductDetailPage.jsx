@@ -8,11 +8,11 @@ import { useProduct, useProducts } from '@/hooks/useProducts';
 import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 import toast from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
-import StructuredData, { createProductSchema } from '@/components/StructuredData';
+import StructuredData, { createProductSchema, createBreadcrumbSchema } from '@/components/StructuredData';
 import ShareModal from '@/components/ShareModal';
 import { isOfferActive as isOfferActiveUtil, isOfferScheduled as isOfferScheduledUtil } from '@/utils/productUtils';
 import OfferCountdown from '@/components/OfferCountdown';
-import { BASE_URL } from '@/config/constants';
+import { BASE_URL, SITE_NAME } from '@/config/constants';
 
 export default function ProductDetailPage() {
   const { slug } = useParams();
@@ -89,15 +89,27 @@ export default function ProductDetailPage() {
   return (
     <>
       <Helmet>
-        <title>{product.name} | Padilla's Store</title>
+        <title>{product.name} | Padilla Store — Tienda en Línea San Miguel</title>
         <meta name="description" content={getOgDescription()} />
-        <meta property="og:title" content={`${product.name} | Padilla's Store`} />
+        <meta property="og:title" content={`${product.name} | ${SITE_NAME}`} />
         <meta property="og:image" content={mainImg} />
         <meta property="og:description" content={getOgDescription()} />
         <meta property="og:url" content={`${BASE_URL}/product/${product.slug}`} />
+        <meta property="og:type" content="product" />
+        <meta property="og:site_name" content={SITE_NAME} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${product.name} | ${SITE_NAME}`} />
+        <meta name="twitter:description" content={getOgDescription()} />
+        <meta name="twitter:image" content={mainImg} />
         <link rel="canonical" href={`${BASE_URL}/product/${product.slug}`} />
       </Helmet>
       <StructuredData data={createProductSchema(product, `${BASE_URL}/product/${product.slug}`)} />
+      <StructuredData data={createBreadcrumbSchema([
+        { name: 'Inicio', url: '/' },
+        { name: 'Catálogo', url: '/catalog' },
+        { name: product.categories?.name || 'Productos', url: `/catalog?category=${product.categories?.slug || ''}` },
+        { name: product.name }
+      ])} />
 
       <main className="flex-1 px-container py-[var(--space-lg)]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-xl)]">

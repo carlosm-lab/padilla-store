@@ -7,7 +7,8 @@ import { Helmet } from 'react-helmet-async';
 import ProductCard from '@/components/ProductCard';
 import FilterSidebar from '@/components/FilterSidebar';
 import MobileFilterDrawer from '@/components/MobileFilterDrawer';
-import { BASE_URL } from '@/config/constants';
+import { BASE_URL, SITE_NAME } from '@/config/constants';
+import StructuredData, { createBreadcrumbSchema } from '@/components/StructuredData';
 
 export default function CatalogPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -139,12 +140,20 @@ export default function CatalogPage() {
   return (
     <>
       <Helmet>
-        <title>Catálogo | Padilla's Store</title>
+        <title>Catálogo de Accesorios para Celular, Bisutería Fina y Electrónicos | Padilla Store San Miguel</title>
+        <meta name="description" content="Explora el catálogo completo de Padilla Store: bisutería fina de acero y plata, fundas para celular, cargadores, audífonos, drones y más. Envío a domicilio en San Miguel, El Salvador. Compra fácil por WhatsApp." />
+        <meta property="og:title" content={`Catálogo | ${SITE_NAME} — Accesorios y Bisutería en San Miguel`} />
+        <meta property="og:description" content="Bisutería fina, fundas para celular, cargadores, audífonos y electrónicos con entrega a domicilio en 24h en San Miguel." />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content={SITE_NAME} />
         <meta property="og:url" content={`${BASE_URL}/catalog`} />
         <meta property="og:image" content={`${BASE_URL}/og-image.png`} />
-        <meta name="description" content="Explora nuestra colección completa de joyería fina y accesorios para celular en Padilla's Store." />
         <link rel="canonical" href={`${BASE_URL}/catalog`} />
       </Helmet>
+      <StructuredData data={createBreadcrumbSchema([
+        { name: 'Inicio', url: '/' },
+        { name: 'Catálogo', url: '/catalog' }
+      ])} />
       <main className="flex flex-1 flex-col lg:flex-row w-full px-container py-[var(--space-lg)] gap-[var(--space-lg)]">
         
         {/* Desktop Sidebar - hidden on mobile */}

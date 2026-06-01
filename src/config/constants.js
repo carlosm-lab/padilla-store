@@ -42,15 +42,34 @@
 export const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '50300000000';
 
 // Email de contacto. También desde env para facilitar migración.
-export const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || 'detallesymas.contacto@gmail.com';
+export const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || 'padillastoresv@gmail.com';
 
 // URL base del sitio. Se usa para og:url, Schema.org y canonical links.
 // OJO: hardcoded al dominio de producción. Si se usa un dominio diferente
 // en staging, agregar VITE_BASE_URL a las env vars.
 export const BASE_URL = 'https://padillastore.com';
 
-export const SITE_NAME = "Padilla's Store";
-export const CONTACT_LOCATION = "El Salvador";
+export const SITE_NAME = "Padilla Store";
+export const CONTACT_LOCATION = "San Miguel, El Salvador";
+
+// ── Identidad de Negocio (SEO / EEAT / Schema.org) ──────
+// Datos oficiales del TXT maestro. Usados en JSON-LD, meta tags, footer, etc.
+export const LEGAL_NAME = 'Padilla S.A. de C.V.';
+export const FOUNDER_NAME = 'Isaac Padilla';
+export const BUSINESS_PHONE = '+503 7486-6909';
+export const BUSINESS_REGION = 'San Miguel';
+export const BUSINESS_COUNTRY = 'SV';
+
+// Horarios de atención (ISO 8601 para Schema.org)
+export const BUSINESS_HOURS = [
+  { days: ['Mo', 'Tu', 'We', 'Th', 'Fr'], opens: '08:00', closes: '18:00' },
+  { days: ['Sa'], opens: '08:00', closes: '13:00' }
+];
+
+// Redes sociales oficiales
+export const SOCIAL_INSTAGRAM = 'https://www.instagram.com/padillastoresv';
+export const SOCIAL_FACEBOOK = 'https://www.facebook.com/padillastoresv';
+export const SOCIAL_TIKTOK = 'https://www.tiktok.com/@padillastoresv';
 
 // ── Límites del carrito ──────────────────────────────────
 // MAX_CART_QUANTITY: máximo de unidades por producto individual.
