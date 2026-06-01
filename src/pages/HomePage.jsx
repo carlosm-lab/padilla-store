@@ -430,7 +430,7 @@ export default function HomePage() {
             ].map(item => (
               <li key={item.step} className="bg-white dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/60 shadow-sm p-6 rounded-2xl flex flex-col items-start text-left gap-4 hover:-translate-y-1 hover:shadow-md transition-all duration-300 relative overflow-hidden group">
                 {/* Elegant Subtle Step Number */}
-                <span className="absolute top-4 right-6 text-4xl font-extrabold text-slate-300 dark:text-slate-600 select-none font-brand tracking-tight transition-transform group-hover:scale-105 duration-300">
+                <span className="absolute top-4 right-6 text-4xl font-extrabold text-slate-400 dark:text-slate-500 select-none font-brand tracking-tight transition-transform group-hover:scale-105 duration-300">
                   {item.step}
                 </span>
                 
