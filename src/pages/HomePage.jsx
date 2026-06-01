@@ -234,7 +234,7 @@ export default function HomePage() {
                   className="flex-1 inline-flex items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 font-bold rounded-xl hover:scale-[1.02] shadow-lg shadow-slate-900/10 dark:shadow-white/5 active:scale-[0.98] transition-all duration-300 cursor-pointer border border-transparent"
                   style={{ padding: 'var(--space-md) var(--space-md)', fontSize: 'var(--text-sm)', gap: 'var(--space-xs)' }}
                 >
-                  Contactemos
+                  Contáctanos
                   <span className="material-symbols-outlined" style={{ fontSize: 'var(--icon-sm)' }} aria-hidden="true">chat</span>
                 </Link>
               </div>
