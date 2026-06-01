@@ -210,7 +210,7 @@ export default function CatalogPage() {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-2 xl:grid-cols-3 gap-[var(--space-lg)]">
+              <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
                 {paginatedProducts.map(p => (
                   <ProductCard key={p.id} product={p} />
                 ))}
