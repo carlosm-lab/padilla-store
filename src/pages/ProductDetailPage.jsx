@@ -41,10 +41,10 @@ export default function ProductDetailPage() {
     if (!loading) {
       if (error) {
         toast.error('Error al cargar el producto');
-        navigate('/catalog');
+        navigate('/');
       } else if (!product) {
         toast.error('Producto no encontrado');
-        navigate('/catalog');
+        navigate('/');
       }
     }
   }, [loading, product, navigate, error]);
@@ -86,6 +86,13 @@ export default function ProductDetailPage() {
 
   const isOfferActive = isOfferActiveUtil(product);
 
+  const getCatalogUrl = () => {
+    if (product?.categories?.slug === 'joyeria') {
+      return '/catalog-joyeria';
+    }
+    return '/catalog-tecnologia';
+  };
+
   return (
     <>
       <Helmet>
@@ -106,8 +113,8 @@ export default function ProductDetailPage() {
       <StructuredData data={createProductSchema(product, `${BASE_URL}/product/${product.slug}`)} />
       <StructuredData data={createBreadcrumbSchema([
         { name: 'Inicio', url: '/' },
-        { name: 'Catálogo', url: '/catalog' },
-        { name: product.categories?.name || 'Productos', url: `/catalog?category=${product.categories?.slug || ''}` },
+        { name: 'Catálogo', url: getCatalogUrl() },
+        { name: product.categories?.name || 'Productos', url: `${getCatalogUrl()}?category=${product.categories?.slug || ''}` },
         { name: product.name }
       ])} />
 
@@ -146,7 +153,7 @@ export default function ProductDetailPage() {
             <nav className="flex text-[var(--text-sm)] text-slate-500 dark:text-slate-400 gap-[var(--space-xs)] items-center">
               <Link to="/">Tienda</Link>
               <span className="material-symbols-outlined text-[var(--text-xs)]">chevron_right</span>
-              <Link to="/catalog">Colecciones</Link>
+              <Link to={getCatalogUrl()}>Colecciones</Link>
               <span className="material-symbols-outlined text-[var(--text-xs)]">chevron_right</span>
               <span className="text-primary font-medium">{product.categories?.name || product.category}</span>
             </nav>
@@ -233,7 +240,7 @@ export default function ProductDetailPage() {
           <section className="mt-[var(--space-3xl)]">
             <div className="flex justify-between items-center mb-[var(--space-lg)]">
               <h2 className="text-[var(--text-2xl)] font-bold tracking-tight">También Te Puede Gustar</h2>
-              <Link to="/catalog" className="text-primary font-bold text-[var(--text-sm)] hover:underline">Ver Todo</Link>
+              <Link to={getCatalogUrl()} className="text-primary font-bold text-[var(--text-sm)] hover:underline">Ver Todo</Link>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[var(--space-lg)]">
               {related.map((p) => (

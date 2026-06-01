@@ -103,10 +103,10 @@ export default function FavoritesModal({ isOpen, onClose }) {
               <span className="material-symbols-outlined text-6xl text-gray-300 dark:text-gray-700 mb-4 block">favorite_border</span>
               <p className="text-gray-500 dark:text-gray-400">Aún no tienes productos favoritos guardados.</p>
               <button 
-                onClick={() => { onClose(); navigate('/catalog'); }} 
+                onClick={() => { onClose(); navigate('/'); }} 
                 className="mt-6 px-8 py-3 bg-primary text-white rounded-full font-bold hover:bg-primary-dark shadow-md transition-all hover:scale-105"
               >
-                Explorar Catálogo
+                Volver a la Tienda
               </button>
             </div>
           ) : (
