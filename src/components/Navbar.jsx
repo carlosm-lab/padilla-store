@@ -98,7 +98,7 @@ export default function Navbar() {
           </div>
           <button
             onClick={() => setIsSearchOpen(true)}
-            className="hidden sm:flex lg:hidden items-center justify-center rounded-lg aspect-square w-[clamp(2rem,5vw,2.5rem)] bg-white dark:bg-white/10 shadow-sm border border-slate-100 dark:border-white/5 text-slate-900 dark:text-slate-100 hover:bg-slate-50 dark:hover:text-primary transition-colors"
+            className="flex lg:hidden items-center justify-center rounded-lg aspect-square w-[clamp(2rem,5vw,2.5rem)] bg-white dark:bg-white/10 shadow-sm border border-slate-100 dark:border-white/5 text-slate-900 dark:text-slate-100 hover:bg-slate-50 dark:hover:text-primary transition-colors"
             aria-label="Abrir buscador"
           >
             <span className="material-symbols-outlined">search</span>
@@ -174,18 +174,18 @@ export default function Navbar() {
           </NavLink>
           <NavLink
             to="/catalog-tecnologia"
-            className={() => {
-              const isAct = location.pathname.startsWith('/catalog');
-              return `flex flex-col items-center justify-center gap-0.5 w-full h-full transition-colors ${isAct ? 'text-primary' : 'text-black dark:text-white'}`;
-            }}
+            className={({ isActive }) => `flex flex-col items-center justify-center gap-0.5 w-full h-full transition-colors ${isActive ? 'text-primary' : 'text-black dark:text-white'}`}
           >
-            <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>storefront</span>
-            <span className="text-[10px] font-semibold">Catálogo</span>
+            <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>smartphone</span>
+            <span className="text-[10px] font-semibold">Tecnología</span>
           </NavLink>
-          <button onClick={() => setIsSearchOpen(true)} className="flex flex-col items-center justify-center gap-0.5 w-full h-full text-black dark:text-white transition-colors">
-            <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>search</span>
-            <span className="text-[10px] font-semibold">Buscar</span>
-          </button>
+          <NavLink
+            to="/catalog-joyeria"
+            className={({ isActive }) => `flex flex-col items-center justify-center gap-0.5 w-full h-full transition-colors ${isActive ? 'text-primary' : 'text-black dark:text-white'}`}
+          >
+            <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>diamond</span>
+            <span className="text-[10px] font-semibold">Joyería</span>
+          </NavLink>
           <button data-testid="cart-button-mobile" onClick={() => setIsCartOpen(true)} className="relative flex flex-col items-center justify-center gap-0.5 w-full h-full text-black dark:text-white transition-colors">
             <span className={`material-symbols-outlined transition-transform duration-300 ${isBouncing ? 'scale-125 text-primary' : ''}`} style={{ fontSize: '24px' }}>shopping_cart</span>
             {cartCount > 0 && (
