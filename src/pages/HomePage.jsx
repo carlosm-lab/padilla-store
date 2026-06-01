@@ -491,40 +491,34 @@ export default function HomePage() {
 
         {/* ── Preguntas Frecuentes (FAQ + Schema) ─────────────── */}
         <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="preguntas-frecuentes">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
-            {/* Left Column: Heading and Description */}
-            <div className="lg:col-span-5 space-y-4">
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white font-brand" style={{ fontFamily: 'var(--font-brand)' }}>Preguntas frecuentes</h2>
-              <p className="text-left text-slate-500 dark:text-slate-400 text-sm md:text-base leading-relaxed font-normal italic">
-                Resolvemos las dudas más comunes de nuestros clientes en San Miguel y El Salvador sobre productos, envíos, pagos y garantías.
-              </p>
-            </div>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white mb-4 text-left font-brand" style={{ fontFamily: 'var(--font-brand)' }}>Preguntas frecuentes</h2>
+          <p className="text-left text-slate-500 dark:text-slate-400 max-w-2xl mb-8 text-sm md:text-base leading-relaxed font-normal italic">
+            Resolvemos las dudas más comunes de nuestros clientes en San Miguel y El Salvador sobre productos, envíos, pagos y garantías.
+          </p>
 
-            {/* Right Column: Accordion Items */}
-            <div className="lg:col-span-7 space-y-3 w-full">
-              {FAQ_ITEMS.map((item, index) => (
-                <div key={index} className="bg-white dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/60 shadow-sm rounded-xl overflow-hidden">
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                    className="w-full flex items-center justify-between p-5 text-left cursor-pointer"
-                    aria-expanded={openFaq === index}
-                    aria-controls={`faq-answer-${index}`}
-                  >
-                    <h3 className="text-[16px] leading-[24px] font-semibold text-[#1c1b1b] dark:text-white pr-4">{item.question}</h3>
-                    <span className={`material-symbols-outlined text-[20px] text-slate-500 transition-transform duration-200 shrink-0 ${openFaq === index ? 'rotate-180' : ''}`} aria-hidden="true">expand_more</span>
-                  </button>
-                  <div
-                    id={`faq-answer-${index}`}
-                    className={`overflow-hidden transition-all duration-300 ${openFaq === index ? 'max-h-96 pb-5' : 'max-h-0'}`}
-                    role="region"
-                    aria-labelledby={`faq-question-${index}`}
-                  >
-                    <p className="px-5 text-[15px] leading-[24px] text-[#444748] dark:text-slate-400">{item.answer}</p>
-                  </div>
+          <div className="space-y-3 w-full">
+            {FAQ_ITEMS.map((item, index) => (
+              <div key={index} className="bg-white dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/60 shadow-sm rounded-xl overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  className="w-full flex items-center justify-between p-5 text-left cursor-pointer"
+                  aria-expanded={openFaq === index}
+                  aria-controls={`faq-answer-${index}`}
+                >
+                  <h3 className="text-[16px] leading-[24px] font-semibold text-[#1c1b1b] dark:text-white pr-4">{item.question}</h3>
+                  <span className={`material-symbols-outlined text-[20px] text-slate-500 transition-transform duration-200 shrink-0 ${openFaq === index ? 'rotate-180' : ''}`} aria-hidden="true">expand_more</span>
+                </button>
+                <div
+                  id={`faq-answer-${index}`}
+                  className={`overflow-hidden transition-all duration-300 ${openFaq === index ? 'max-h-96 pb-5' : 'max-h-0'}`}
+                  role="region"
+                  aria-labelledby={`faq-question-${index}`}
+                >
+                  <p className="px-5 text-[15px] leading-[24px] text-[#444748] dark:text-slate-400">{item.answer}</p>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </section>
       </main>
