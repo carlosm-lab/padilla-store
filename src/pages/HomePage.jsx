@@ -296,8 +296,8 @@ export default function HomePage() {
 
       <main className="max-w-[1440px] mx-auto bg-background-light dark:bg-background-dark text-[#1c1b1b] dark:text-slate-100 font-sans">
         <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up">
-          <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-8 text-center">Explorar por Categoría</h2>
-          <p className="text-center text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mb-8 text-[16px] leading-[24px]">
+          <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-4 text-left">Explorar por Categoría</h2>
+          <p className="text-left text-slate-500 dark:text-slate-400 max-w-2xl mb-8 text-[16px] leading-[24px]">
             Encuentra accesorios tecnológicos para tu celular, bisutería fina de acero y plata, y productos electrónicos seleccionados. Todo disponible con entrega a domicilio en San Miguel.
           </p>
           <div className="flex overflow-x-auto hide-scrollbar gap-[16px] snap-x snap-mandatory pb-4">
@@ -353,7 +353,7 @@ export default function HomePage() {
         {/* ── Sobre Padilla Store (EEAT) ──────────────────────── */}
         <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="sobre-nosotros">
           <article>
-            <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-6 text-center">Sobre Padilla Store</h2>
+            <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-6 text-left">Sobre Padilla Store</h2>
             <div className="bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-white/5 shadow-sm rounded-2xl p-8 md:p-10">
               <div className="max-w-3xl mx-auto space-y-6">
                 <p className="text-[16px] leading-[26px] text-[#444748] dark:text-slate-400">
@@ -418,8 +418,8 @@ export default function HomePage() {
 
         {/* ── Cómo Comprar ──────────────────────────────────── */}
         <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="como-comprar">
-          <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-6 text-center">Cómo comprar en Padilla Store</h2>
-          <p className="text-center text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mb-8 text-[16px] leading-[24px]">
+          <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-4 text-left">Cómo comprar en Padilla Store</h2>
+          <p className="text-left text-slate-500 dark:text-slate-400 max-w-2xl mb-8 text-[16px] leading-[24px]">
             Comprar en Padilla Store es rápido y sencillo. Todo el proceso se realiza a través de WhatsApp con atención personalizada.
           </p>
           <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[16px] md:gap-6 list-none p-0 m-0">
@@ -443,8 +443,8 @@ export default function HomePage() {
         <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="cobertura">
           <div className="bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-white/5 shadow-sm rounded-2xl p-8 md:p-10">
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-6 text-center">Cobertura de envío en San Miguel</h2>
-              <p className="text-[16px] leading-[26px] text-[#444748] dark:text-slate-400 mb-6 text-center">
+              <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-4 text-left">Cobertura de envío en San Miguel</h2>
+              <p className="text-[16px] leading-[26px] text-[#444748] dark:text-slate-400 mb-8 text-left">
                 Padilla Store realiza entregas a domicilio en <strong className="text-[#1c1b1b] dark:text-white">San Miguel, municipios cercanos y zonas aledañas</strong>. Nuestro servicio de envío cuenta con motorista propio, lo que garantiza mayor control del proceso, comunicación directa y entrega personalizada.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
@@ -469,8 +469,8 @@ export default function HomePage() {
 
         {/* ── Preguntas Frecuentes (FAQ + Schema) ─────────────── */}
         <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="preguntas-frecuentes">
-          <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-6 text-center">Preguntas frecuentes</h2>
-          <p className="text-center text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mb-8 text-[16px] leading-[24px]">
+          <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-4 text-left">Preguntas frecuentes</h2>
+          <p className="text-left text-slate-500 dark:text-slate-400 max-w-2xl mb-8 text-[16px] leading-[24px]">
             Resolvemos las dudas más comunes de nuestros clientes en San Miguel y El Salvador sobre productos, envíos, pagos y garantías.
           </p>
           <div className="max-w-3xl mx-auto space-y-3">
