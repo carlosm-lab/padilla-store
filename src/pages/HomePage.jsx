@@ -457,20 +457,26 @@ export default function HomePage() {
               <p className="text-[16px] leading-[26px] text-slate-500 dark:text-slate-400 mb-8 text-left italic">
                 Padilla Store realiza entregas a domicilio en <strong className="text-[#1c1b1b] dark:text-white">San Miguel, municipios cercanos y zonas aledañas</strong>. Nuestro servicio de envío cuenta con motorista propio, lo que garantiza mayor control del proceso, comunicación directa y entrega personalizada.
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+              <div className="grid grid-cols-2 gap-x-8 gap-y-6 text-left">
                 <div>
-                  <div className="text-[28px] font-bold text-primary">24h</div>
-                  <p className="text-[14px] text-[#444748] dark:text-slate-400 mt-1">Tiempo estimado de entrega</p>
+                  <div className="text-2xl md:text-3xl font-extrabold text-primary font-sans">24h</div>
+                  <p className="text-sm font-semibold text-slate-900 dark:text-white mt-1">Tiempo de entrega</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Estimado para San Miguel y zonas aledañas.</p>
                 </div>
                 <div>
-                  <div className="text-[28px] font-bold text-primary">$1–$3</div>
-                  <p className="text-[14px] text-[#444748] dark:text-slate-400 mt-1">Costo de envío a domicilio</p>
+                  <div className="text-2xl md:text-3xl font-extrabold text-primary font-sans">$1–$3</div>
+                  <p className="text-sm font-semibold text-slate-900 dark:text-white mt-1">Costo de envío</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Tarifa económica según la ubicación exacta.</p>
                 </div>
                 <div>
-                  <div className="text-[28px] font-bold text-primary">
-                    <span className="material-symbols-outlined text-[28px]" aria-hidden="true">two_wheeler</span>
-                  </div>
-                  <p className="text-[14px] text-[#444748] dark:text-slate-400 mt-1">Motorista propio con seguimiento</p>
+                  <div className="text-2xl md:text-3xl font-extrabold text-primary font-sans">Propio</div>
+                  <p className="text-sm font-semibold text-slate-900 dark:text-white mt-1">Motorista personal</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Mayor control del proceso y entrega segura.</p>
+                </div>
+                <div>
+                  <div className="text-2xl md:text-3xl font-extrabold text-primary font-sans">Directo</div>
+                  <p className="text-sm font-semibold text-slate-900 dark:text-white mt-1">Chat de WhatsApp</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Coordinación de entrega y soporte al instante.</p>
                 </div>
               </div>
             </div>
