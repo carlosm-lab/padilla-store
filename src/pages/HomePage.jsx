@@ -190,7 +190,7 @@ export default function HomePage() {
             {/* Left Column: Typography & Actions (Aligned and Clean) */}
             <div className="w-full lg:w-1/2 flex flex-col justify-center items-center lg:items-start text-center lg:text-left relative z-10">
               {/* Título Principal */}
-              <h1 className="tracking-tight text-slate-900 dark:text-white inline-flex flex-col items-stretch mx-auto lg:mx-0 font-bold font-brand text-4xl sm:text-5xl md:text-6xl lg:text-7xl" style={{ lineHeight: 1.1, marginBottom: 'var(--space-lg)', fontFamily: 'var(--font-brand)' }}>
+              <h1 className="tracking-tight text-slate-900 dark:text-white inline-flex flex-col items-stretch mx-auto lg:mx-0 font-bold font-brand" style={{ fontSize: 'var(--text-hero)', lineHeight: 1.1, marginBottom: 'var(--space-lg)', fontFamily: 'var(--font-brand)' }}>
                 <span className="block whitespace-nowrap font-brand" style={{ fontFamily: 'var(--font-brand)' }}>
                   {settings?.hero_title || "Protege tu estilo"}
                 </span>
