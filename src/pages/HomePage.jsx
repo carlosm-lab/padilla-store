@@ -189,10 +189,9 @@ export default function HomePage() {
           <div className="flex flex-col lg:flex-row-reverse items-center w-full" style={{ gap: 'var(--space-2xl)' }}>
             {/* Left Column: Typography & Actions (Aligned and Clean) */}
             <div className="w-full lg:w-1/2 flex flex-col justify-center items-center lg:items-start text-center lg:text-left relative z-10">
-              
               {/* Título Principal */}
-              <h1 className="font-sans font-black tracking-tight text-slate-900 dark:text-white inline-flex flex-col items-stretch mx-auto lg:mx-0" style={{ fontSize: 'var(--text-hero)', lineHeight: 1.1, marginBottom: 'var(--space-lg)' }}>
-                <span className="block whitespace-nowrap">
+              <h1 className="tracking-tight text-slate-900 dark:text-white inline-flex flex-col items-stretch mx-auto lg:mx-0 font-bold font-brand text-4xl sm:text-5xl md:text-6xl lg:text-7xl" style={{ lineHeight: 1.1, marginBottom: 'var(--space-lg)', fontFamily: 'var(--font-brand)' }}>
+                <span className="block whitespace-nowrap font-brand" style={{ fontFamily: 'var(--font-brand)' }}>
                   {settings?.hero_title || "Protege tu estilo"}
                 </span>
                 <span className="flex justify-between bg-clip-text text-transparent bg-gradient-to-r from-primary via-violet-500 to-blue-500 dark:from-violet-400 dark:via-primary dark:to-blue-400 select-none italic font-semibold" style={{ fontFamily: 'var(--font-brand)' }}>
@@ -211,7 +210,7 @@ export default function HomePage() {
               </div>
               
               {/* Subtítulo — Nivel corporativo con SEO */}
-              <p className="font-normal text-slate-500 dark:text-slate-400 max-w-[500px]" style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, marginBottom: 'var(--space-xl)' }}>
+              <p className="text-slate-500 dark:text-slate-400 max-w-[500px] font-normal italic" style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, marginBottom: 'var(--space-xl)' }}>
                 {settings?.hero_subtitle || "Descubre nuestra colección de bisutería fina de acero y plata, accesorios premium para celular y productos electrónicos. Entrega a domicilio en 24 horas en San Miguel, El Salvador."}
               </p>
 
@@ -280,7 +279,7 @@ export default function HomePage() {
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Atención personalizada con {FOUNDER_NAME}. Proceso sencillo, rápido y sin complicaciones.</p>
               </div>
             </div>
-
+            
             <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 md:px-6 md:border-l border-slate-200/40 dark:border-slate-800/40">
               <div className="w-11 h-11 rounded-xl bg-slate-100 dark:bg-slate-900/80 text-primary flex items-center justify-center shrink-0 border border-slate-200/40 dark:border-slate-800/40 shadow-sm">
                 <span className="material-symbols-outlined text-[20px]">redeem</span>
@@ -296,8 +295,8 @@ export default function HomePage() {
 
       <main className="max-w-[1440px] mx-auto bg-background-light dark:bg-background-dark text-[#1c1b1b] dark:text-slate-100 font-sans">
         <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up">
-          <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-4 text-left">Explorar por Categoría</h2>
-          <p className="text-left text-slate-500 dark:text-slate-400 max-w-2xl mb-8 text-[16px] leading-[24px]">
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white mb-4 text-left font-brand" style={{ fontFamily: 'var(--font-brand)' }}>Explorar por Categoría</h2>
+          <p className="text-left text-slate-500 dark:text-slate-400 max-w-2xl mb-8 text-sm md:text-base leading-relaxed font-normal italic">
             Encuentra accesorios tecnológicos para tu celular, bisutería fina de acero y plata, y productos electrónicos seleccionados. Todo disponible con entrega a domicilio en San Miguel.
           </p>
           <div className="flex overflow-x-auto hide-scrollbar gap-[16px] snap-x snap-mandatory pb-4">
@@ -331,7 +330,7 @@ export default function HomePage() {
         {/* Featured Products */}
         <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="shop">
           <div className="flex justify-between items-end mb-8">
-            <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white">Los Más Deseados</h2>
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white font-brand" style={{ fontFamily: 'var(--font-brand)' }}>Los Más Deseados</h2>
             <Link to="/catalog" className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full text-xs font-bold bg-white dark:bg-slate-900/50 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-800/60 shadow-sm hover:bg-primary hover:text-white hover:border-primary dark:hover:bg-primary dark:hover:border-primary transition-all duration-300 group">
               Más
               <span className="material-symbols-outlined text-[14px] transition-transform group-hover:translate-x-0.5" aria-hidden="true">arrow_forward</span>
@@ -353,7 +352,7 @@ export default function HomePage() {
         {/* ── Sobre Padilla Store (EEAT) ──────────────────────── */}
         <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="sobre-nosotros">
           <article>
-            <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-6 text-left">Sobre Padilla Store</h2>
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white mb-6 text-left font-brand" style={{ fontFamily: 'var(--font-brand)' }}>Sobre Padilla Store</h2>
             <div className="bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-white/5 shadow-sm rounded-2xl p-8 md:p-10">
               <div className="max-w-3xl mx-auto space-y-6">
                 <p className="text-[16px] leading-[26px] text-[#444748] dark:text-slate-400">
@@ -363,12 +362,12 @@ export default function HomePage() {
                   La empresa fue fundada por <strong className="text-[#1c1b1b] dark:text-white">{FOUNDER_NAME}</strong> con el propósito de simplificar la experiencia de compra de productos tecnológicos y accesorios personales. La idea nace al identificar la necesidad de muchas personas de adquirir productos de calidad sin abandonar sus actividades diarias, evitando desplazamientos innecesarios y optimizando el tiempo.
                 </p>
 
-                <h3 className="text-[18px] leading-[28px] font-semibold text-[#1c1b1b] dark:text-white pt-2">Nuestra misión</h3>
+                <h3 className="text-[18px] leading-[28px] font-semibold text-[#1c1b1b] dark:text-white pt-2 font-brand" style={{ fontFamily: 'var(--font-brand)' }}>Nuestra misión</h3>
                 <p className="text-[16px] leading-[26px] text-[#444748] dark:text-slate-400">
                   Facilitar el acceso a productos electrónicos, accesorios tecnológicos y bisutería fina mediante un proceso de compra cómodo, rápido y confiable, permitiendo que nuestros clientes realicen sus compras desde la comodidad de su hogar y reciban sus pedidos en el menor tiempo posible.
                 </p>
 
-                <h3 className="text-[18px] leading-[28px] font-semibold text-[#1c1b1b] dark:text-white pt-2">¿Por qué elegir Padilla Store?</h3>
+                <h3 className="text-[18px] leading-[28px] font-semibold text-[#1c1b1b] dark:text-white pt-2 font-brand" style={{ fontFamily: 'var(--font-brand)' }}>¿Por qué elegir Padilla Store?</h3>
                 <ul className="space-y-2 text-[16px] leading-[26px] text-[#444748] dark:text-slate-400">
                   <li className="flex items-start gap-3">
                     <span className="material-symbols-outlined text-primary text-[20px] mt-0.5 shrink-0" aria-hidden="true">check_circle</span>
@@ -392,7 +391,7 @@ export default function HomePage() {
                   </li>
                 </ul>
 
-                <h3 className="text-[18px] leading-[28px] font-semibold text-[#1c1b1b] dark:text-white pt-2">Nuestros valores</h3>
+                <h3 className="text-[18px] leading-[28px] font-semibold text-[#1c1b1b] dark:text-white pt-2 font-brand" style={{ fontFamily: 'var(--font-brand)' }}>Nuestros valores</h3>
                 <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <dt className="font-semibold text-[#1c1b1b] dark:text-white text-[16px]">Honestidad</dt>
@@ -418,8 +417,8 @@ export default function HomePage() {
 
         {/* ── Cómo Comprar ──────────────────────────────────── */}
         <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="como-comprar">
-          <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-4 text-left">Cómo comprar en Padilla Store</h2>
-          <p className="text-left text-slate-500 dark:text-slate-400 max-w-2xl mb-8 text-[16px] leading-[24px]">
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white mb-4 text-left font-brand" style={{ fontFamily: 'var(--font-brand)' }}>Cómo comprar en Padilla Store</h2>
+          <p className="text-left text-slate-500 dark:text-slate-400 max-w-2xl mb-8 text-sm md:text-base leading-relaxed font-normal italic">
             Comprar en Padilla Store es rápido y sencillo. Todo el proceso se realiza a través de WhatsApp con atención personalizada.
           </p>
           <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[16px] md:gap-6 list-none p-0 m-0">
@@ -443,8 +442,8 @@ export default function HomePage() {
         <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="cobertura">
           <div className="bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-white/5 shadow-sm rounded-2xl p-8 md:p-10">
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-4 text-left">Cobertura de envío en San Miguel</h2>
-              <p className="text-[16px] leading-[26px] text-[#444748] dark:text-slate-400 mb-8 text-left">
+              <h2 className="text-xl md:text-2xl font-bold tracking-tight text-slate-900 dark:text-white mb-4 text-left font-brand" style={{ fontFamily: 'var(--font-brand)' }}>Cobertura de envío en San Miguel</h2>
+              <p className="text-[16px] leading-[26px] text-slate-500 dark:text-slate-400 mb-8 text-left italic">
                 Padilla Store realiza entregas a domicilio en <strong className="text-[#1c1b1b] dark:text-white">San Miguel, municipios cercanos y zonas aledañas</strong>. Nuestro servicio de envío cuenta con motorista propio, lo que garantiza mayor control del proceso, comunicación directa y entrega personalizada.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
@@ -469,8 +468,8 @@ export default function HomePage() {
 
         {/* ── Preguntas Frecuentes (FAQ + Schema) ─────────────── */}
         <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="preguntas-frecuentes">
-          <h2 className="text-[24px] leading-[32px] font-semibold tracking-[-0.01em] text-[#1c1b1b] dark:text-white mb-4 text-left">Preguntas frecuentes</h2>
-          <p className="text-left text-slate-500 dark:text-slate-400 max-w-2xl mb-8 text-[16px] leading-[24px]">
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white mb-4 text-left font-brand" style={{ fontFamily: 'var(--font-brand)' }}>Preguntas frecuentes</h2>
+          <p className="text-left text-slate-500 dark:text-slate-400 max-w-2xl mb-8 text-sm md:text-base leading-relaxed font-normal italic">
             Resolvemos las dudas más comunes de nuestros clientes en San Miguel y El Salvador sobre productos, envíos, pagos y garantías.
           </p>
           <div className="max-w-3xl mx-auto space-y-3">
