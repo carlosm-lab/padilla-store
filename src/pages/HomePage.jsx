@@ -120,7 +120,7 @@ export default function HomePage() {
   return (
     <>
       <Helmet>
-        <title>Padilla Store | Accesorios para Celular, Bisutería Fina y Electrónicos en San Miguel, El Salvador</title>
+        <title>Cases para Celular, Cargadores y Joyeria de Acero | Padilla Store — Envío 24h San Miguel</title>
         <meta name="description" content="Padilla Store: tienda en línea en San Miguel, El Salvador. Bisutería fina de acero y plata, fundas para celular, cargadores, audífonos y electrónicos. Entrega a domicilio en 24 horas. Compra fácil por WhatsApp." />
         <meta property="og:title" content="Padilla Store — Accesorios para Celular, Bisutería Fina y Electrónicos en San Miguel" />
         <meta property="og:description" content="Tienda en línea de accesorios tecnológicos, bisutería de acero y plata con entrega a domicilio en 24h en San Miguel, El Salvador." />
