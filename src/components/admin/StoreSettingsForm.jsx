@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { useSettings } from '@/context/SettingsContext';
-import ImageUploader from './ImageUploader';
 import { logger } from '@/utils/logger';
 
 
@@ -11,8 +10,6 @@ export default function StoreSettingsForm({ showToast }) {
     hero_title: '',
     hero_subtitle: '',
     hero_description: '',
-    hero_image_url: '',
-    story_image_url: '',
     contact_phone: '',
     contact_email: '',
     social_facebook: '',
@@ -27,8 +24,6 @@ export default function StoreSettingsForm({ showToast }) {
         hero_title: settings.hero_title || '',
         hero_subtitle: settings.hero_subtitle || '',
         hero_description: settings.hero_description || '',
-        hero_image_url: settings.hero_image_url || '',
-        story_image_url: settings.story_image_url || '',
         contact_phone: settings.contact_phone || '',
         contact_email: settings.contact_email || '',
         social_facebook: settings.social_facebook || '',
@@ -41,22 +36,6 @@ export default function StoreSettingsForm({ showToast }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleImageUpload = (url) => {
-    setFormData(prev => ({ ...prev, hero_image_url: url }));
-  };
-
-  const handleRemoveImage = () => {
-    setFormData(prev => ({ ...prev, hero_image_url: '' }));
-  };
-
-  const handleStoryImageUpload = (url) => {
-    setFormData(prev => ({ ...prev, story_image_url: url }));
-  };
-
-  const handleRemoveStoryImage = () => {
-    setFormData(prev => ({ ...prev, story_image_url: '' }));
   };
 
   const handleSubmit = async (e) => {
@@ -73,8 +52,6 @@ export default function StoreSettingsForm({ showToast }) {
           hero_title: formData.hero_title,
           hero_subtitle: formData.hero_subtitle,
           hero_description: formData.hero_description,
-          hero_image_url: formData.hero_image_url,
-          story_image_url: formData.story_image_url,
           contact_phone: formData.contact_phone,
           contact_email: formData.contact_email,
           social_facebook: formData.social_facebook,
@@ -110,67 +87,41 @@ export default function StoreSettingsForm({ showToast }) {
         {/* Hero Section */}
         <div>
           <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4 border-b border-slate-100 dark:border-white/5 pb-2">Hero Section (Inicio)</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div>
-                <label htmlFor="settings-hero-title" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Título Principal</label>
-                <input 
-                  id="settings-hero-title"
-                  type="text" 
-                  name="hero_title"
-                  value={formData.hero_title}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-slate-50 dark:bg-transparent border border-slate-200 dark:border-white/5 rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20"
-                />
-              </div>
-              <div>
-                <label htmlFor="settings-hero-subtitle" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Subtítulo</label>
-                <textarea 
-                  id="settings-hero-subtitle"
-                  name="hero_subtitle"
-                  value={formData.hero_subtitle}
-                  onChange={handleChange}
-                  required
-                  rows="2"
-                  className="w-full bg-slate-50 dark:bg-transparent border border-slate-200 dark:border-white/5 rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 resize-none"
-                />
-              </div>
-              <div>
-                <label htmlFor="settings-hero-description" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Texto Descriptivo (Párrafo)</label>
-                <textarea 
-                  id="settings-hero-description"
-                  name="hero_description"
-                  value={formData.hero_description}
-                  onChange={handleChange}
-                  required
-                  rows="4"
-                  className="w-full bg-slate-50 dark:bg-transparent border border-slate-200 dark:border-white/5 rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 resize-none"
-                />
-              </div>
-            </div>
+          <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Imagen de Fondo (Hero Banner)</label>
-              <ImageUploader 
-                onUploadSuccess={handleImageUpload} 
-                onRemoveImage={handleRemoveImage}
-                currentImage={formData.hero_image_url} 
+              <label htmlFor="settings-hero-title" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Título Principal</label>
+              <input 
+                id="settings-hero-title"
+                type="text" 
+                name="hero_title"
+                value={formData.hero_title}
+                onChange={handleChange}
+                required
+                className="w-full bg-slate-50 dark:bg-transparent border border-slate-200 dark:border-white/5 rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20"
               />
             </div>
-          </div>
-        </div>
-
-        {/* Story Section Image */}
-        <div>
-          <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4 border-b border-slate-100 dark:border-white/5 pb-2">Sección "Tu regalo, tu historia"</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <p className="text-sm text-slate-500 mb-4">Esta imagen se mostrará junto a los pasos de personalización en la página de inicio.</p>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Imagen de la Sección</label>
-              <ImageUploader 
-                onUploadSuccess={handleStoryImageUpload} 
-                onRemoveImage={handleRemoveStoryImage}
-                currentImage={formData.story_image_url} 
+              <label htmlFor="settings-hero-subtitle" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Subtítulo</label>
+              <textarea 
+                id="settings-hero-subtitle"
+                name="hero_subtitle"
+                value={formData.hero_subtitle}
+                onChange={handleChange}
+                required
+                rows="2"
+                className="w-full bg-slate-50 dark:bg-transparent border border-slate-200 dark:border-white/5 rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 resize-none"
+              />
+            </div>
+            <div>
+              <label htmlFor="settings-hero-description" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Texto Descriptivo (Párrafo)</label>
+              <textarea 
+                id="settings-hero-description"
+                name="hero_description"
+                value={formData.hero_description}
+                onChange={handleChange}
+                required
+                rows="4"
+                className="w-full bg-slate-50 dark:bg-transparent border border-slate-200 dark:border-white/5 rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 resize-none"
               />
             </div>
           </div>
