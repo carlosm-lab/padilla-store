@@ -125,9 +125,9 @@ export default function ProductDetailPage() {
             <button
               type="button"
               onClick={() => setIsImageModalOpen(true)}
-              className="cursor-zoom-in group relative w-full aspect-square max-h-[500px] lg:max-h-[600px] rounded-xl overflow-hidden shadow-360 transition-all bg-gray-50 dark:bg-white/10"
+              className="cursor-zoom-in group relative w-full h-auto rounded-xl overflow-hidden shadow-360 transition-all bg-gray-50 dark:bg-white/10"
             >
-              <img src={mainImg || '/logo.png'} alt={product.name} fetchpriority="high" loading="eager" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
+              <img src={mainImg || '/logo.png'} alt={product.name} fetchpriority="high" loading="eager" className="w-full h-auto block transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
                 <span className="material-symbols-outlined text-white text-5xl drop-shadow-md">zoom_in</span>
               </div>
@@ -173,7 +173,7 @@ export default function ProductDetailPage() {
                   </span>
                 </button>
               </div>
-              <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+              <p className="text-slate-600 dark:text-slate-400 leading-relaxed break-words whitespace-pre-line">
                 {product.description}
               </p>
             </div>
