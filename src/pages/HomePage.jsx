@@ -214,15 +214,13 @@ export default function HomePage() {
 
               {/* Botones de Acción de Alta Gama */}
               <div className="flex flex-row w-full" style={{ gap: 'var(--space-sm)' }}>
-                <a
-                  href={settings?.social_instagram || "https://www.instagram.com/padillastoresv"}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/links"
                   className="flex-1 inline-flex items-center justify-center bg-white/50 dark:bg-slate-950/40 hover:bg-slate-100/80 dark:hover:bg-slate-900/60 text-slate-800 dark:text-slate-200 border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer rounded-xl backdrop-blur-md text-center"
                   style={{ padding: 'var(--space-md) var(--space-md)', fontSize: 'var(--text-sm)' }}
                 >
                   Redes Sociales
-                </a>
+                </Link>
                 <Link
                   to="/contact"
                   className="flex-1 inline-flex items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 font-bold rounded-xl hover:scale-[1.02] shadow-lg shadow-slate-900/10 dark:shadow-white/5 active:scale-[0.98] transition-all duration-300 cursor-pointer border border-transparent"
