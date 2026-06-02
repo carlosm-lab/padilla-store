@@ -121,11 +121,11 @@ export default function ProductDetailPage() {
       <main className="flex-1 px-container py-[var(--space-lg)]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-xl)]">
           {/* Gallery */}
-          <div className="flex flex-col gap-[var(--space-md)]">
+          <div className="flex flex-col gap-[var(--space-md)] w-full lg:max-w-[480px] lg:ml-auto lg:items-end">
             <button
               type="button"
               onClick={() => setIsImageModalOpen(true)}
-              className="cursor-zoom-in group relative mx-auto block rounded-2xl overflow-hidden shadow-360 bg-transparent border-0 p-0"
+              className="cursor-zoom-in group relative mx-auto lg:mx-0 block rounded-2xl overflow-hidden shadow-360 bg-transparent border-0 p-0"
             >
               <img src={mainImg || '/logo.png'} alt={product.name} fetchpriority="high" loading="eager" className="max-w-full h-auto max-h-[450px] md:max-h-[500px] lg:max-h-[550px] object-contain rounded-2xl transition-transform duration-700 group-hover:scale-105 block" />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
@@ -133,7 +133,7 @@ export default function ProductDetailPage() {
               </div>
             </button>
             {product.images && product.images.length > 1 && (
-              <div className="grid grid-cols-4 gap-[var(--space-md)]">
+              <div className="grid grid-cols-4 gap-[var(--space-md)] w-full lg:max-w-[480px] lg:ml-auto">
                 {product.images.map((img, i) => (
                   <button
                     key={i}
