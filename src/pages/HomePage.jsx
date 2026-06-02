@@ -189,10 +189,10 @@ export default function HomePage() {
                 
                 <h1 className="tracking-tight text-slate-900 dark:text-white w-full lg:w-auto flex flex-col items-stretch mx-auto lg:mx-0 font-bold font-brand text-3xl sm:text-4xl md:text-5xl lg:text-6xl" style={{ lineHeight: 1.15, fontFamily: 'var(--font-brand)' }}>
                   <span className="block font-brand w-full lg:text-balance" style={{ fontFamily: 'var(--font-brand)' }}>
-                    Protege tu celular. Luce tu estilo.
+                    {settings?.hero_title || "Protege tu celular. Luce tu estilo."}
                   </span>
                   <span className="block text-base md:text-xl lg:text-2xl mt-3 font-sans font-medium text-slate-500 dark:text-slate-400">
-                    Cases premium, cargadores rápidos y joyería de acero en San Miguel
+                    {settings?.hero_subtitle || "Cases premium, cargadores rápidos y joyería de acero en San Miguel"}
                   </span>
                 </h1>
               </div>
@@ -209,7 +209,7 @@ export default function HomePage() {
 
               {/* Subtítulo — Nivel corporativo con SEO */}
               <p className="text-slate-500 dark:text-slate-400 max-w-[500px] font-normal italic" style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, marginBottom: 'var(--space-xl)' }}>
-                {settings?.hero_subtitle || "Descubre nuestra colección de bisutería fina de acero y plata, accesorios premium para celular y productos electrónicos. Entrega a domicilio en 24 horas en San Miguel, El Salvador."}
+                {settings?.hero_description || "Descubre nuestra colección de bisutería fina de acero y plata, accesorios premium para celular y productos electrónicos. Entrega a domicilio en 24 horas en San Miguel, El Salvador."}
               </p>
 
               {/* Botones de Acción de Alta Gama */}

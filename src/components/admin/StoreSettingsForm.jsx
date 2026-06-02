@@ -10,6 +10,7 @@ export default function StoreSettingsForm({ showToast }) {
   const [formData, setFormData] = useState({
     hero_title: '',
     hero_subtitle: '',
+    hero_description: '',
     hero_image_url: '',
     story_image_url: '',
     contact_phone: '',
@@ -25,6 +26,7 @@ export default function StoreSettingsForm({ showToast }) {
       setFormData({
         hero_title: settings.hero_title || '',
         hero_subtitle: settings.hero_subtitle || '',
+        hero_description: settings.hero_description || '',
         hero_image_url: settings.hero_image_url || '',
         story_image_url: settings.story_image_url || '',
         contact_phone: settings.contact_phone || '',
@@ -70,6 +72,7 @@ export default function StoreSettingsForm({ showToast }) {
         .update({
           hero_title: formData.hero_title,
           hero_subtitle: formData.hero_subtitle,
+          hero_description: formData.hero_description,
           hero_image_url: formData.hero_image_url,
           story_image_url: formData.story_image_url,
           contact_phone: formData.contact_phone,
@@ -129,7 +132,19 @@ export default function StoreSettingsForm({ showToast }) {
                   value={formData.hero_subtitle}
                   onChange={handleChange}
                   required
-                  rows="3"
+                  rows="2"
+                  className="w-full bg-slate-50 dark:bg-transparent border border-slate-200 dark:border-white/5 rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 resize-none"
+                />
+              </div>
+              <div>
+                <label htmlFor="settings-hero-description" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Texto Descriptivo (Párrafo)</label>
+                <textarea 
+                  id="settings-hero-description"
+                  name="hero_description"
+                  value={formData.hero_description}
+                  onChange={handleChange}
+                  required
+                  rows="4"
                   className="w-full bg-slate-50 dark:bg-transparent border border-slate-200 dark:border-white/5 rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 resize-none"
                 />
               </div>
