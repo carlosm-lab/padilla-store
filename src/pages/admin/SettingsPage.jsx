@@ -3,7 +3,6 @@ import { supabase } from '@/lib/supabaseClient';
 import { toast } from 'react-hot-toast';
 import { useAuth } from '@/context/AuthContext';
 import StoreSettingsForm from '@/components/admin/StoreSettingsForm';
-import StoreCategoryImagesForm from '@/components/admin/StoreCategoryImagesForm';
 import { useConfirm } from '@/context/ConfirmContext';
 import { logger } from '@/utils/logger';
 
@@ -83,9 +82,6 @@ export default function SettingsPage() {
 
       {/* Store Settings Form */}
       <StoreSettingsForm showToast={showToast} />
-
-      {/* Category Images Form */}
-      <StoreCategoryImagesForm showToast={showToast} />
 
       {/* Users Settings */}
       <div className="bg-white dark:bg-white/5 rounded-2xl border border-slate-100 dark:border-white/5 shadow-360 overflow-hidden flex flex-col">
