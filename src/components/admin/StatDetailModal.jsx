@@ -7,6 +7,7 @@ export default function StatDetailModal({ isOpen, onClose, type }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  // Hook 1: carga de datos — solo cuando está abierto
   useEffect(() => {
     if (!isOpen || !type) return;
 
@@ -18,28 +19,46 @@ export default function StatDetailModal({ isOpen, onClose, type }) {
 
         switch (type) {
           case 'products': {
-            const { data: pData } = await supabase.from('products').select('id, name, price, category').order('created_at', { ascending: false }).limit(100);
+            const { data: pData } = await supabase
+              .from('products')
+              .select('id, name, price, category')
+              .order('created_at', { ascending: false })
+              .limit(100);
             fetchedData = pData || [];
             break;
           }
           case 'categories': {
-            const { data: cData } = await supabase.from('categories').select('id, name, slug').order('name');
+            const { data: cData } = await supabase
+              .from('categories')
+              .select('id, name, slug')
+              .order('name');
             fetchedData = cData || [];
             break;
           }
           case 'offers': {
-            const { data: oData } = await supabase.from('products').select('id, name, price, old_price').not('old_price', 'is', null).order('created_at', { ascending: false }).limit(100);
+            const { data: oData } = await supabase
+              .from('products')
+              .select('id, name, price, old_price')
+              .not('old_price', 'is', null)
+              .order('created_at', { ascending: false })
+              .limit(100);
             fetchedData = oData || [];
             break;
           }
           case 'messages': {
-            const { data: mData } = await supabase.from('contact_messages').select('id, name, email, subject, created_at').eq('is_read', false).order('created_at', { ascending: false }).limit(100);
+            const { data: mData } = await supabase
+              .from('contact_messages')
+              .select('id, name, email, subject, created_at')
+              .eq('is_read', false)
+              .order('created_at', { ascending: false })
+              .limit(100);
             fetchedData = mData || [];
             break;
           }
           case 'favorites': {
-            // Custom fetch for favorites
-            const { data: allFavs } = await supabase.from('user_favorites').select('product_id');
+            const { data: allFavs } = await supabase
+              .from('user_favorites')
+              .select('product_id');
             if (allFavs && allFavs.length > 0) {
               const counts = allFavs.reduce((acc, curr) => {
                 acc[curr.product_id] = (acc[curr.product_id] || 0) + 1;
@@ -47,9 +66,14 @@ export default function StatDetailModal({ isOpen, onClose, type }) {
               }, {});
               const pIds = Object.keys(counts);
               if (pIds.length > 0) {
-                const { data: favProd } = await supabase.from('products').select('id, name').in('id', pIds);
+                const { data: favProd } = await supabase
+                  .from('products')
+                  .select('id, name')
+                  .in('id', pIds);
                 if (favProd) {
-                  fetchedData = favProd.map(p => ({ ...p, count: counts[p.id] })).sort((a,b) => b.count - a.count);
+                  fetchedData = favProd
+                    .map(p => ({ ...p, count: counts[p.id] }))
+                    .sort((a, b) => b.count - a.count);
                 }
               }
             }
@@ -60,11 +84,11 @@ export default function StatDetailModal({ isOpen, onClose, type }) {
             fetchedData = uData || [];
             break;
           }
+          default:
+            break;
         }
 
-        if (isMounted) {
-          setData(fetchedData);
-        }
+        if (isMounted) setData(fetchedData);
       } catch (err) {
         logger.error(`Error fetching data for ${type}:`, err);
       } finally {
@@ -73,21 +97,34 @@ export default function StatDetailModal({ isOpen, onClose, type }) {
     };
 
     fetchData();
-
     return () => { isMounted = false; };
   }, [isOpen, type]);
 
+  // Hook 2: tecla Escape — SIEMPRE antes del early return (Rules of Hooks)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
+  // Early return ÚNICO — después de TODOS los hooks
   if (!isOpen) return null;
 
   const getTitle = () => {
     switch (type) {
-      case 'products': return 'Detalle de Productos';
+      case 'products':   return 'Detalle de Productos';
       case 'categories': return 'Detalle de Categorías';
-      case 'offers': return 'Detalle de Ofertas Activas';
-      case 'messages': return 'Mensajes No Leídos';
-      case 'favorites': return 'Top Favoritos';
-      case 'users': return 'Lista de Usuarios';
-      default: return 'Detalle';
+      case 'offers':     return 'Detalle de Ofertas Activas';
+      case 'messages':   return 'Mensajes No Leídos';
+      case 'favorites':  return 'Top Favoritos';
+      case 'users':      return 'Lista de Usuarios';
+      default:           return 'Detalle';
     }
   };
 
@@ -140,7 +177,9 @@ export default function StatDetailModal({ isOpen, onClose, type }) {
               <div className="flex flex-col">
                 <div className="flex justify-between">
                   <p className="font-medium text-slate-900 dark:text-white">{item.name}</p>
-                  <span className="text-xs text-slate-500">{new Date(item.created_at).toLocaleDateString()}</span>
+                  <span className="text-xs text-slate-500">
+                    {new Date(item.created_at).toLocaleDateString()}
+                  </span>
                 </div>
                 <p className="text-sm text-slate-600 truncate">{item.subject || 'Sin asunto'}</p>
                 <a href={`mailto:${item.email}`} className="text-xs text-primary hover:underline">{item.email}</a>
@@ -161,7 +200,11 @@ export default function StatDetailModal({ isOpen, onClose, type }) {
                   <p className="font-medium text-slate-900 dark:text-white">{item.full_name || 'Sin Nombre'}</p>
                   <p className="text-xs text-slate-500">{item.email}</p>
                 </div>
-                <span className={`text-xs px-2 py-1 rounded-full ${item.role === 'admin' ? 'bg-indigo-100 text-indigo-700' : 'bg-slate-100 text-slate-700'}`}>
+                <span className={`text-xs px-2 py-1 rounded-full ${
+                  item.role === 'admin'
+                    ? 'bg-indigo-100 text-indigo-700'
+                    : 'bg-slate-100 text-slate-700'
+                }`}>
                   {item.role || 'user'}
                 </span>
               </div>
@@ -172,26 +215,12 @@ export default function StatDetailModal({ isOpen, onClose, type }) {
     );
   };
 
-  // Manejo de la tecla Escape para cerrar el modal
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
-        onClose();
-      }
-    };
-    if (isOpen) {
-      window.addEventListener('keydown', handleKeyDown);
-    }
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in" onClick={onClose}>
-      <div 
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in"
+      onClick={onClose}
+    >
+      <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="stat-detail-title"
@@ -203,11 +232,15 @@ export default function StatDetailModal({ isOpen, onClose, type }) {
             <h2 id="stat-detail-title" className="text-xl font-bold text-slate-900 dark:text-white">
               {getTitle()}
             </h2>
-            <button onClick={onClose} aria-label="Cerrar detalles" className="p-2 rounded-full hover:bg-gray-100 dark:bg-gray-800 transition-colors text-slate-500">
+            <button
+              onClick={onClose}
+              aria-label="Cerrar detalles"
+              className="p-2 rounded-full hover:bg-gray-100 dark:bg-gray-800 transition-colors text-slate-500"
+            >
               <span className="material-symbols-outlined">close</span>
             </button>
           </div>
-          
+
           <div className="flex-1 overflow-y-auto custom-scrollbar">
             {renderContent()}
           </div>
