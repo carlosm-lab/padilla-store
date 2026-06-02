@@ -209,7 +209,7 @@ export default function HomePage() {
 
               {/* Subtítulo — Nivel corporativo con SEO */}
               <p className="text-slate-600 dark:text-slate-300 max-w-[650px] font-normal not-italic text-left" style={{ fontSize: 'var(--text-base)', lineHeight: 1.65, marginBottom: 'var(--space-xl)', fontStyle: 'normal' }}>
-                {settings?.hero_description || "Descubre nuestra colección de bisutería fina de acero y plata, accesorios premium para celular y productos electrónicos. Entrega a domicilio en 24 horas en San Miguel, El Salvador."}
+                {settings?.hero_description || "Accesorios de alta gama para tu celular, cargadores de carga rápida y joyería fina de acero y plata para elevar tu estilo diario. Haz tu pedido hoy y recíbelo en menos de 24 horas en San Miguel."}
               </p>
 
               {/* Botones de Acción de Alta Gama */}
