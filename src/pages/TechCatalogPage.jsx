@@ -33,7 +33,7 @@ export default function TechCatalogPage() {
   }));
 
   // Technology catalog categories only
-  const activeCatalogSlugs = ['tecnologia', 'electronicos'];
+  const activeCatalogSlugs = ['accesorios-celular'];
 
   const queryCategories = useMemo(() => {
     if (filters.categories.length > 0) {

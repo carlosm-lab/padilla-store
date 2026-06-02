@@ -222,13 +222,15 @@ export default function HomePage() {
 
               {/* Botones de Acción de Alta Gama */}
               <div className="flex flex-row w-full" style={{ gap: 'var(--space-sm)' }}>
-                <Link
-                  to="/links"
-                  className="flex-1 inline-flex items-center justify-center bg-white/50 dark:bg-slate-950/40 hover:bg-slate-100/80 dark:hover:bg-slate-900/60 text-slate-800 dark:text-slate-200 border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer rounded-xl backdrop-blur-md"
+                <a
+                  href={settings?.social_instagram || "https://www.instagram.com/padillastoresv"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 inline-flex items-center justify-center bg-white/50 dark:bg-slate-950/40 hover:bg-slate-100/80 dark:hover:bg-slate-900/60 text-slate-800 dark:text-slate-200 border border-slate-200/80 dark:border-slate-800/80 shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer rounded-xl backdrop-blur-md text-center"
                   style={{ padding: 'var(--space-md) var(--space-md)', fontSize: 'var(--text-sm)' }}
                 >
                   Redes Sociales
-                </Link>
+                </a>
                 <Link
                   to="/contact"
                   className="flex-1 inline-flex items-center justify-center bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 font-bold rounded-xl hover:scale-[1.02] shadow-lg shadow-slate-900/10 dark:shadow-white/5 active:scale-[0.98] transition-all duration-300 cursor-pointer border border-transparent"
@@ -317,7 +319,7 @@ export default function HomePage() {
               return (
                 <Link
                   key={cat.id}
-                  to={`/catalog?category=${cat.slug}`}
+                  to={cat.slug === 'joyeria' ? '/catalog-joyeria' : '/catalog-tecnologia'}
                   className="snap-start shrink-0 w-64 md:w-1/3 group relative rounded-2xl overflow-hidden bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-white/5 shadow-sm aspect-[4/5] md:aspect-square flex flex-col hover:shadow-md transition-all duration-300"
                 >
                   <div className="flex-grow p-8 flex items-center justify-center bg-white dark:bg-slate-950/20">
@@ -336,7 +338,7 @@ export default function HomePage() {
         <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="shop">
           <div className="flex justify-between items-end mb-8">
             <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white font-brand" style={{ fontFamily: 'var(--font-brand)' }}>Los Más Deseados</h2>
-            <Link to="/catalog" className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full text-xs font-bold bg-white dark:bg-slate-900/50 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-800/60 shadow-sm hover:bg-primary hover:text-white hover:border-primary dark:hover:bg-primary dark:hover:border-primary transition-all duration-300 group">
+            <Link to="/catalog-tecnologia" className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full text-xs font-bold bg-white dark:bg-slate-900/50 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-800/60 shadow-sm hover:bg-primary hover:text-white hover:border-primary dark:hover:bg-primary dark:hover:border-primary transition-all duration-300 group">
               Más
               <span className="material-symbols-outlined text-[14px] transition-transform group-hover:translate-x-0.5" aria-hidden="true">arrow_forward</span>
             </Link>
