@@ -13,7 +13,6 @@ import UserAvatar from './ui/UserAvatar';
 
 export default function Navbar() {
   const location = useLocation();
-  const currentType = new URLSearchParams(location.search).get('type');
   const { cartCount, setIsCartOpen } = useCart();
   const { favorites } = useFavorites();
   const { user, isAdmin, signOut, authModalContext, showAuthModal, hideAuthModal } = useAuth();

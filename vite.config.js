@@ -63,6 +63,8 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       host: true, // Para acceso desde otros dispositivos en la red local
+      port: 3000,
+      strictPort: true,
     },
   build: {
     sourcemap: false, // Sin sourcemaps en prod (seguridad + tamaño)

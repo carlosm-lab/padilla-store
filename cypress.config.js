@@ -2,7 +2,7 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
   e2e: {
-    baseUrl: "http://127.0.0.1:5173",
+    baseUrl: "http://127.0.0.1:3000",
     supportFile: false,
     setupNodeEvents() {
       // implement node event listeners here

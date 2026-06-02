@@ -24,12 +24,11 @@
 //   - Toaster: notificaciones toast (react-hot-toast)
 // ──────────────────────────────────────────────────────────────
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { Suspense, lazy, useEffect, useState, useCallback, useRef } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 
 import ErrorBoundary from './components/ErrorBoundary';
 import { Helmet } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
-import { BASE_URL } from '@/config/constants';
 
 // ── Páginas públicas (lazy) ──────────────────────────────
 const HomePage = lazy(() => import('./pages/HomePage'));

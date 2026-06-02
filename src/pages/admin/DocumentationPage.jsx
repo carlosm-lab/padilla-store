@@ -1437,7 +1437,6 @@ export default function DocumentationPage() {
     { id: 'funcional', label: 'Descripción Funcional (Sistema)', content: graphicContent },
     { id: 'codigo', label: 'Descripción Funcional (Código)', content: funcContent },
     { id: 'sprints', label: 'Sprints de Desarrollo', content: sprintsContent },
-    { id: 'donacion', label: 'Términos de Donación', content: donacionContent },
   ];
 
   return (
@@ -1461,7 +1460,7 @@ export default function DocumentationPage() {
                 Documentación Interna Privada
               </h1>
               <p className="text-sm text-slate-500 dark:text-slate-400">
-                Archivos confidenciales: Sprints, arquitectura y términos legales de donación.
+                Archivos confidenciales: Sprints y arquitectura.
               </p>
               <div className="mt-4 flex items-start gap-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/30 rounded-xl px-4 py-3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5"><path d="M12 9v4"/><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636-2.87L13.637 3.59a1.914 1.914 0 0 0-3.274 0z"/><path d="M12 17h.01"/></svg>

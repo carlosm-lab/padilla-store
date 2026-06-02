@@ -3,7 +3,7 @@
 // ──────────────────────────────────────────────────────────────
 // Genera los datos estructurados Schema.org para Google.
 // Cada función crea un schema específico basado en los datos
-// oficiales del negocio (infoseo.txt → constants.js).
+// oficiales del negocio (constants.js).
 //
 // Schemas implementados:
 //   - LocalBusiness (tienda + contacto + horarios + cobertura)

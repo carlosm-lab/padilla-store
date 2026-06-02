@@ -4,7 +4,7 @@ import ProductCard from '@/components/ProductCard';
 import { useProducts } from '@/hooks/useProducts';
 import { useCategories } from '@/hooks/useCategories';
 import { Helmet } from 'react-helmet-async';
-import { BASE_URL, WHATSAPP_NUMBER, SITE_NAME, FOUNDER_NAME, BUSINESS_PHONE, CONTACT_EMAIL } from '@/config/constants';
+import { BASE_URL, SITE_NAME, FOUNDER_NAME } from '@/config/constants';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import lottie from 'lottie-web';
 import StructuredData, { createFAQSchema, createBreadcrumbSchema } from '@/components/StructuredData';
