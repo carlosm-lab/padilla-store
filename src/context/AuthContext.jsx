@@ -205,6 +205,19 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     let mounted = true;
 
+    // Limpiar el hash '#' vacío residual que deja Supabase tras procesar las credenciales en la URL
+    const cleanTrailingHash = () => {
+      if (window.location.hash === '#' || window.location.href.endsWith('#')) {
+        window.history.replaceState(
+          null,
+          document.title,
+          window.location.pathname + window.location.search
+        );
+      }
+    };
+
+    cleanTrailingHash();
+
     // Paso 1: Obtener la sesión existente (refresh / nueva pestaña)
     const initSession = async () => {
       try {
@@ -250,6 +263,11 @@ export const AuthProvider = ({ children }) => {
           sessionStorage.removeItem(CACHE_TIME_KEY);
           sessionStorage.removeItem(USER_CACHE_KEY);
           return;
+        }
+
+        if (event === 'SIGNED_IN') {
+          // Un pequeño delay asegura que Supabase termine de extraer los datos del hash antes de removerlo
+          setTimeout(cleanTrailingHash, 25);
         }
 
         // SIGNED_IN, TOKEN_REFRESHED, USER_UPDATED — actualizar session/user
