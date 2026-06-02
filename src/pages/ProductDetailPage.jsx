@@ -118,7 +118,7 @@ export default function ProductDetailPage() {
         { name: product.name }
       ])} />
 
-      <main className="flex-1 px-container py-[var(--space-lg)]">
+      <main className="max-w-[1200px] mx-auto w-full flex-1 px-container py-[var(--space-lg)]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-xl)]">
           {/* Gallery */}
           <div className="flex flex-col gap-[var(--space-md)] w-full lg:max-w-[480px] lg:ml-auto lg:items-end">
