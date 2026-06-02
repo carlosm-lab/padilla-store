@@ -121,13 +121,13 @@ export default function ProductDetailPage() {
       <main className="flex-1 px-container py-[var(--space-lg)]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-xl)]">
           {/* Gallery */}
-          <div className="flex flex-col gap-[var(--space-md)]">
+          <div className="flex flex-col gap-[var(--space-md)] min-w-0">
             <button
               type="button"
               onClick={() => setIsImageModalOpen(true)}
-              className="cursor-zoom-in group relative w-full aspect-square max-h-[500px] lg:max-h-[600px] rounded-xl overflow-hidden shadow-360 transition-all bg-gray-50 dark:bg-white/10"
+              className="cursor-zoom-in group relative w-full rounded-xl overflow-hidden shadow-360 transition-all bg-transparent"
             >
-              <img src={mainImg || '/logo.png'} alt={product.name} fetchpriority="high" loading="eager" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
+              <img src={mainImg || '/logo.png'} alt={product.name} fetchpriority="high" loading="eager" className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
                 <span className="material-symbols-outlined text-white text-5xl drop-shadow-md">zoom_in</span>
               </div>
@@ -149,17 +149,17 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Info */}
-          <div className="flex flex-col gap-[var(--space-lg)]">
-            <nav className="flex text-[var(--text-sm)] text-slate-500 dark:text-slate-400 gap-[var(--space-xs)] items-center">
+          <div className="flex flex-col gap-[var(--space-lg)] min-w-0">
+            <nav className="flex text-[var(--text-sm)] text-slate-500 dark:text-slate-400 gap-[var(--space-xs)] items-center whitespace-nowrap overflow-x-auto pb-1">
               <Link to="/">Tienda</Link>
-              <span className="material-symbols-outlined text-[var(--text-xs)]">chevron_right</span>
+              <span className="material-symbols-outlined text-[var(--text-xs)] shrink-0">chevron_right</span>
               <Link to={getCatalogUrl()}>Colecciones</Link>
-              <span className="material-symbols-outlined text-[var(--text-xs)]">chevron_right</span>
-              <span className="text-primary font-medium">{product.categories?.name || product.category}</span>
+              <span className="material-symbols-outlined text-[var(--text-xs)] shrink-0">chevron_right</span>
+              <span className="text-primary font-medium shrink-0 truncate">{product.categories?.name || product.category}</span>
             </nav>
-            <div>
+            <div className="min-w-0">
               <div className="flex justify-between items-start gap-4 mb-[var(--space-xs)]">
-                <h1 className="text-[var(--text-4xl)] font-black tracking-tight">{product.name}</h1>
+                <h1 className="text-[var(--text-4xl)] font-black tracking-tight min-w-0 break-words">{product.name}</h1>
                 <button
                   onClick={() => handleToggleFavorite(product.id)}
                   className={`w-[clamp(2.5rem,5vw,3rem)] aspect-square flex items-center justify-center rounded-full shrink-0 transition-all ${isFavorite(product.id)
@@ -173,7 +173,7 @@ export default function ProductDetailPage() {
                   </span>
                 </button>
               </div>
-              <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+              <p className="text-slate-600 dark:text-slate-400 leading-relaxed whitespace-pre-line" style={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
                 {product.description}
               </p>
             </div>
