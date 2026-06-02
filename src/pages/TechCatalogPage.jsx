@@ -32,17 +32,26 @@ export default function TechCatalogPage() {
     onSaleOnly: searchParams.get('onSaleOnly') === 'true'
   }));
 
+  const { categories: dbCategories } = useCategories();
+
   // Technology catalog categories only
-  const activeCatalogSlugs = ['accesorios-celular'];
+  const techCategories = useMemo(() => {
+    return dbCategories.filter(cat => cat.catalog === 'tecnologia');
+  }, [dbCategories]);
+
+  const activeCatalogSlugs = useMemo(() => {
+    return techCategories.map(cat => cat.slug);
+  }, [techCategories]);
 
   const queryCategories = useMemo(() => {
     if (filters.categories.length > 0) {
       return filters.categories;
     }
     return activeCatalogSlugs;
-  }, [filters.categories]);
+  }, [filters.categories, activeCatalogSlugs]);
 
   const { products: paginatedProducts, totalCount, loading: prodsLoading } = useProducts({
+    catalog: 'tecnologia',
     categories: queryCategories,
     search: filters.search,
     minPrice: filters.minPrice,
@@ -53,8 +62,6 @@ export default function TechCatalogPage() {
     limit: ITEMS_PER_PAGE,
     filterFavorites: filterMode === 'favorites' ? favorites : null
   });
-
-  const { categories: dbCategories } = useCategories();
 
   // Update URL search params when filters or page change
   const isFirstRender = useRef(true);

@@ -87,7 +87,7 @@ export const MAX_TOTAL_ITEMS = 50;
 // ambigüedad si se agregan más FKs a categories en el futuro.
 // Si se agrega una columna a la tabla products, hay que ponerla
 // aquí manualmente. Eso es a propósito.
-export const PRODUCT_SELECT_COLUMNS = 'id, name, description, price, old_price, images, image_path, category, category_id, slug, is_active, offer_starts_at, offer_ends_at, tags, categories!products_category_id_fkey(name, icon, slug)';
+export const PRODUCT_SELECT_COLUMNS = 'id, name, description, price, old_price, images, image_path, category, category_id, catalog, slug, is_active, offer_starts_at, offer_ends_at, tags, categories!products_category_id_fkey(name, icon, slug)';
 
 // ── Localización ─────────────────────────────────────────
 // Fijo para El Salvador: dólar americano, español salvadoreño.

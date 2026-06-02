@@ -13,7 +13,7 @@ export default function CategoriesPage() {
   
   // Form State
   const [isEditing, setIsEditing] = useState(false);
-  const [currentCat, setCurrentCat] = useState({ id: '', name: '', slug: '', description: '' });
+  const [currentCat, setCurrentCat] = useState({ id: '', name: '', slug: '', description: '', catalog: 'joyeria' });
 
   const confirm = useConfirm();
 
@@ -67,7 +67,7 @@ export default function CategoriesPage() {
       if (isEditing) {
         const { error } = await supabase
           .from('categories')
-          .update({ name: currentCat.name, slug: currentCat.slug, description: currentCat.description || null })
+          .update({ name: currentCat.name, slug: currentCat.slug, description: currentCat.description || null, catalog: currentCat.catalog })
           .eq('id', currentCat.id);
           
         if (error) throw error;
@@ -75,13 +75,13 @@ export default function CategoriesPage() {
       } else {
         const { error } = await supabase
           .from('categories')
-          .insert([{ name: currentCat.name, slug: currentCat.slug, description: currentCat.description || null }]);
+          .insert([{ name: currentCat.name, slug: currentCat.slug, description: currentCat.description || null, catalog: currentCat.catalog }]);
           
         if (error) throw error;
         showToast('Categoría creada');
       }
       
-      setCurrentCat({ id: '', name: '', slug: '', description: '' });
+      setCurrentCat({ id: '', name: '', slug: '', description: '', catalog: 'joyeria' });
       setIsEditing(false);
       invalidateCategoryCache();
       fetchCategories();
@@ -99,7 +99,7 @@ export default function CategoriesPage() {
   };
 
   const handleCancelEdit = () => {
-    setCurrentCat({ id: '', name: '', slug: '', description: '' });
+    setCurrentCat({ id: '', name: '', slug: '', description: '', catalog: 'joyeria' });
     setIsEditing(false);
   };
 
@@ -163,6 +163,19 @@ export default function CategoriesPage() {
             {isEditing ? 'Editar Categoría' : 'Nueva Categoría'}
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label htmlFor="cat-catalog" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Catálogo</label>
+              <select 
+                id="cat-catalog"
+                required
+                value={currentCat.catalog || 'joyeria'} 
+                onChange={(e) => setCurrentCat({...currentCat, catalog: e.target.value})}
+                className="w-full px-4 py-2 bg-slate-50 dark:bg-transparent border border-slate-200 dark:border-white/5 rounded-lg focus:ring-2 focus:ring-primary/20 text-slate-900 dark:text-white"
+              >
+                <option value="joyeria" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Joyería</option>
+                <option value="tecnologia" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">Tecnología</option>
+              </select>
+            </div>
             <div>
               <label htmlFor="cat-name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nombre</label>
               <input 
@@ -244,7 +257,12 @@ export default function CategoriesPage() {
                       <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: cat.featured ? "'FILL' 1" : "'FILL' 0" }}>star</span>
                     </button>
                     <div>
-                      <p className="font-bold text-slate-900 dark:text-white">{cat.name}</p>
+                      <div className="flex items-center gap-2">
+                        <p className="font-bold text-slate-900 dark:text-white">{cat.name}</p>
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${cat.catalog === 'joyeria' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400' : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'}`}>
+                          {cat.catalog === 'joyeria' ? 'Joyería' : 'Tecnología'}
+                        </span>
+                      </div>
                       <p className="text-sm text-slate-500 font-mono">{cat.slug}</p>
                     </div>
                   </div>

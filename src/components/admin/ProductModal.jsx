@@ -36,6 +36,7 @@ export default function ProductModal({ isOpen, onClose, product, onSave, categor
     offer_hours: '',
     offer_minutes: '',
     offer_starts_at: '',
+    catalog: 'joyeria',
     category: '',
     tags: [],
     image_path: '',
@@ -58,6 +59,7 @@ export default function ProductModal({ isOpen, onClose, product, onSave, categor
         offer_hours: '',
         offer_minutes: '',
         offer_starts_at: product.offer_starts_at ? new Date(product.offer_starts_at).toISOString().slice(0, 16) : '',
+        catalog: product.catalog || (product.category ? categories?.find(c => c.slug === product.category)?.catalog : '') || 'joyeria',
         category: product.category || '',
         tags: Array.isArray(product.tags) ? product.tags : [],
         image_path: product.images?.[0] || product.image_path || '',
@@ -76,7 +78,8 @@ export default function ProductModal({ isOpen, onClose, product, onSave, categor
         offer_hours: '',
         offer_minutes: '',
         offer_starts_at: '',
-        category: categories?.[0]?.slug || '',
+        catalog: 'joyeria',
+        category: '',
         tags: [],
         image_path: '',
         images: [],
@@ -225,6 +228,7 @@ export default function ProductModal({ isOpen, onClose, product, onSave, categor
       description: formData.description || null,
       price: parsedPrice,
       old_price: parsedOldPrice,
+      catalog: formData.catalog || null,
       category: formData.category || null,
       tags: Array.isArray(formData.tags) ? formData.tags : [],
       image_path: formData.images[0] || formData.image_path || null,
@@ -385,7 +389,22 @@ export default function ProductModal({ isOpen, onClose, product, onSave, categor
                 </div>
               )}
 
-              {/* Category & Status */}
+              <div>
+                <label htmlFor="product-catalog" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Catálogo</label>
+                <select 
+                  id="product-catalog"
+                  name="catalog" value={formData.catalog} onChange={(e) => {
+                    const nextCatalog = e.target.value;
+                    setFormData(prev => ({ ...prev, catalog: nextCatalog, category: '' }));
+                  }} required
+                  className="w-full rounded-lg border-slate-200 dark:border-white/5 bg-white dark:bg-transparent text-slate-900 dark:text-white px-4 py-2 focus:ring-2 focus:ring-primary/20 mb-3"
+                >
+                  <option value="" disabled>Seleccionar...</option>
+                  <option value="joyeria">Joyería</option>
+                  <option value="tecnologia">Tecnología</option>
+                </select>
+              </div>
+
               <div>
                 <label htmlFor="product-category" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Categoría</label>
                 <select 
@@ -394,9 +413,11 @@ export default function ProductModal({ isOpen, onClose, product, onSave, categor
                   className="w-full rounded-lg border-slate-200 dark:border-white/5 bg-white dark:bg-transparent text-slate-900 dark:text-white px-4 py-2 focus:ring-2 focus:ring-primary/20"
                 >
                   <option value="" disabled>Seleccionar...</option>
-                  {categories?.map(cat => (
-                    <option key={cat.id} value={cat.slug}>{cat.name}</option>
-                  ))}
+                  {categories
+                    ?.filter(cat => cat.catalog === formData.catalog)
+                    ?.map(cat => (
+                      <option key={cat.id} value={cat.slug}>{cat.name}</option>
+                    ))}
                 </select>
               </div>
 

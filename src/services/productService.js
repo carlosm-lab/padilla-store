@@ -30,11 +30,13 @@ export const productService = {
    *     queries IN() con miles de IDs (SEC-009 / PERF-002).
    *   - search: se escapan %, _ y \ para evitar comodines SQL.
    */
-  getProductsQuery({ category, categories, search, minPrice, maxPrice, onSaleOnly, sortBy, page, limit, filterFavorites }) {
+  getProductsQuery({ catalog, category, categories, search, minPrice, maxPrice, onSaleOnly, sortBy, page, limit, filterFavorites }) {
     let q = supabase
       .from('products')
       .select(PRODUCT_SELECT_COLUMNS, { count: 'exact' })
       .eq('is_active', true); // Solo productos visibles en la tienda
+
+    if (catalog) q = q.eq('catalog', catalog);
 
     // Filtro por categoría individual (ProductDetailPage relacionados)
     if (category) q = q.eq('category', category);

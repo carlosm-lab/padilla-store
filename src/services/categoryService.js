@@ -23,7 +23,7 @@ export const categoryService = {
   async getCategories() {
     const { data, error } = await supabase
       .from('categories')
-      .select('id, name, slug, created_at, icon, image_url, description, featured')
+      .select('id, name, slug, created_at, icon, image_url, description, featured, catalog')
       .order('name');
       
     if (error) throw error;

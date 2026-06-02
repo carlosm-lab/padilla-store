@@ -28,6 +28,7 @@ export default function ProductsPage() {
   // Filters & Search
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 500); // 500ms debounce
+  const [filterCatalog, setFilterCatalog] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
   const [filterOnSale, setFilterOnSale] = useState(false);
 
@@ -57,13 +58,16 @@ export default function ProductsPage() {
       // Fetch products
       let query = supabase.from('products').select(`
         id, name, description, price, old_price, offer_ends_at, category, tags, image_path, images, is_active, slug, created_at,
-        category_id,
+        category_id, catalog,
         categories!products_category_id_fkey(name)
       `, { count: 'exact' }).order('created_at', { ascending: false });
 
       if (debouncedSearchTerm) {
         const escapedSearch = debouncedSearchTerm.replace(/[%_\\]/g, '\\$&');
         query = query.ilike('name', `%${escapedSearch}%`);
+      }
+      if (filterCatalog) {
+        query = query.eq('catalog', filterCatalog);
       }
       if (filterCategory) {
         query = query.eq('category', filterCategory);
@@ -95,11 +99,11 @@ export default function ProductsPage() {
       setIsLoading(false);
     }
      
-  }, [debouncedSearchTerm, filterCategory, filterOnSale]);
+  }, [debouncedSearchTerm, filterCatalog, filterCategory, filterOnSale]);
 
   useEffect(() => {
     fetchData(false);
-  }, [debouncedSearchTerm, filterCategory, filterOnSale, fetchData]);
+  }, [debouncedSearchTerm, filterCatalog, filterCategory, filterOnSale, fetchData]);
 
   const handleOpenModal = (product = null) => {
     setEditingProduct(product);
@@ -259,6 +263,25 @@ export default function ProductsPage() {
           />
         </div>
 
+        {/* Catalog Filter */}
+        <div className="w-full md:w-48 relative">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 flex items-center">
+            <span className="material-symbols-outlined text-[20px]">store</span>
+          </span>
+          <select
+            value={filterCatalog}
+            onChange={(e) => {
+              setFilterCatalog(e.target.value);
+              setFilterCategory('');
+            }}
+            className="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-transparent border border-slate-200 dark:border-white/5 rounded-xl focus:ring-2 focus:ring-primary/20 text-slate-900 dark:text-white appearance-none cursor-pointer"
+          >
+            <option value="">Todos los catálogos</option>
+            <option value="joyeria">Joyería</option>
+            <option value="tecnologia">Tecnología</option>
+          </select>
+        </div>
+
         {/* Category Filter */}
         <div className="w-full md:w-64 relative">
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 flex items-center">
@@ -270,9 +293,11 @@ export default function ProductsPage() {
             className="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-transparent border border-slate-200 dark:border-white/5 rounded-xl focus:ring-2 focus:ring-primary/20 text-slate-900 dark:text-white appearance-none cursor-pointer"
           >
             <option value="">Todas las categorías</option>
-            {categories.map(cat => (
-              <option key={cat.id} value={cat.slug}>{cat.name}</option>
-            ))}
+            {categories
+              .filter(cat => !filterCatalog || cat.catalog === filterCatalog)
+              .map(cat => (
+                <option key={cat.id} value={cat.slug}>{cat.name}</option>
+              ))}
           </select>
         </div>
 

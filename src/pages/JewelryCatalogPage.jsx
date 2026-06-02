@@ -32,17 +32,26 @@ export default function JewelryCatalogPage() {
     onSaleOnly: searchParams.get('onSaleOnly') === 'true'
   }));
 
+  const { categories: dbCategories } = useCategories();
+
   // Jewelry catalog categories only
-  const activeCatalogSlugs = ['joyeria'];
+  const jewelryCategories = useMemo(() => {
+    return dbCategories.filter(cat => cat.catalog === 'joyeria');
+  }, [dbCategories]);
+
+  const activeCatalogSlugs = useMemo(() => {
+    return jewelryCategories.map(cat => cat.slug);
+  }, [jewelryCategories]);
 
   const queryCategories = useMemo(() => {
     if (filters.categories.length > 0) {
       return filters.categories;
     }
     return activeCatalogSlugs;
-  }, [filters.categories]);
+  }, [filters.categories, activeCatalogSlugs]);
 
   const { products: paginatedProducts, totalCount, loading: prodsLoading } = useProducts({
+    catalog: 'joyeria',
     categories: queryCategories,
     search: filters.search,
     minPrice: filters.minPrice,
@@ -53,8 +62,6 @@ export default function JewelryCatalogPage() {
     limit: ITEMS_PER_PAGE,
     filterFavorites: filterMode === 'favorites' ? favorites : null
   });
-
-  const { categories: dbCategories } = useCategories();
 
   // Update URL search params when filters or page change
   const isFirstRender = useRef(true);

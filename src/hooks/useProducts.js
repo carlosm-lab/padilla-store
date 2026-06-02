@@ -59,7 +59,7 @@ const shallowCompareArray = (arr1, arr2) => {
  * @param {string[]|null} options.filterFavorites - IDs de favoritos para filtrar
  * @param {boolean} options.skip - Si true, no hace fetch (para lazy loading)
  */
-export function useProducts({ category, categories = [], search, minPrice, maxPrice, onSaleOnly, sortBy, page, limit, filterFavorites = null, skip = false } = {}) {
+export function useProducts({ catalog, category, categories = [], search, minPrice, maxPrice, onSaleOnly, sortBy, page, limit, filterFavorites = null, skip = false } = {}) {
   const [products, setProducts] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -112,6 +112,7 @@ export function useProducts({ category, categories = [], search, minPrice, maxPr
       
       try {
         let q = productService.getProductsQuery({
+          catalog,
           category, 
           categories: stableCategories, 
           search: debouncedSearch, 
@@ -160,7 +161,7 @@ export function useProducts({ category, categories = [], search, minPrice, maxPr
       abortController.abort();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category, stableCategories, debouncedSearch, minPrice, maxPrice, onSaleOnly, sortBy, page, limit, stableFavorites, skip]);
+  }, [catalog, category, stableCategories, debouncedSearch, minPrice, maxPrice, onSaleOnly, sortBy, page, limit, stableFavorites, skip]);
 
   return { products, totalCount, loading, error };
 }
