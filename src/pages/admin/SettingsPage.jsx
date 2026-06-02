@@ -27,7 +27,7 @@ export default function SettingsPage() {
       const { data, error } = await supabase
         .from('profiles')
         .select('id, role, email, created_at');
-        
+
       if (error) throw error;
       setProfiles(data || []);
     } catch (error) {
@@ -97,7 +97,7 @@ export default function SettingsPage() {
 
         {isLoading ? (
           <div className="p-12 flex justify-center">
-             <div className="w-8 h-8 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+            <div className="w-8 h-8 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -122,11 +122,10 @@ export default function SettingsPage() {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-center">
-                      <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold ${
-                        profile.role === 'admin' 
-                          ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400' 
+                      <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold ${profile.role === 'admin'
+                          ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400'
                           : 'bg-slate-100 text-slate-600 dark:bg-white/5 dark:text-slate-400'
-                      }`}>
+                        }`}>
                         {profile.role === 'admin' ? 'Administrador' : 'Usuario P.'}
                       </span>
                     </td>

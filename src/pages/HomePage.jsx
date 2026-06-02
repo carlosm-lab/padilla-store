@@ -180,14 +180,14 @@ export default function HomePage() {
         <div className="max-w-[1440px] mx-auto relative z-[2] w-full px-[20px] md:px-[64px]">
           <div className="flex flex-col lg:flex-row-reverse items-center w-full" style={{ gap: 'var(--space-2xl)' }}>
             {/* Left Column: Typography & Actions (Aligned and Clean) */}
-            <div className="w-full lg:w-1/2 flex flex-col justify-center items-start text-left relative z-10">
+            <div className="w-full lg:w-1/2 flex flex-col justify-center items-center lg:items-start text-center lg:text-left relative z-10">
               {/* Contenedor Tarjeta Liquid Glass para el Título */}
               <div className="w-full bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border-2 border-dotted border-slate-400/70 dark:border-slate-600/70 rounded-3xl p-6 md:p-8 shadow-2xl shadow-primary/5 relative overflow-hidden mb-6">
                 {/* Glow líquido interno */}
                 <div className="absolute -right-16 -top-16 w-32 h-32 rounded-full bg-primary/20 blur-3xl pointer-events-none" />
                 <div className="absolute -left-16 -bottom-16 w-32 h-32 rounded-full bg-indigo-500/20 blur-3xl pointer-events-none" />
-                
-                <h1 className="tracking-tight text-slate-900 dark:text-white w-full lg:w-auto flex flex-col items-stretch mx-0 font-bold font-brand text-3xl sm:text-4xl md:text-5xl lg:text-6xl" style={{ lineHeight: 1.15, fontFamily: 'var(--font-brand)' }}>
+
+                <h1 className="tracking-tight text-slate-900 dark:text-white w-full lg:w-auto flex flex-col items-stretch mx-auto lg:mx-0 font-bold font-brand text-3xl sm:text-4xl md:text-5xl lg:text-6xl" style={{ lineHeight: 1.15, fontFamily: 'var(--font-brand)' }}>
                   <span className="block font-brand w-full lg:text-balance" style={{ fontFamily: 'var(--font-brand)' }}>
                     {settings?.hero_title || "Protege tu celular. Luce tu estilo."}
                   </span>
@@ -195,11 +195,6 @@ export default function HomePage() {
                     {settings?.hero_subtitle || "Cases premium, cargadores rápidos y joyería de acero en San Miguel"}
                   </span>
                 </h1>
-
-                {/* Subtítulo — Nivel corporativo con SEO */}
-                <p className="text-slate-600 dark:text-slate-300 max-w-[500px] font-normal not-italic text-left mt-6 border-t border-slate-200/40 dark:border-slate-800/40 pt-6" style={{ fontSize: 'var(--text-base)', lineHeight: 1.65, fontStyle: 'normal' }}>
-                  {settings?.hero_description || "Descubre nuestra colección de bisutería fina de acero y plata, accesorios premium para celular y productos electrónicos. Entrega a domicilio en 24 horas en San Miguel, El Salvador."}
-                </p>
               </div>
 
               {/* Mobile Animation */}
@@ -211,6 +206,11 @@ export default function HomePage() {
                   role="img"
                 />
               </div>
+
+              {/* Subtítulo — Nivel corporativo con SEO */}
+              <p className="text-slate-600 dark:text-slate-300 max-w-[650px] font-normal not-italic text-left" style={{ fontSize: 'var(--text-base)', lineHeight: 1.65, marginBottom: 'var(--space-xl)', fontStyle: 'normal' }}>
+                {settings?.hero_description || "Descubre nuestra colección de bisutería fina de acero y plata, accesorios premium para celular y productos electrónicos. Entrega a domicilio en 24 horas en San Miguel, El Salvador."}
+              </p>
 
               {/* Botones de Acción de Alta Gama */}
               <div className="flex flex-row w-full" style={{ gap: 'var(--space-sm)' }}>
