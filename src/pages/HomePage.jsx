@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { useSettings } from '@/context/SettingsContext';
 import ProductCard from '@/components/ProductCard';
 import { useProducts } from '@/hooks/useProducts';
-import { useCategories } from '@/hooks/useCategories';
 import { Helmet } from 'react-helmet-async';
 import { BASE_URL, SITE_NAME, FOUNDER_NAME } from '@/config/constants';
 import { useEffect, useRef, useState, useCallback } from 'react';
@@ -47,7 +46,6 @@ const FAQ_ITEMS = [
 
 export default function HomePage() {
   const { products: homeProducts, loading } = useProducts({ limit: 5 });
-  const { categories: allCategories, loading: loadingCategories } = useCategories();
   const { settings } = useSettings();
 
   // Desktop animation ref
@@ -81,10 +79,7 @@ export default function HomePage() {
     };
   }, [loadAnim]);
 
-  const categories = (() => {
-    const featured = allCategories.filter(c => c.featured);
-    return featured.length > 0 ? featured : allCategories.slice(0, 3);
-  })();
+
 
   useEffect(() => {
     const observerOptions = {
@@ -301,38 +296,7 @@ export default function HomePage() {
       </section>
 
       <main className="max-w-[1440px] mx-auto bg-background-light dark:bg-background-dark text-[#1c1b1b] dark:text-slate-100 font-sans">
-        <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up">
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white mb-4 text-left font-brand" style={{ fontFamily: 'var(--font-brand)' }}>Explorar por Categoría</h2>
-          <p className="text-left text-slate-500 dark:text-slate-400 max-w-2xl mb-8 text-sm md:text-base leading-relaxed font-normal italic">
-            Encuentra accesorios tecnológicos para tu celular, bisutería fina de acero y plata, y productos electrónicos seleccionados. Todo disponible con entrega a domicilio en San Miguel.
-          </p>
-          <div className="flex overflow-x-auto hide-scrollbar gap-[16px] snap-x snap-mandatory pb-4">
-            {loadingCategories ? (
-              <div className="w-full py-12 flex justify-center"><div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div></div>
-            ) : categories.map((cat, index) => {
-              const defaultImages = [
-                "https://lh3.googleusercontent.com/aida-public/AB6AXuAkucagwOYF8skqepVgQ2unwBr55ZdWiGwNboYt7tmxilkmRP7-YfP_KhkFa91r60es4k5OCNvGKv-CBlJgjpcpRYwM-fxXpVJEwd3-hlXJA-ABb5LK4VWgmamHEXbXZ3YiZpVrP7eDe98zPo_eFmGC1pJo5Q-LRLHiK95H5j_BrKtT00q2x1XoFsNOXdnCEI-9ryQsd8iNa5AMFkdvwFpiBody5KTwLWLpQc3ky5YcwkAE8CqDSyy4fiWXXFm1nB0E5Myw_0gEwbM",
-                "https://lh3.googleusercontent.com/aida-public/AB6AXuDa9RT3tTmdr__dyJDduA7hC1eKpWc0JqjZCicXbU6N4RVsxsdPR10UqdR_AMKBGLC2SE6RAg8wRhm0dLFTcx5iAV4hpZhvXnJ8LeQT8slk0UYaa4yFhhOnnjLaW68zsHcUdMClAdqZ3LfOl9VqSvcB7sMZIf43GOAr5jCnKMzgZ9JhiBLhHaCXbGMig-p2_B-FiJMtqT4wYDNXzekesDVTNpRkwl3_Ey4ELulDZhY4jpr_hd2WEDbrJMtPy-FZGoZEPSjt9F7D_sc",
-                "https://lh3.googleusercontent.com/aida-public/AB6AXuDiNFm07Ae9c-95bNmCWBRKfdWVo-KG8I9-jIXHahCF-wYVdvlGqr7Ng06fNvFm5z32RGlufWOr0TzuzS2yusnaJfrY4MiFLv5rwCGDk344wQ6IRUdh1rqlziT0wtaJCAc5toyESQsRcXhFoTvoSlTKOHlTt0ucKRp0zT13bEDLvs8L8oNwlCMJ5rjJ05Mv6qy8u-h7ScqTneGoVzqGOomle6bvEzsjvCoGXBXBg3k4YoIut070sNsWKetXR--fNB03YU_Od4a0a1U"
-              ];
-              const imgSrc = cat.image_url || defaultImages[index % defaultImages.length];
-              return (
-                <Link
-                  key={cat.id}
-                  to={cat.slug === 'joyeria' ? '/catalog-joyeria' : '/catalog-tecnologia'}
-                  className="snap-start shrink-0 w-64 md:w-1/3 group relative rounded-2xl overflow-hidden bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-white/5 shadow-sm aspect-[4/5] md:aspect-square flex flex-col hover:shadow-md transition-all duration-300"
-                >
-                  <div className="flex-grow p-8 flex items-center justify-center bg-white dark:bg-slate-950/20">
-                    <img alt={`${cat.name} — Padilla Store San Miguel`} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" src={imgSrc} />
-                  </div>
-                  <div className="p-6 bg-white/90 dark:bg-slate-900/90 border-t border-slate-100 dark:border-white/5 backdrop-blur-sm absolute bottom-0 w-full">
-                    <h3 className="text-[18px] leading-[28px] font-medium text-[#1c1b1b] dark:text-white text-center">{cat.name}</h3>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </section>
+
 
         {/* Featured Products */}
         <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="shop">
