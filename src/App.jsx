@@ -115,13 +115,13 @@ function App() {
             </Suspense>
           </ErrorBoundary>
         }>
-          <Route index element={<ErrorBoundary><DashboardPage /></ErrorBoundary>} />
-          <Route path="products" element={<ErrorBoundary><ProductsPage /></ErrorBoundary>} />
-          <Route path="categories" element={<ErrorBoundary><CategoriesPage /></ErrorBoundary>} />
-          <Route path="messages" element={<ErrorBoundary><MessagesPage /></ErrorBoundary>} />
-          <Route path="favorites" element={<ErrorBoundary><FavoritesPage /></ErrorBoundary>} />
-          <Route path="settings" element={<ErrorBoundary><SettingsPage /></ErrorBoundary>} />
-          <Route path="documentacion" element={<ErrorBoundary><DocumentationPage /></ErrorBoundary>} />
+          <Route index element={<ErrorBoundary><Suspense fallback={<AdminLoading />}><DashboardPage /></Suspense></ErrorBoundary>} />
+          <Route path="products" element={<ErrorBoundary><Suspense fallback={<AdminLoading />}><ProductsPage /></Suspense></ErrorBoundary>} />
+          <Route path="categories" element={<ErrorBoundary><Suspense fallback={<AdminLoading />}><CategoriesPage /></Suspense></ErrorBoundary>} />
+          <Route path="messages" element={<ErrorBoundary><Suspense fallback={<AdminLoading />}><MessagesPage /></Suspense></ErrorBoundary>} />
+          <Route path="favorites" element={<ErrorBoundary><Suspense fallback={<AdminLoading />}><FavoritesPage /></Suspense></ErrorBoundary>} />
+          <Route path="settings" element={<ErrorBoundary><Suspense fallback={<AdminLoading />}><SettingsPage /></Suspense></ErrorBoundary>} />
+          <Route path="documentacion" element={<ErrorBoundary><Suspense fallback={<AdminLoading />}><DocumentationPage /></Suspense></ErrorBoundary>} />
         </Route>
 
         {/* ── Rutas Públicas (tienda) ────────────────────── */}

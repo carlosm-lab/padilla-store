@@ -11,7 +11,7 @@ export default function StoreCategoryImagesForm({ showToast }) {
   const fetchCategories = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase.from('categories').select('*').eq('featured', true).order('name');
+      const { data, error } = await supabase.from('categories').select('*').order('name');
       if (error) throw error;
       setCategories(data || []);
     } catch (err) {

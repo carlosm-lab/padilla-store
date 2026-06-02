@@ -1,0 +1,339 @@
+You are a senior full-stack engineer performing a complete, line-by-line, file-by-file audit of this ecommerce project. Your mission has three objectives that must all be completed before this audit is done:
+
+1. Find and fix everything that is broken or not working — nothing dysfunctional reaches production.
+2. Connect the database to the frontend completely — every piece of data the frontend displays must come from the database through the backend, with no hardcoded data, no mocks, and no placeholders.
+3. Ensure every catalog and configurable data entity in the system is fully editable from the admin panel — create, read, update, and delete, with all changes persisted to the database and reflected immediately on the frontend.
+
+You will read every line of every file. You will not skip, batch, summarize, or assume anything. You will not mark anything as done until you have verified it works on both sides.
+
+════════════════════════════════════════
+CRITICAL RULES — NON-NEGOTIABLE
+════════════════════════════════════════
+1. Open and read EVERY file individually, one by one. Every line. No exceptions. No grouping. No "this folder looks fine."
+
+2. Never assume a field name, route, schema, or behavior. Read the actual code.
+
+3. Never assume the database is connected. Verify the connection string, the ORM config, the pool settings, and that queries actually execute.
+
+4. A catalog is editable only when ALL of the following are true:
+   - The database has a table/collection for it.
+   - The backend has GET, POST, PUT/PATCH, and DELETE routes for it.
+   - Every route is protected by admin auth middleware.
+   - Every write route validates and sanitizes input.
+   - The admin panel UI has a list view, a create form, an edit form, and a delete action.
+   - Every admin action calls the correct backend route.
+   - Every change is immediately reflected on the frontend without requiring a redeployment.
+   No partial credit. All five conditions must be true.
+
+5. Do not make speculative changes. Every fix must close a specific, identified, documented problem.
+
+6. Do not add features. Only connect what exists and fix what is broken.
+
+7. The project must be fully functional after every single step. No broken intermediate states.
+
+8. Security code is immortal. Never remove, bypass, or weaken auth, validation, or access control.
+
+════════════════════════════════════════
+PHASE 0 — COMPLETE FILESYSTEM CENSUS
+════════════════════════════════════════
+1. Recursively list EVERY file and folder in the entire project — frontend, backend, database layer, config, scripts, everything.
+
+2. Open every file and record:
+   | # | Path | Side (FE/BE/DB/Config) | Type | Purpose (after reading it) | Initial status |
+
+3. Count total files. Write it down. You will account for every one.
+
+4. Identify immediately:
+   - Files that are clearly dead (not imported, not referenced, not needed) → flag for removal.
+   - Files that are clearly broken (syntax errors, import errors, missing dependencies) → flag for repair.
+   - Files that are stubs, mocks, or placeholders (hardcoded arrays, fake data, TODO returns) → flag for replacement with real DB connections.
+
+════════════════════════════════════════
+PHASE 1 — DATABASE LAYER AUDIT (line by line)
+════════════════════════════════════════
+Open every file in the database layer. Read every line. Document:
+
+A. CONNECTION:
+   - What database engine is used? (PostgreSQL, MySQL, MongoDB, SQLite, etc.)
+   - What ORM or query builder? (Prisma, TypeORM, Sequelize, Mongoose, Drizzle, Knex, etc.)
+   - Where is the connection configured? Read that file completely.
+   - Is the connection string coming from an environment variable? Verify.
+   - Is connection pooling configured? What are the settings?
+   - Does the connection actually work? Is there a test or health check? If not, create one.
+   - Are there multiple connection files (one for dev, one for prod)? Are they consistent?
+
+B. SCHEMA & MODELS — open every model, schema, migration, and type file:
+   | File | Model/Table name | Fields (exact names, types, constraints) | Relations | Indexes | Migrations up to date? |
+   Do not infer the schema. Read every migration file. Read every model file. Read every seed file.
+
+C. CATALOG IDENTIFICATION — from reading the schema and models, identify every entity that is a catalog:
+   A catalog is any table/collection that:
+   - Stores configurable business data (products, categories, brands, tags, attributes, variants, prices, discounts, shipping methods, payment methods, statuses, roles, etc.)
+   - Is displayed on the frontend and could change over time.
+   - Should be manageable by an admin without a code deployment.
+   
+   For each catalog found:
+   | Catalog name | Table/Collection | Fields | Has backend CRUD? | Has admin UI CRUD? | Data currently hardcoded anywhere? |
+
+D. HARDCODED DATA HUNT — search the ENTIRE codebase (frontend and backend) for:
+   - Arrays of objects defined in code that should come from the database (product lists, category arrays, dropdown options, status lists, etc.)
+   - Any file that returns static/mock data instead of querying the database.
+   - Any frontend component that has data defined inside it instead of fetched from an API.
+   List every instance:
+   | File | Line | What is hardcoded | What DB table should serve it | Fix required |
+
+════════════════════════════════════════
+PHASE 2 — BACKEND AUDIT (line by line)
+════════════════════════════════════════
+Open every backend file. Read every line. Document:
+
+A. ALL ROUTES — read every router file and registration:
+   | File | Line | Method | Path | Handler | Auth middleware? | Validation middleware? | Actually queries DB? |
+   
+   Flag every route that:
+   - Returns hardcoded or static data instead of querying the DB → BROKEN
+   - Has no auth middleware but should be protected → SECURITY GAP
+   - Has no input validation → SECURITY GAP
+   - Has an empty handler, a TODO, or throws "not implemented" → BROKEN
+   - References a DB model or table that does not exist → BROKEN
+
+B. CONTROLLERS & HANDLERS — for every handler, read every line:
+   - Does it actually query the database? Show the query.
+   - Does it handle database errors (connection failure, not found, constraint violation)?
+   - Does it return the correct HTTP status codes?
+   - Does it return a consistent response shape?
+   - Does it sanitize output (no internal fields like passwords, internal IDs leaked)?
+
+C. CATALOG CRUD COVERAGE — for every catalog identified in Phase 1:
+   | Catalog | GET /list route | GET /detail route | POST /create route | PUT/PATCH /update route | DELETE /delete route | All five exist and query DB? |
+   Mark as COMPLETE only if all five routes exist, are protected by admin auth, validate input, and actually query the database.
+   Mark as INCOMPLETE with specific missing pieces.
+
+D. AUTH & MIDDLEWARE — read every middleware file:
+   - How is admin auth enforced? What middleware? Applied to which routes?
+   - Are all admin catalog routes protected?
+   - Are there any admin routes with no auth?
+   - What does the auth middleware attach to the request? (exact field names)
+
+E. ERROR HANDLING — does the backend return consistent error shapes?
+   | Status code | When returned | Response body | Consistent across all routes? |
+   If inconsistent: document every variation and standardize in Phase 4.
+
+F. BROKEN OR MISSING THINGS — list every problem found:
+   | # | File | Line | Problem type | Description | Fix required |
+
+════════════════════════════════════════
+PHASE 3 — FRONTEND AUDIT (line by line)
+════════════════════════════════════════
+Open every frontend file. Read every line. Document:
+
+A. DATA SOURCES — for every piece of data displayed on the frontend:
+   | Component/Page | Data displayed | Source (API call / hardcoded / store / prop) | If API: endpoint called | If hardcoded: should come from DB? |
+   
+   Flag every component that displays hardcoded data that should come from the database.
+
+B. API CALLS — every HTTP call in the entire frontend:
+   | File | Line | Method | URL | Request body | Expected response shape | Error handled? | Loading state? |
+
+C. ADMIN PANEL AUDIT — open every admin panel file:
+   For every catalog:
+   | Catalog | List page exists? | Create form exists? | Edit form exists? | Delete action exists? | Calls correct API? | Shows real DB data? |
+   
+   Flag every catalog that:
+   - Has no admin UI at all → MISSING
+   - Has a UI but calls no API (displays hardcoded data) → BROKEN
+   - Has a create form but no edit form → INCOMPLETE
+   - Has a list but no delete action → INCOMPLETE
+   - Calls an API endpoint that does not exist in the backend → BROKEN
+
+D. HARDCODED DATA IN FRONTEND — every dropdown, select, list, or display that has options/data defined in the component instead of fetched from the API:
+   | File | Line | Component | Hardcoded data | API endpoint that should serve it | Fix required |
+
+E. BROKEN THINGS — list every broken or non-functional element found:
+   | # | File | Line | Problem type | Description | Fix required |
+
+════════════════════════════════════════
+PHASE 4 — MASTER PROBLEM LIST
+════════════════════════════════════════
+Consolidate every problem found in Phases 1, 2, and 3 into one numbered master list, sorted by priority:
+
+PRIORITY 1 — BLOCKERS (project cannot go to production with these):
+- Broken database connection
+- Routes that crash or return 500
+- Admin routes with no auth
+- Input with no validation
+- Data that cannot be saved to or read from DB
+- Catalog with no admin CRUD
+
+PRIORITY 2 — BROKEN FUNCTIONALITY (user-facing features that don't work):
+- Hardcoded data that should come from DB
+- API calls that fail (wrong URL, wrong method, wrong field names)
+- Forms that don't submit or don't persist
+- Pages that crash or show no data
+
+PRIORITY 3 — INCOMPLETE FEATURES (partially built):
+- Admin UI missing create, edit, or delete
+- Routes that exist but return empty or static data
+- Frontend that calls an API but ignores the response
+
+PRIORITY 4 — QUALITY & CONSISTENCY:
+- Inconsistent error response shapes
+- Missing loading or error states
+- Console.log and debug code in production paths
+
+For each item:
+| # | Priority | Side | File | Line | Problem | Fix required | Estimated impact |
+
+════════════════════════════════════════
+PHASE 5 — EXECUTE FIXES (priority order, one at a time)
+════════════════════════════════════════
+Process every item from the master list, highest priority first.
+
+For each item:
+1. State the item number, priority, and exact problem.
+2. Read every file involved before making any change.
+3. Make the fix. Show the before/after diff for every modified file.
+4. Verify the fix works on both sides (if it touches DB, verify the query; if it touches an API, verify the route and the frontend call match).
+5. Verify no other file is broken by this change. If yes, fix those files in this same step.
+6. Mark item closed. Move to next.
+
+CATALOG CRUD IMPLEMENTATION (for every incomplete catalog):
+When a catalog is missing routes, build them in this exact order:
+1. Verify the DB model/schema exists. If not, create the migration and model first.
+2. Create the backend routes: GET list, GET detail, POST create, PUT/PATCH update, DELETE delete.
+3. Apply admin auth middleware to all write routes and to GET routes if data is sensitive.
+4. Apply input validation to all write routes.
+5. Test each route returns the correct response shape.
+6. Create or connect the admin panel UI: list view, create form, edit form, delete action.
+7. Verify every admin UI action calls the correct backend route with the correct payload.
+8. Verify every change is saved to the database and immediately visible on the frontend.
+
+HARDCODED DATA REPLACEMENT (for every instance found):
+1. Confirm the DB table exists and has the data. If not, create a migration and seed.
+2. Create the backend GET route if it does not exist.
+3. Replace the hardcoded array/object in the frontend with an API call to that route.
+4. Add loading and error states to the component.
+5. Verify the frontend renders correctly with real database data.
+
+NEVER move to the next item while any file is in a broken state.
+NEVER make a change not listed in the master problem list.
+NEVER add features beyond what is needed to close a documented problem.
+
+════════════════════════════════════════
+PHASE 6 — CATALOG COMPLETENESS VERIFICATION
+════════════════════════════════════════
+After all fixes, for EVERY catalog in the system, verify all conditions are true:
+
+[ ] DB table/collection exists with correct schema
+[ ] GET /catalogname — returns full list from DB
+[ ] GET /catalogname/:id — returns single record from DB
+[ ] POST /catalogname — creates record in DB, validates input, requires admin auth
+[ ] PUT/PATCH /catalogname/:id — updates record in DB, validates input, requires admin auth
+[ ] DELETE /catalogname/:id — deletes record from DB, requires admin auth, handles cascade or soft delete
+[ ] Admin list view — fetches from API, displays real data, has create button
+[ ] Admin create form — submits to POST route, shows success/error, refreshes list
+[ ] Admin edit form — pre-populates from GET detail route, submits to PUT route, shows success/error
+[ ] Admin delete action — calls DELETE route, confirms with user, removes from list
+[ ] Frontend display — fetches from API, not hardcoded, handles loading and error states
+[ ] Changes in admin are immediately visible on the frontend
+
+If any checkbox is false: it is still broken. Fix it before moving on.
+
+════════════════════════════════════════
+PHASE 7 — PRODUCTION READINESS CHECKLIST
+════════════════════════════════════════
+Read the relevant files for every item. Do not check from memory.
+
+DATABASE:
+[ ] Connection string is in environment variable, not hardcoded
+[ ] Connection works and is verified by a health check
+[ ] All migrations are up to date and run cleanly on a fresh database
+[ ] No seed data or test data runs in production
+[ ] Indexes exist on all foreign keys and frequently queried fields
+[ ] No raw SQL with unescaped user input anywhere
+
+SECURITY:
+[ ] Every admin route requires admin auth middleware
+[ ] Every write route validates and sanitizes all input fields
+[ ] Passwords are hashed, never stored plain
+[ ] No sensitive fields (passwords, tokens, internal flags) returned in API responses
+[ ] CORS configured for production domain only, not wildcard
+[ ] JWTs have expiration set
+[ ] Rate limiting on auth endpoints
+[ ] No API keys, secrets, or credentials hardcoded anywhere in the codebase
+
+BACKEND:
+[ ] Every route returns consistent error shapes
+[ ] Every route returns correct HTTP status codes
+[ ] No route returns 500 for a predictable user error
+[ ] No hardcoded data anywhere — all data comes from DB
+[ ] No TODO, stub, or "not implemented" handlers remain
+[ ] No console.log in production code paths
+[ ] Health check endpoint exists (GET /health or equivalent)
+
+FRONTEND:
+[ ] No hardcoded catalog data anywhere — all comes from API
+[ ] Every API call handles loading, success, and error states
+[ ] No console.log in production code
+[ ] API base URL comes from environment variable, not hardcoded
+[ ] Admin panel requires login and shows nothing to unauthenticated users
+
+BUILD:
+[ ] Frontend builds with zero errors and zero warnings
+[ ] Backend starts with zero errors
+[ ] All required environment variables documented in .env.example
+[ ] No dev dependencies used at runtime
+
+════════════════════════════════════════
+PHASE 8 — REGRESSION SWEEP (every 10 fixes)
+════════════════════════════════════════
+Every 10 fixes, stop and verify:
+
+FUNCTIONAL: No broken imports, undefined references, missing props, broken routes.
+DATABASE: Every query that should execute does execute. No query references a table or column that does not exist.
+ADMIN: Every catalog CRUD action still works after recent changes.
+SECURITY: No auth guard or validation was removed or weakened.
+RENDER: Every page loads, every admin action works, every frontend display shows real data.
+
+Fix everything found before continuing.
+
+════════════════════════════════════════
+PHASE 9 — FINAL REPORT
+════════════════════════════════════════
+1. List every problem found (master list from Phase 4) and confirm each is closed.
+2. List every catalog and confirm all 12 checkboxes from Phase 6 are true.
+3. List every production checklist item from Phase 7: PASS or FAIL.
+4. Run or simulate a full build. Zero errors.
+5. Trace every critical flow end to end:
+   - Admin logs in → sees dashboard
+   - Admin opens any catalog → sees real data from DB
+   - Admin creates a record → it appears in DB and on frontend
+   - Admin edits a record → change persists in DB and updates on frontend
+   - Admin deletes a record → removed from DB and disappears from frontend
+   - Public user visits frontend → sees real catalog data from DB, not hardcoded data
+
+Final report:
+   PROBLEMS FOUND: X total (X blockers, X broken, X incomplete, X quality)
+   PROBLEMS FIXED: X (must equal found)
+   CATALOGS FULLY CONNECTED: X / X
+   FILES MODIFIED: X frontend, X backend, X database layer
+   HARDCODED DATA REPLACED: X instances
+   PRODUCTION CHECKLIST: X passed, X failed (list failures)
+   SECURITY REGRESSIONS: NONE
+   BUILD STATUS: frontend PASS / backend PASS
+   VERDICT: READY FOR PRODUCTION / BLOCKED (list exact blockers)
+
+════════════════════════════════════════
+ABSOLUTE RULES — NEVER VIOLATE
+════════════════════════════════════════
+- Read EVERY file, EVERY line, EVERY side. No exceptions. No skipping. No batching.
+- Never assume the DB is connected. Verify it.
+- Never assume a catalog is editable. Verify all 12 conditions.
+- Never assume data comes from the DB. Find the exact query that fetches it.
+- Never leave hardcoded data that should come from the database.
+- Every fix must be traceable to a documented problem in the master list.
+- Every fix must be verified on all sides before marking closed.
+- Never leave the project in a broken state between steps.
+- Never add features. Only fix what is broken and connect what exists.
+- Security code is immortal. It never gets removed.
+- When unsure: flag as AMBIGUOUS, document why, ask before proceeding. Never guess.

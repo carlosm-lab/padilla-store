@@ -36,7 +36,7 @@ export default function ProductsPage() {
     try {
       const { data: catData, error: catError } = await supabase
         .from('categories')
-        .select('id, name, slug')
+        .select('id, name, slug, catalog')
         .order('name');
       
       if (catError) throw catError;
