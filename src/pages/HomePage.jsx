@@ -208,7 +208,7 @@ export default function HomePage() {
               </div>
 
               {/* Subtítulo — Nivel corporativo con SEO */}
-              <p className="text-slate-600 dark:text-slate-300 max-w-[650px] font-normal not-italic text-left" style={{ fontSize: 'var(--text-base)', lineHeight: 1.65, marginBottom: 'var(--space-xl)', fontStyle: 'normal' }}>
+              <p className="text-slate-500 dark:text-slate-400 font-normal italic mb-8 w-full px-6 md:px-8" style={{ fontSize: 'var(--text-base)', lineHeight: 1.6 }}>
                 {settings?.hero_description || "Accesorios de alta gama para tu celular, cargadores de carga rápida y joyería fina de acero y plata para elevar tu estilo diario. Haz tu pedido hoy y recíbelo en menos de 24 horas en San Miguel."}
               </p>
 
