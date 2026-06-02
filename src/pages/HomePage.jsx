@@ -7,6 +7,8 @@ import { BASE_URL, SITE_NAME, FOUNDER_NAME } from '@/config/constants';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import lottie from 'lottie-web';
 import StructuredData, { createFAQSchema, createBreadcrumbSchema } from '@/components/StructuredData';
+import { useModal } from '@/hooks/useModal';
+import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 
 const FALLBACK_HERO_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuC2utPyicqN_kUOlg_KMlF2AA1cqvefgwLmDWPoStz9OLaD7KrTngV5Z330vaSwZf_Ad-Va2vFoDwEj4lBCqcQF_O4oZyxM7HrmORUD6zpvKgOA0z6fzdO1HZ6FDAI6BOHCIeCRWCSiZu8u9TJ79hmbPK0DLNbKphBr3g-E6flprEImzUkY0AIKfn31wWv1HhkMfxaEYUmAZAXARQ2wqx1GSswK_9grPpT5H48RI4n8rkAexrzyjQuq7HR3Lyfy-voEibkI1gYHm5I';
 
@@ -47,6 +49,13 @@ const FAQ_ITEMS = [
 export default function HomePage() {
   const { products: homeProducts, loading } = useProducts({ limit: 5 });
   const { settings } = useSettings();
+
+  const [isCatalogModalOpen, setIsCatalogModalOpen] = useState(false);
+  const { modalRef, handleOverlayClick } = useModal({
+    isOpen: isCatalogModalOpen,
+    onClose: () => setIsCatalogModalOpen(false)
+  });
+  useBodyScrollLock(isCatalogModalOpen);
 
   // Desktop animation ref
   const lottieRef = useRef(null);
@@ -297,10 +306,13 @@ export default function HomePage() {
         <section className="mb-[80px] px-[20px] md:px-[64px] fade-in-up" id="shop">
           <div className="flex justify-between items-end mb-8">
             <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white font-brand" style={{ fontFamily: 'var(--font-brand)' }}>Los Más Deseados</h2>
-            <Link to="/catalog-tecnologia" className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full text-xs font-bold bg-white dark:bg-slate-900/50 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-800/60 shadow-sm hover:bg-primary hover:text-white hover:border-primary dark:hover:bg-primary dark:hover:border-primary transition-all duration-300 group">
+            <button
+              onClick={() => setIsCatalogModalOpen(true)}
+              className="inline-flex items-center gap-1 px-4 py-1.5 rounded-full text-xs font-bold bg-white dark:bg-slate-900/50 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-800/60 shadow-sm hover:bg-primary hover:text-white hover:border-primary dark:hover:bg-primary dark:hover:border-primary transition-all duration-300 group cursor-pointer"
+            >
               Más
               <span className="material-symbols-outlined text-[14px] transition-transform group-hover:translate-x-0.5" aria-hidden="true">arrow_forward</span>
-            </Link>
+            </button>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {loading ? (
@@ -488,6 +500,74 @@ export default function HomePage() {
           </div>
         </section>
       </main>
+
+      {/* Modal de Catálogos */}
+      {isCatalogModalOpen && (
+        <div 
+          className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-all duration-300 animate-in fade-in"
+          onClick={handleOverlayClick}
+        >
+          <div
+            ref={modalRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="catalog-modal-title"
+            className="relative w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl shadow-2xl p-6 md:p-8 animate-in fade-in zoom-in duration-300"
+          >
+            {/* Botón Cerrar */}
+            <button
+              onClick={() => setIsCatalogModalOpen(false)}
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-850 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer border border-transparent"
+              aria-label="Cerrar modal"
+            >
+              <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>close</span>
+            </button>
+
+            {/* Encabezado */}
+            <div className="text-center mb-6">
+              <h3 id="catalog-modal-title" className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white font-brand" style={{ fontFamily: 'var(--font-brand)' }}>
+                Nuestros Catálogos
+              </h3>
+              <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">
+                Elige la categoría que deseas explorar hoy
+              </p>
+            </div>
+
+            {/* Opciones de Catálogo */}
+            <div className="flex flex-col gap-4">
+              <Link
+                to="/catalog-tecnologia"
+                onClick={() => setIsCatalogModalOpen(false)}
+                className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/30 hover:bg-primary/5 dark:hover:bg-primary/10 border border-slate-100 dark:border-slate-800/60 hover:border-primary/30 dark:hover:border-primary/30 transition-all duration-300 group cursor-pointer"
+              >
+                <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
+                  <span className="material-symbols-outlined text-[24px]">devices</span>
+                </div>
+                <div className="text-left">
+                  <h4 className="font-bold text-slate-900 dark:text-white text-base">Catálogo Tecnología</h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Cases para celular, cargadores rápidos y accesorios.</p>
+                </div>
+                <span className="material-symbols-outlined text-slate-400 dark:text-slate-600 ml-auto group-hover:translate-x-1 transition-transform" style={{ fontSize: '18px' }}>arrow_forward</span>
+              </Link>
+
+              <Link
+                to="/catalog-joyeria"
+                onClick={() => setIsCatalogModalOpen(false)}
+                className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/30 hover:bg-primary/5 dark:hover:bg-primary/10 border border-slate-100 dark:border-slate-800/60 hover:border-primary/30 dark:hover:border-primary/30 transition-all duration-300 group cursor-pointer"
+              >
+                <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
+                  <span className="material-symbols-outlined text-[24px]">diamond</span>
+                </div>
+                <div className="text-left">
+                  <h4 className="font-bold text-slate-900 dark:text-white text-base">Catálogo Joyería</h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Bisutería fina en acero y plata de alta durabilidad.</p>
+                </div>
+                <span className="material-symbols-outlined text-slate-400 dark:text-slate-600 ml-auto group-hover:translate-x-1 transition-transform" style={{ fontSize: '18px' }}>arrow_forward</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
