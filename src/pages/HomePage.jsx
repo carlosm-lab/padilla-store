@@ -195,6 +195,11 @@ export default function HomePage() {
                     {settings?.hero_subtitle || "Cases premium, cargadores rápidos y joyería de acero en San Miguel"}
                   </span>
                 </h1>
+
+                {/* Subtítulo — Nivel corporativo con SEO */}
+                <p className="text-slate-600 dark:text-slate-300 max-w-[500px] font-normal not-italic text-left mt-6 border-t border-slate-200/40 dark:border-slate-800/40 pt-6" style={{ fontSize: 'var(--text-base)', lineHeight: 1.65, fontStyle: 'normal' }}>
+                  {settings?.hero_description || "Descubre nuestra colección de bisutería fina de acero y plata, accesorios premium para celular y productos electrónicos. Entrega a domicilio en 24 horas en San Miguel, El Salvador."}
+                </p>
               </div>
 
               {/* Mobile Animation */}
@@ -206,11 +211,6 @@ export default function HomePage() {
                   role="img"
                 />
               </div>
-
-              {/* Subtítulo — Nivel corporativo con SEO */}
-              <p className="text-slate-600 dark:text-slate-300 max-w-[500px] font-normal not-italic text-left" style={{ fontSize: 'var(--text-base)', lineHeight: 1.65, marginBottom: 'var(--space-xl)', fontStyle: 'normal' }}>
-                {settings?.hero_description || "Descubre nuestra colección de bisutería fina de acero y plata, accesorios premium para celular y productos electrónicos. Entrega a domicilio en 24 horas en San Miguel, El Salvador."}
-              </p>
 
               {/* Botones de Acción de Alta Gama */}
               <div className="flex flex-row w-full" style={{ gap: 'var(--space-sm)' }}>
