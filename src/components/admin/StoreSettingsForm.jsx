@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { useSettings } from '@/context/SettingsContext';
 import { logger } from '@/utils/logger';
+import ImageUploader from './ImageUploader';
 
 
 export default function StoreSettingsForm({ showToast }) {
@@ -14,7 +15,11 @@ export default function StoreSettingsForm({ showToast }) {
     contact_email: '',
     social_facebook: '',
     social_instagram: '',
-    social_tiktok: ''
+    social_tiktok: '',
+    bio_name: '',
+    bio_description: '',
+    bio_image_url: '',
+    bio_links: []
   });
   const [isSaving, setIsSaving] = useState(false);
 
@@ -28,7 +33,11 @@ export default function StoreSettingsForm({ showToast }) {
         contact_email: settings.contact_email || '',
         social_facebook: settings.social_facebook || '',
         social_instagram: settings.social_instagram || '',
-        social_tiktok: settings.social_tiktok || ''
+        social_tiktok: settings.social_tiktok || '',
+        bio_name: settings.bio_name || '',
+        bio_description: settings.bio_description || '',
+        bio_image_url: settings.bio_image_url || '',
+        bio_links: settings.bio_links || []
       });
     }
   }, [settings]);
@@ -38,6 +47,17 @@ export default function StoreSettingsForm({ showToast }) {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleLinkToggle = (index) => {
+    const newLinks = [...formData.bio_links];
+    newLinks[index].is_active = !newLinks[index].is_active;
+    setFormData(prev => ({ ...prev, bio_links: newLinks }));
+  };
+
+  const handleLinkChange = (index, field, value) => {
+    const newLinks = [...formData.bio_links];
+    newLinks[index][field] = value;
+    setFormData(prev => ({ ...prev, bio_links: newLinks }));
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSaving(true);
@@ -57,6 +77,10 @@ export default function StoreSettingsForm({ showToast }) {
           social_facebook: formData.social_facebook,
           social_instagram: formData.social_instagram,
           social_tiktok: formData.social_tiktok,
+          bio_name: formData.bio_name,
+          bio_description: formData.bio_description,
+          bio_image_url: formData.bio_image_url,
+          bio_links: formData.bio_links,
         })
         .eq('id', settings.id);
 
@@ -200,6 +224,96 @@ export default function StoreSettingsForm({ showToast }) {
                 placeholder="https://tiktok.com/@..."
               />
             </div>
+          </div>
+        </div>
+
+        {/* Links Page (Bio) Configuration */}
+        <div>
+          <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4 border-b border-slate-100 dark:border-white/5 pb-2">Página de Links (Bio)</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Imagen de Perfil</label>
+              <ImageUploader 
+                currentImage={formData.bio_image_url} 
+                onUploadSuccess={(url) => setFormData(prev => ({...prev, bio_image_url: url}))}
+                onRemoveImage={() => setFormData(prev => ({...prev, bio_image_url: ''}))}
+              />
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="bio-name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nombre a mostrar</label>
+                <input 
+                  id="bio-name"
+                  type="text" 
+                  name="bio_name"
+                  value={formData.bio_name}
+                  onChange={handleChange}
+                  className="w-full bg-slate-50 dark:bg-transparent border border-slate-200 dark:border-white/5 rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20"
+                />
+              </div>
+              <div>
+                <label htmlFor="bio-description" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Descripción</label>
+                <textarea 
+                  id="bio-description"
+                  name="bio_description"
+                  value={formData.bio_description}
+                  onChange={handleChange}
+                  rows="3"
+                  className="w-full bg-slate-50 dark:bg-transparent border border-slate-200 dark:border-white/5 rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 resize-none"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-slate-50 dark:bg-white/5 rounded-xl p-4 border border-slate-200 dark:border-white/5">
+            <h4 className="text-md font-bold mb-4 text-slate-900 dark:text-white">Enlaces Disponibles</h4>
+            <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+              {formData.bio_links.map((link, index) => (
+                <div key={link.id || index} className={`bg-white dark:bg-[#1a1a24] p-4 rounded-lg border shadow-sm flex flex-col md:flex-row gap-4 transition-colors ${link.is_active ? 'border-primary/40' : 'border-slate-200 dark:border-white/10 opacity-70'}`}>
+                  <div className="flex items-center gap-3 md:w-1/4">
+                    <button 
+                      type="button" 
+                      onClick={() => handleLinkToggle(index)}
+                      className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${link.is_active ? 'bg-primary' : 'bg-slate-300 dark:bg-slate-600'}`}
+                      role="switch"
+                      aria-checked={link.is_active}
+                    >
+                      <span className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${link.is_active ? 'translate-x-5' : 'translate-x-0'}`} />
+                    </button>
+                    <i className={`${link.icon} text-xl ${link.iconColor}`}></i>
+                    <span className="font-semibold truncate text-slate-900 dark:text-white" title={link.id}>{link.id}</span>
+                  </div>
+                  
+                  <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-medium text-slate-500 mb-1">Nombre Visible</label>
+                      <input 
+                        type="text" 
+                        value={link.name}
+                        onChange={(e) => handleLinkChange(index, 'name', e.target.value)}
+                        disabled={!link.is_active}
+                        className="w-full bg-slate-50 dark:bg-transparent border border-slate-200 dark:border-white/10 rounded px-3 py-1.5 text-sm text-slate-900 dark:text-white disabled:opacity-50"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-slate-500 mb-1">URL (Destino)</label>
+                      <input 
+                        type="url" 
+                        value={link.url}
+                        onChange={(e) => handleLinkChange(index, 'url', e.target.value)}
+                        disabled={!link.is_active}
+                        className="w-full bg-slate-50 dark:bg-transparent border border-slate-200 dark:border-white/10 rounded px-3 py-1.5 text-sm text-slate-900 dark:text-white disabled:opacity-50"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {formData.bio_links.length === 0 && (
+              <p className="text-sm text-slate-500 py-4 text-center">No hay enlaces configurados.</p>
+            )}
           </div>
         </div>
 
