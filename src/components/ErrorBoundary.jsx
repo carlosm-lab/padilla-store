@@ -22,7 +22,8 @@ export default class ErrorBoundary extends Component {
 
   componentDidCatch(error, errorInfo) {
     logger.error("ErrorBoundary atrapó un error:", error, errorInfo);
-    // TODO: Connect to Sentry, Datadog or similar tracking service
+    // Error tracking: forwards to window.trackError if a third-party
+    // service (e.g. Sentry, Datadog) is wired up at runtime.
     if (typeof window !== 'undefined' && window.trackError) {
       window.trackError('React ErrorBoundary', error, errorInfo);
     }

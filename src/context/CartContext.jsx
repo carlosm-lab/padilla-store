@@ -347,7 +347,7 @@ export const CartProvider = ({ children }) => {
     toast.success(
       <div>
         <p className="font-bold">{quantity}x {product.name} agregado</p>
-        <p className="text-xs opacity-90">Disponible en tu carrito por 24 horas</p>
+        <p className="text-xs opacity-90">Disponible en tu carrito por 7 días</p>
       </div>, 
       { id: 'cart-add-toast', icon: '🛍️' }
     );
