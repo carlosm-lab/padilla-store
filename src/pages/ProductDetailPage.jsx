@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
 import StructuredData, { createProductSchema, createBreadcrumbSchema } from '@/components/StructuredData';
 import ShareModal from '@/components/ShareModal';
+import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { isOfferActive as isOfferActiveUtil, isOfferScheduled as isOfferScheduledUtil } from '@/utils/productUtils';
 import OfferCountdown from '@/components/OfferCountdown';
 import { BASE_URL, SITE_NAME } from '@/config/constants';
@@ -54,7 +55,16 @@ export default function ProductDetailPage() {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setMainImg(product.image_path || product.images?.[0] || '');
       setCustomNote('');
+
+      // Dispatch active catalog event for Navbar
+      const category = product.categories?.slug === 'joyeria' ? 'joyeria' : 'tecnologia';
+      window.dispatchEvent(new CustomEvent('activeCatalog', { detail: category }));
     }
+    
+    return () => {
+      // Clear on unmount
+      window.dispatchEvent(new CustomEvent('activeCatalog', { detail: null }));
+    };
   }, [product]);
 
   // Callback para refrescar datos cuando una oferta expira o inicia
@@ -96,16 +106,16 @@ export default function ProductDetailPage() {
   return (
     <>
       <Helmet>
-        <title>{product.name.replace(/iphon/i, 'iPhone')} | Padilla Store — Tienda en Línea San Miguel</title>
+        <title>{product.name} | Padilla Store — Tienda en Línea San Miguel</title>
         <meta name="description" content={getOgDescription()} />
-        <meta property="og:title" content={`${product.name.replace(/iphon/i, 'iPhone')} | ${SITE_NAME}`} />
+        <meta property="og:title" content={`${product.name} | ${SITE_NAME}`} />
         <meta property="og:image" content={mainImg} />
         <meta property="og:description" content={getOgDescription()} />
         <meta property="og:url" content={`${BASE_URL}/product/${product.slug}`} />
         <meta property="og:type" content="product" />
         <meta property="og:site_name" content={SITE_NAME} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${product.name.replace(/iphon/i, 'iPhone')} | ${SITE_NAME}`} />
+        <meta name="twitter:title" content={`${product.name} | ${SITE_NAME}`} />
         <meta name="twitter:description" content={getOgDescription()} />
         <meta name="twitter:image" content={mainImg} />
         <link rel="canonical" href={`${BASE_URL}/product/${product.slug}`} />
@@ -113,27 +123,27 @@ export default function ProductDetailPage() {
       <StructuredData data={createProductSchema(product, `${BASE_URL}/product/${product.slug}`)} />
       <StructuredData data={createBreadcrumbSchema([
         { name: 'Inicio', url: '/' },
-        { name: 'Catálogo', url: getCatalogUrl() },
-        { name: (product.categories?.name || product.category || 'Productos').replace(/iphon/i, 'iPhone').replace(/\b\w/g, c => c.toUpperCase()), url: `${getCatalogUrl()}?category=${product.categories?.slug || ''}` },
-        { name: product.name.replace(/iphon/i, 'iPhone') }
+        { name: product?.categories?.slug === 'joyeria' ? 'Joyería' : 'Tecnología', url: getCatalogUrl() },
+        { name: (product.categories?.name || product.category || 'Productos').replace(/\b\w/g, c => c.toUpperCase()), url: `${getCatalogUrl()}?category=${product.categories?.slug || ''}` },
+        { name: product.name }
       ])} />
 
       <main className="flex-1 px-container py-[var(--space-lg)]">
-        {/* 1. Arquitectura de Layout y Proporciones: Grid 45/55 aprox (60/40) con gap-12 */}
-        <div className="grid grid-cols-1 md:grid-cols-[45%_1fr] gap-12 items-start">
+        {/* 1. Arquitectura de Layout y Proporciones: Grid 50/50 aprox con gap-12 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[45%_1fr] gap-10 lg:gap-12 items-start">
           
           {/* Columna Izquierda: Sticky top-24 (Solo en Desktop) */}
-          <div className="md:sticky md:top-24 flex flex-col-reverse md:flex-row gap-5 md:gap-7 items-start w-full min-w-0">
+          <div className="md:sticky md:top-24 flex flex-col-reverse lg:flex-row gap-5 lg:gap-7 items-start w-full min-w-0">
             
-            {/* Sistema de miniaturas un lateral en desktop, fila abajo en móvil */}
-            <div className="flex flex-row md:flex-col gap-4 w-full md:w-24 shrink-0 md:max-h-[600px] overflow-x-auto md:overflow-y-auto no-scrollbar pb-2 md:pb-0 min-w-0">
+            {/* Sistema de miniaturas un lateral en desktop, fila abajo en tablet/móvil */}
+            <div className="flex flex-row lg:flex-col gap-4 w-full lg:w-24 shrink-0 lg:max-h-[600px] overflow-x-auto lg:overflow-y-auto no-scrollbar pb-2 lg:pb-0 min-w-0">
               {/* Imágenes reales de la galería */}
               {(product.images?.length > 0 ? product.images : (product.image_path ? [product.image_path] : [])).map((img, i) => (
                 <button
                   key={`img-${i}`}
                   type="button"
                   onClick={() => setMainImg(img)}
-                  className={`w-20 h-20 md:w-24 md:h-24 shrink-0 rounded-xl overflow-hidden cursor-pointer border-2 transition-all bg-gray-50 dark:bg-white/10 ${mainImg === img ? 'border-primary shadow-sm' : 'border-transparent opacity-60 hover:opacity-100 hover:border-slate-300 dark:hover:border-slate-600'}`}
+                  className={`w-20 h-20 lg:w-24 lg:h-24 shrink-0 rounded-xl overflow-hidden cursor-pointer border-2 transition-all bg-gray-50 dark:bg-white/10 ${mainImg === img ? 'border-primary shadow-sm' : 'border-transparent opacity-60 hover:opacity-100 hover:border-slate-300 dark:hover:border-slate-600'}`}
                 >
                   <img src={img || '/logo.png'} alt={`${product.name} thumbnail ${i + 1}`} loading="lazy" className="w-full h-full object-cover object-center" />
                 </button>
@@ -143,14 +153,14 @@ export default function ProductDetailPage() {
               {Array.from({ length: Math.max(0, 4 - (product.images?.length > 0 ? product.images.length : (product.image_path ? 1 : 0))) }).map((_, i) => (
                 <div 
                   key={`empty-${i}`} 
-                  className="w-20 h-20 md:w-24 md:h-24 shrink-0 rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/30"
+                  className="w-20 h-20 lg:w-24 lg:h-24 shrink-0 rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/30"
                   aria-hidden="true"
                 />
               ))}
             </div>
 
             {/* Sutil Línea Divisoria Vertical (Solo visible en Desktop) */}
-            <div className="hidden md:block w-px bg-slate-200 dark:bg-slate-700/50 self-stretch shrink-0 mt-2 mb-2 rounded-full"></div>
+            <div className="hidden lg:block w-px bg-slate-200 dark:bg-slate-700/50 self-stretch shrink-0 mt-2 mb-2 rounded-full"></div>
 
             {/* Imagen Principal: max-h-[600px] object-cover rounded-xl (tamaño original) */}
             <div className="w-full md:flex-1 relative bg-slate-50 dark:bg-white/5 rounded-xl border border-slate-100 dark:border-white/5 overflow-hidden shadow-sm min-w-0">
@@ -186,35 +196,32 @@ export default function ProductDetailPage() {
 
           {/* Columna Derecha: Información */}
           <div className="flex flex-col gap-6 min-w-0">
-            
-            {/* Breadcrumbs Semánticos y Capitalizados */}
-            <nav aria-label="Breadcrumb" className="flex text-sm text-slate-500 dark:text-slate-400 gap-2 items-center whitespace-nowrap overflow-x-auto pb-1">
-              <ol className="flex items-center gap-2">
-                <li><Link to="/" className="hover:text-primary transition-colors">Inicio</Link></li>
-                <li><span className="material-symbols-outlined text-xs">chevron_right</span></li>
-                <li><Link to={getCatalogUrl()} className="hover:text-primary transition-colors">Catálogo</Link></li>
-                <li><span className="material-symbols-outlined text-xs">chevron_right</span></li>
-                <li>
-                  <span className="text-primary font-medium truncate capitalize">
-                    {(product.categories?.name || product.category || 'Productos').replace(/iphon/i, 'iPhone').replace(/\b\w/g, c => c.toUpperCase())}
-                  </span>
-                </li>
-              </ol>
-            </nav>
+            {/* Breadcrumbs Dinámicos usando el componente reutilizable */}
+            <Breadcrumbs 
+              items={[
+                { label: 'Inicio', url: '/' },
+                { label: product?.categories?.slug === 'joyeria' ? 'Joyería' : 'Tecnología', url: getCatalogUrl() },
+                { 
+                  label: (product.categories?.name || product.category || 'Productos').replace(/\b\w/g, c => c.toUpperCase()),
+                  url: `${getCatalogUrl()}?category=${product.categories?.slug || ''}`
+                }
+              ]}
+            />
 
             <div className="min-w-0 flex flex-col gap-4">
               {/* 2. Jerarquía Tipográfica: Título H1 optimizado text-4xl font-extrabold text-gray-900 */}
               <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight min-w-0 break-words">
-                {product.name.replace(/iphon/i, 'iPhone')}
+                {product.name}
               </h1>
               
-              {/* Reconstrucción de la Descripción: Viñetas técnicas sin texto promocional, resolviendo overflow */}
               <div className="w-full min-w-0 overflow-hidden">
-                <ul className="text-slate-600 dark:text-slate-400 text-base space-y-2 list-disc list-inside">
-                  <li><strong>Material:</strong> Cuero vegano</li>
-                  <li><strong>Protección:</strong> Contra caídas de 2 metros</li>
-                  <li><strong>Compatibilidad:</strong> Compatible con carga MagSafe</li>
-                </ul>
+                {product.description ? (
+                  <p className="text-slate-600 dark:text-slate-400 text-base whitespace-pre-wrap">
+                    {product.description}
+                  </p>
+                ) : (
+                  <p className="text-slate-500 italic text-sm">Sin descripción detallada.</p>
+                )}
               </div>
             </div>
 
@@ -311,7 +318,7 @@ export default function ProductDetailPage() {
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors line-clamp-1">{p.name.replace(/iphon/i, 'iPhone')}</h4>
+                    <h4 className="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors line-clamp-1">{p.name}</h4>
                     <p className="text-primary font-bold">{formatPrice(p.price)}</p>
                   </div>
                 </Link>

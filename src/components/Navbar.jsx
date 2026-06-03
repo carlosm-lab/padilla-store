@@ -21,6 +21,22 @@ export default function Navbar() {
   const [isFavoritesModalOpen, setIsFavoritesModalOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isBouncing, setIsBouncing] = useState(false);
+  const [activeCatalog, setActiveCatalog] = useState(null);
+
+  // Listen to active catalog changes
+  useEffect(() => {
+    const handleActiveCatalog = (e) => {
+      setActiveCatalog(e.detail);
+    };
+    window.addEventListener('activeCatalog', handleActiveCatalog);
+    
+    // Cleanup state if navigating away from product pages
+    if (!location.pathname.startsWith('/product/')) {
+      setActiveCatalog(null);
+    }
+    
+    return () => window.removeEventListener('activeCatalog', handleActiveCatalog);
+  }, [location.pathname]);
 
   // Trigger bounce animation when cartCount changes (increases)
   const prevCount = useRef(cartCount);
@@ -73,8 +89,8 @@ export default function Navbar() {
           <Logo />
           <nav className="hidden md:flex items-center gap-[clamp(0.25rem,0.5vw,0.5rem)]">
             <NavLink to="/" className={({ isActive }) => `select-none px-[clamp(0.75rem,1.5vw,1rem)] py-[clamp(0.375rem,0.8vw,0.5rem)] rounded-full text-[var(--text-sm)] font-bold transition-all ${isActive ? 'bg-primary text-white shadow-md tracking-wide' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 hover:text-primary'}`}>Inicio</NavLink>
-            <NavLink to="/catalog-tecnologia" className={({ isActive }) => `select-none px-[clamp(0.75rem,1.5vw,1rem)] py-[clamp(0.375rem,0.8vw,0.5rem)] rounded-full text-[var(--text-sm)] font-bold transition-all ${isActive ? 'bg-primary text-white shadow-md tracking-wide' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 hover:text-primary'}`}>Tecnología</NavLink>
-            <NavLink to="/catalog-joyeria" className={({ isActive }) => `select-none px-[clamp(0.75rem,1.5vw,1rem)] py-[clamp(0.375rem,0.8vw,0.5rem)] rounded-full text-[var(--text-sm)] font-bold transition-all ${isActive ? 'bg-primary text-white shadow-md tracking-wide' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 hover:text-primary'}`}>Joyería</NavLink>
+            <NavLink to="/catalog-tecnologia" className={({ isActive }) => `select-none px-[clamp(0.75rem,1.5vw,1rem)] py-[clamp(0.375rem,0.8vw,0.5rem)] rounded-full text-[var(--text-sm)] font-bold transition-all ${(isActive || activeCatalog === 'tecnologia') ? 'bg-primary text-white shadow-md tracking-wide' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 hover:text-primary'}`}>Tecnología</NavLink>
+            <NavLink to="/catalog-joyeria" className={({ isActive }) => `select-none px-[clamp(0.75rem,1.5vw,1rem)] py-[clamp(0.375rem,0.8vw,0.5rem)] rounded-full text-[var(--text-sm)] font-bold transition-all ${(isActive || activeCatalog === 'joyeria') ? 'bg-primary text-white shadow-md tracking-wide' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 hover:text-primary'}`}>Joyería</NavLink>
           </nav>
         </div>
         <div className="flex items-center gap-[clamp(0.25rem,1vw,1rem)]">
@@ -173,14 +189,14 @@ export default function Navbar() {
           </NavLink>
           <NavLink
             to="/catalog-tecnologia"
-            className={({ isActive }) => `flex flex-col items-center justify-center gap-0.5 w-full h-full transition-colors ${isActive ? 'text-primary' : 'text-black dark:text-white'}`}
+            className={({ isActive }) => `flex flex-col items-center justify-center gap-0.5 w-full h-full transition-colors ${(isActive || activeCatalog === 'tecnologia') ? 'text-primary' : 'text-black dark:text-white'}`}
           >
             <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>smartphone</span>
             <span className="text-[10px] font-semibold">Tecnología</span>
           </NavLink>
           <NavLink
             to="/catalog-joyeria"
-            className={({ isActive }) => `flex flex-col items-center justify-center gap-0.5 w-full h-full transition-colors ${isActive ? 'text-primary' : 'text-black dark:text-white'}`}
+            className={({ isActive }) => `flex flex-col items-center justify-center gap-0.5 w-full h-full transition-colors ${(isActive || activeCatalog === 'joyeria') ? 'text-primary' : 'text-black dark:text-white'}`}
           >
             <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>diamond</span>
             <span className="text-[10px] font-semibold">Joyería</span>
