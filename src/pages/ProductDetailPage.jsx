@@ -52,7 +52,7 @@ export default function ProductDetailPage() {
 
   useEffect(() => {
     if (product) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+       
       setMainImg(product.image_path || product.images?.[0] || '');
       setCustomNote('');
 

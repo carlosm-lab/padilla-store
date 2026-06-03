@@ -92,7 +92,7 @@ export const CartProvider = ({ children }) => {
   const [isRefreshingPrices, setIsRefreshingPrices] = useState(false);
   // HIGH-004: Tracking de fallos consecutivos para detectar precios potencialmente stale
   const [consecutiveRefreshFailures, setConsecutiveRefreshFailures] = useState(0);
-  const [lastSuccessfulRefresh, setLastSuccessfulRefresh] = useState(Date.now());
+  const [lastSuccessfulRefresh, setLastSuccessfulRefresh] = useState(() => Date.now());
   
   // Debounce de 1.5s para la sincronización con DB.
   // Evita mandar un upsert por cada click en +/- de cantidad.
@@ -165,62 +165,6 @@ export const CartProvider = ({ children }) => {
       });
     }
   }, [debouncedCartItems, user]);
-
-  // ── Hidratación desde DB al login ───────────────────────
-  // Guest-First: carrito local gana. Si está vacío, carga desde DB.
-  useEffect(() => {
-    let isMounted = true;
-
-    const syncAndRevalidate = async () => {
-      // Caso 1: Usuario logueado + carrito local vacío → hidratar desde DB
-      if (user && cartItemsRef.current.length === 0) {
-        const { data, error } = await supabase
-          .from('user_carts')
-          .select('cart_items')
-          .eq('user_id', user.id)
-          .single();
-          
-        if (!error && data?.cart_items && data.cart_items.length > 0) {
-          // Race condition guard: verificar que el carrito sigue vacío
-          if (cartItemsRef.current.length === 0 && isMounted) {
-            const ids = [...new Set(data.cart_items.map(i => i.product.id))];
-            // Revalidar precios contra la DB antes de hidratar
-            const pRes = await supabase.from('products').select(PRODUCT_SELECT_COLUMNS).in('id', ids);
-            
-            if (pRes.data) {
-              const pMap = Object.fromEntries(pRes.data.map(p => [p.id, p]));
-              // Filtrar productos desactivados y actualizar precios
-              const validated = data.cart_items
-                .filter(i => pMap[i.product.id]?.is_active)
-                .map(i => {
-                  const fresh = pMap[i.product.id];
-                  return { ...i, product: { ...i.product, name: fresh.name, price: fresh.price, old_price: fresh.old_price, offer_ends_at: fresh.offer_ends_at, offer_starts_at: fresh.offer_starts_at, image_path: fresh.image_path, images: fresh.images, slug: fresh.slug }};
-                });
-              if (isMounted && cartItemsRef.current.length === 0) {
-                setCartItems(validated);
-                lastSyncedCartRef.current = validated;
-              }
-            } else if (isMounted && cartItemsRef.current.length === 0) {
-              // Si falla la revalidación, usar los datos de DB tal cual
-              setCartItems(data.cart_items);
-              lastSyncedCartRef.current = data.cart_items;
-            }
-            return;
-          }
-        }
-      }
-
-      // Caso 2: Hay items locales → revalidar precios
-      if (cartItemsRef.current.length > 0 && isMounted) {
-        refreshCartPrices();
-      }
-    };
-
-    syncAndRevalidate();
-    
-    return () => { isMounted = false; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
 
   // ── Revalidación de precios ─────────────────────────────
   // Consulta Supabase para verificar precios actuales y estado
@@ -296,6 +240,64 @@ export const CartProvider = ({ children }) => {
       setIsRefreshingPrices(false);
     }
   }, []);
+
+  // ── Hidratación desde DB al login ───────────────────────
+  // Guest-First: carrito local gana. Si está vacío, carga desde DB.
+  useEffect(() => {
+    let isMounted = true;
+
+    const syncAndRevalidate = async () => {
+      // Caso 1: Usuario logueado + carrito local vacío → hidratar desde DB
+      if (user && cartItemsRef.current.length === 0) {
+        const { data, error } = await supabase
+          .from('user_carts')
+          .select('cart_items')
+          .eq('user_id', user.id)
+          .single();
+          
+        if (!error && data?.cart_items && data.cart_items.length > 0) {
+          // Race condition guard: verificar que el carrito sigue vacío
+          if (cartItemsRef.current.length === 0 && isMounted) {
+            const ids = [...new Set(data.cart_items.map(i => i.product.id))];
+            // Revalidar precios contra la DB antes de hidratar
+            const pRes = await supabase.from('products').select(PRODUCT_SELECT_COLUMNS).in('id', ids);
+            
+            if (pRes.data) {
+              const pMap = Object.fromEntries(pRes.data.map(p => [p.id, p]));
+              // Filtrar productos desactivados y actualizar precios
+              const validated = data.cart_items
+                .filter(i => pMap[i.product.id]?.is_active)
+                .map(i => {
+                  const fresh = pMap[i.product.id];
+                  return { ...i, product: { ...i.product, name: fresh.name, price: fresh.price, old_price: fresh.old_price, offer_ends_at: fresh.offer_ends_at, offer_starts_at: fresh.offer_starts_at, image_path: fresh.image_path, images: fresh.images, slug: fresh.slug }};
+                });
+              if (isMounted && cartItemsRef.current.length === 0) {
+                setCartItems(validated);
+                lastSyncedCartRef.current = validated;
+              }
+            } else if (isMounted && cartItemsRef.current.length === 0) {
+              // Si falla la revalidación, usar los datos de DB tal cual
+              setCartItems(data.cart_items);
+              lastSyncedCartRef.current = data.cart_items;
+            }
+            return;
+          }
+        }
+      }
+
+      // Caso 2: Hay items locales → revalidar precios
+      if (cartItemsRef.current.length > 0 && isMounted) {
+        refreshCartPrices();
+      }
+    };
+
+    syncAndRevalidate();
+    
+    return () => { isMounted = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+
 
   // ── Polling de revalidación cada 60s ────────────────────
   useEffect(() => {
@@ -382,6 +384,7 @@ export const CartProvider = ({ children }) => {
   // Precios se consideran stale si: 3+ fallos consecutivos O
   // más de 5 minutos sin un refresh exitoso. En ese caso
   // CartDrawer muestra un warning al usuario.
+  // eslint-disable-next-line react-hooks/purity
   const arePricesStale = consecutiveRefreshFailures >= 3 || (Date.now() - lastSuccessfulRefresh > 5 * 60 * 1000);
 
   return (

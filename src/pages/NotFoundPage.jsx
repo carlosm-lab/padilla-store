@@ -7,6 +7,11 @@ export default function NotFoundPage() {
       <Helmet>
         <title>Página no encontrada - Padilla Store</title>
         <meta name="robots" content="noindex, nofollow" />
+        <meta name="description" content="La página que buscas no existe o ha sido movida en Padilla Store." />
+        <meta property="og:title" content="Página no encontrada - Padilla Store" />
+        <meta property="og:description" content="La página que buscas no existe o ha sido movida." />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://padillastore.com/404" />
       </Helmet>
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
         <h1 className="text-9xl font-black text-slate-200 dark:text-slate-800">404</h1>

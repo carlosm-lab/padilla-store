@@ -454,10 +454,14 @@ export default function ProductModal({ isOpen, onClose, product, onSave, categor
                   onRemoveImage={() => {}}
                 />
                 {/* Fallback opcional para URL manual */}
-                <div className="mt-3 flex gap-2">
-                  <input 
-                    type="text" 
-                    id="manual-image-url"
+                <div className="mt-3 flex flex-col gap-1">
+                  <label htmlFor="manual-image-url" className="text-xs font-medium text-slate-600 dark:text-slate-400">
+                    O ingresar URL de imagen manualmente
+                  </label>
+                  <div className="flex gap-2">
+                    <input 
+                      type="text" 
+                      id="manual-image-url"
                     ref={manualUrlRef}
                     placeholder="https://ejemplo.com/imagen.jpg"
                     aria-label="URL de imagen manual"
@@ -547,7 +551,7 @@ export default function ProductModal({ isOpen, onClose, product, onSave, categor
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 flex justify-end gap-3">
+        <div className="px-6 py-4 border-t border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-white/5 flex justify-end gap-3" aria-live="polite">
           <button 
             type="button" onClick={onClose}
             className="px-4 py-2 font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/10 rounded-lg transition-colors"
@@ -555,11 +559,11 @@ export default function ProductModal({ isOpen, onClose, product, onSave, categor
             Cancelar
           </button>
           <button 
-            type="submit" form="productForm" disabled={isSubmitting}
+            type="submit" form="productForm" disabled={isSubmitting} aria-busy={isSubmitting}
             className="px-6 py-2 bg-primary text-white font-medium rounded-lg hover:bg-red-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
           >
             {isSubmitting ? (
-              <><span className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></span> Guardando...</>
+              <><span className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" aria-hidden="true"></span> Guardando...</>
             ) : (
               'Guardar Producto'
             )}

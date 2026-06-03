@@ -27,7 +27,7 @@ export default function CategoriesPage() {
     try {
       const { data, error } = await supabase
         .from('categories')
-        .select('*')
+        .select('id, name, slug, description, catalog, featured')
         .order('name');
         
       if (error) throw error;

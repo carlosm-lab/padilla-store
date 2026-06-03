@@ -157,11 +157,11 @@ export default function CartDrawer() {
       ></div>
 
       {/* Drawer */}
-      <div data-testid="cart-drawer" className={`fixed top-0 right-0 max-w-[28rem] w-full h-[100dvh] bg-white dark:bg-background-dark shadow-2xl z-50 flex flex-col border-l border-slate-200 dark:border-transparent transition-transform duration-300 ease-out ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div data-testid="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" className={`fixed top-0 right-0 max-w-[28rem] w-full h-[100dvh] bg-white dark:bg-background-dark shadow-2xl z-50 flex flex-col border-l border-slate-200 dark:border-transparent transition-transform duration-300 ease-out ${isCartOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <FocusLock returnFocus disabled={!isCartOpen} className="flex flex-col h-[100dvh] w-full">
         {/* Header */}
         <div className="flex justify-between items-center p-[var(--space-lg)] border-b border-gray-100 dark:border-transparent">
-          <h2 className="text-[var(--text-xl)] font-bold text-slate-900 dark:text-slate-100 flex items-center gap-[var(--space-xs)]">
+          <h2 id="cart-title" className="text-[var(--text-xl)] font-bold text-slate-900 dark:text-slate-100 flex items-center gap-[var(--space-xs)]">
             <span className="material-symbols-outlined" style={{ fontSize: 'var(--icon-lg)' }}>shopping_cart</span>
             Tu Carrito
           </h2>

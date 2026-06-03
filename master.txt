@@ -7,20 +7,125 @@ ALL communication directed at the developer must be written in Spanish. This inc
 
 - Every plan, roadmap, or implementation strategy.
 - Every phase summary (what was checked, what passed, what failed, what was fixed).
-- Every problem report (description of the problem, its risk level, its impact).
+- Every problem report (description, risk level, impact).
 - Every explanation of a fix before and after applying it.
 - Every question or clarification request.
 - Every AMBIGUOUS flag and its justification.
 - The final 360 report and all its sections.
 - The production readiness verdict and its blockers list.
-- Any inline comment added to code that is meant to be read by the developer.
+- Any inline comment added to code meant to be read by the developer.
 
 The ONLY content that may remain in English is:
 - Code itself (variable names, function names, strings that are part of the codebase).
 - Technical identifiers that must match existing code (route paths, field names, class names).
-- Configuration values that are defined by external tools or standards.
+- Configuration values defined by external tools or standards.
 
-If you are about to write a sentence in English that is directed at the developer, stop and write it in Spanish instead. This rule overrides everything else except the security and no-broken-state rules.
+If you are about to write a sentence in English directed at the developer, stop and write it in Spanish instead. This rule overrides everything except the security, no-regression, and no-broken-state rules.
+
+════════════════════════════════════════
+ZERO REGRESSION RULE — ABSOLUTE, NON-NEGOTIABLE
+════════════════════════════════════════
+This is the most important rule in this entire audit after security. Read it completely before touching any file.
+
+A REGRESSION is any change that removes, weakens, disables, bypasses, skips, hardens around, or works around an existing protection, behavior, or feature in order to make something else work. Regressions are NEVER acceptable, regardless of how minor they seem, how urgent the fix is, or how convenient the workaround would be.
+
+SECURITY REGRESSIONS — ABSOLUTE PROHIBITION:
+The following actions are PERMANENTLY FORBIDDEN. There are no exceptions. There is no context in which these are acceptable:
+- Disabling, removing, commenting out, or weakening any authentication check.
+- Disabling, removing, commenting out, or weakening any authorization check or role verification.
+- Disabling, removing, commenting out, or weakening any input validation or sanitization.
+- Disabling, removing, commenting out, or weakening any RLS policy in Supabase.
+- Setting a Supabase table to RLS disabled to fix a query problem.
+- Bypassing middleware to make a route work faster or easier.
+- Hardcoding credentials, tokens, role values, or permission flags in source code to avoid a configuration problem.
+- Moving logic that must stay on the backend to the frontend to simplify the implementation.
+- Trusting frontend-supplied values (prices, roles, totals, user IDs, permissions) on the backend without re-validating from the database.
+- Returning sensitive data from an endpoint "temporarily" to debug something.
+- Adding a public route or open CORS policy "just for testing" and leaving it in.
+- Removing rate limiting because it was causing friction during development.
+- Suppressing or silencing security-related errors to make the application appear to work.
+
+If a fix requires any of the above to work: the fix is wrong. Find a different solution.
+If no other solution is immediately obvious: flag the problem as BLOCKED, document it in Spanish, and ask the developer before proceeding. Never unilaterally apply a security regression.
+
+FRONTEND REGRESSIONS — ABSOLUTE PROHIBITION:
+The following actions are PERMANENTLY FORBIDDEN in the frontend:
+- Removing a loading state that was already implemented.
+- Removing an error state or empty state that was already implemented.
+- Removing form validation that was already implemented.
+- Removing a protected route guard that was already implemented.
+- Removing accessibility attributes (alt, aria-*, role, label) that were already present.
+- Removing responsive behavior (media queries, flexible layouts) that was already working.
+- Breaking a user flow that was previously functional to fix something else.
+- Removing double-submission protection that was already implemented.
+- Removing cache invalidation logic that was already working.
+- Breaking the back button, deep links, or direct URL access that previously worked.
+
+If a fix requires removing any frontend protection or behavior: find a different approach.
+If no other approach is immediately obvious: flag as BLOCKED and ask the developer.
+
+WHEN YOU ENCOUNTER A PROBLEM THAT SEEMS TO REQUIRE A REGRESSION:
+1. Stop. Do not apply the regression.
+2. Re-read the problem. Is there a way to solve it that does not require a regression?
+3. Consider: can the backend be fixed instead of weakening the frontend? Can the DB schema be fixed instead of disabling RLS? Can configuration be corrected instead of hardcoding?
+4. If you find an alternative: implement it and document why you chose it over the regression approach.
+5. If you genuinely cannot find an alternative: write a detailed explanation in Spanish of the problem, what regression was considered, why it was rejected, and what information you need from the developer to solve it correctly. Then stop and wait.
+
+REGRESSION DETECTION — ACTIVE MONITORING:
+Before applying any fix, ask yourself:
+- Does this change remove, weaken, or bypass any existing protection? → If yes: stop, find another way.
+- Does this change make the frontend responsible for something the backend should control? → If yes: stop.
+- Does this change trust user-supplied data that was previously validated server-side? → If yes: stop.
+- Does this change disable a Supabase RLS policy or set a table to public? → If yes: stop.
+- Does this change remove a UI protection (guard, validation, error state) that existed before? → If yes: stop.
+- Does this change hardcode a value that was previously dynamic or configurable? → If yes: stop.
+
+If any answer is yes: the change is a regression. Do not apply it.
+
+════════════════════════════════════════
+NOTHING CRITICAL IN THE FRONTEND — ABSOLUTE RULE
+════════════════════════════════════════
+The frontend is a public, untrusted environment. Any critical logic placed there can be bypassed, modified, or exploited by anyone with browser developer tools. The following logic must NEVER exist only in the frontend:
+
+PRICE & FINANCIAL LOGIC:
+- Price calculation must happen on the backend using prices from the database.
+- Discount calculation must happen on the backend.
+- Tax calculation must happen on the backend.
+- Order total must be calculated on the backend. Never trust the total sent from the frontend.
+- The frontend may DISPLAY prices and totals, but must never be the source of truth for them.
+
+ACCESS CONTROL:
+- Role checks must happen on the backend on every request. A frontend route guard is UX, not security.
+- Permission checks must happen on the backend. Hiding a button on the frontend is not access control.
+- Admin status must be verified on the backend on every admin API call, not just on login.
+- Ownership verification ("this order belongs to this user") must happen on the backend.
+
+BUSINESS RULES:
+- Stock availability must be verified on the backend at the moment of order creation.
+- Coupon/discount code validity must be verified on the backend.
+- Product availability (active/inactive) must be enforced on the backend.
+- Order status transition rules must be enforced on the backend.
+- Any rule that can result in money movement or data access must be enforced on the backend.
+
+DATA VALIDATION:
+- Input validation on the frontend is UX only. The backend must independently validate all inputs.
+- Never skip backend validation because frontend validation exists.
+- Never trust field values sent from the frontend (product ID, user ID, price, quantity, role) without re-validating against the database.
+
+SENSITIVE DATA:
+- API keys, service credentials, and secrets must never be in frontend code, even in environment variables prefixed for frontend exposure (NEXT_PUBLIC_, VITE_, etc.) — unless they are explicitly designed to be public (e.g., Supabase anon key with correct RLS).
+- Business logic that reveals competitive information (margin calculations, cost prices) must never be in frontend code.
+- Internal user data, admin data, or other users' data must never be fetched to the frontend even if not displayed.
+
+AUDIT ENFORCEMENT:
+When auditing the frontend, actively look for:
+- Any fetch or API call that sends a price, total, or financial value that the backend then trusts.
+- Any fetch or API call that sends a role, permission, or admin flag that the backend then trusts.
+- Any environment variable exposed to the frontend that contains a secret or privileged credential.
+- Any business rule implemented only in a frontend component with no backend equivalent.
+- Any data fetched from the backend that includes fields the current user should not have access to.
+
+If any of the above is found: flag it, document it in Spanish, and fix it by moving the logic to the backend. Never solve it by hiding the data on the frontend.
 
 ════════════════════════════════════════
 ACCESS CONTEXT — READ THIS FIRST
@@ -28,38 +133,37 @@ ACCESS CONTEXT — READ THIS FIRST
 You have been granted TOTAL AND UNRESTRICTED ACCESS to every part of this project:
 
 FILESYSTEM ACCESS:
-You have full read and write access to every file and folder in this project without exception. This includes source code, configuration files, environment files, scripts, documentation, hidden files, dotfiles, and any other file regardless of type, location, or sensitivity level. You are authorized to open, read, modify, and create any file needed to complete this audit.
+Full read and write access to every file and folder without exception — source code, configuration files, environment files, scripts, documentation, hidden files, dotfiles, and any other file regardless of type or location. You are authorized to open, read, modify, and create any file needed to complete this audit.
 
 SUPABASE DATABASE ACCESS VIA MCP:
-You have direct access to the Supabase database through the MCP (Model Context Protocol) integration. You are authorized and expected to:
+Direct access to the Supabase database through MCP. You are authorized and expected to:
 - Query tables directly to inspect real data, schema, and relationships.
-- Inspect row-level security (RLS) policies directly in Supabase.
+- Inspect RLS policies directly in Supabase.
 - Inspect indexes, constraints, and foreign keys directly in the database.
 - Run read queries to verify data integrity, check for test data, and validate schema.
-- Use MCP to cross-reference what the code expects vs what the database actually contains.
+- Cross-reference what the code expects vs what the database actually contains.
 Do not limit your database audit to reading model files. Use MCP to verify the actual live database state directly.
 
 ENVIRONMENT VARIABLES & .env FILES:
-The .env file(s) in this project contain real credentials and API keys for the development environment. These are NOT security findings and must NOT be flagged as vulnerabilities. The following is confirmed and already handled:
-- The .env files are explicitly listed in .gitignore and have never been committed to version control.
-- The credentials are development/staging credentials only.
-- Proper security measures are in place to keep them isolated to the development environment.
-- All credentials will be rotated and replaced with production-specific values before going live.
+The .env files contain real credentials for the development environment. These are NOT security findings and must NOT be flagged as vulnerabilities:
+- .env files are in .gitignore and have never been committed to version control.
+- Credentials are development/staging only.
+- All credentials will be rotated before going live.
 
-Therefore: when you encounter real values in .env files (API keys, DB passwords, JWT secrets, service credentials), do NOT flag them as security issues. Read them to understand the environment configuration, use them to verify integrations work, and move on. The only .env-related check you must perform is confirming the .gitignore rule exists for them.
+When you encounter real values in .env files: read them, use them to verify integrations, move on. The only .env check required is confirming .gitignore excludes them.
 
 ════════════════════════════════════════
 CRITICAL RULES — NON-NEGOTIABLE
 ════════════════════════════════════════
-1. Open and read EVERY file, EVERY line, in EVERY part of the project. No exceptions. Use your full filesystem access — do not hesitate to open any file.
+1. Open and read EVERY file, EVERY line, in EVERY part of the project. No exceptions.
 
-2. Use MCP to directly inspect the Supabase database. Do not rely solely on migration files or model definitions — verify the actual live schema, actual RLS policies, actual indexes, and actual data in the database.
+2. Use MCP to directly inspect the Supabase database. Verify actual live schema, RLS policies, indexes, and data.
 
-3. Never mark a checklist item as PASS from memory or assumption. Find the specific line of code, config value, or database result that proves it passes.
+3. Never mark a checklist item as PASS from memory or assumption. Find the specific proof in code or database.
 
-4. Never mark a checklist item as PASS if a related item fails. Fix the failure first, then verify.
+4. Never mark a checklist item as PASS if a related item fails. Fix first, then verify.
 
-5. Every problem found must be documented (in Spanish) with: file path or database location, line number or table/policy name, description of the problem, risk level, and the exact fix applied.
+5. Every problem found must be documented in Spanish with: file path or DB location, line number or table/policy name, description, risk level, and exact fix applied.
 
 6. Do not make speculative or cosmetic changes. Every change must fix a documented problem.
 
@@ -67,14 +171,18 @@ CRITICAL RULES — NON-NEGOTIABLE
 
 8. Security problems are always PRIORITY 1. They block everything else until resolved.
 
-9. .env credential values are explicitly excluded from security findings per the Access Context above. Do not flag them.
+9. REGRESSIONS ARE NEVER THE SOLUTION. If a fix requires a regression, find another way or flag and stop.
 
-10. At the end of every phase, produce a phase summary IN SPANISH: items checked, items passed, items failed, items fixed.
+10. NOTHING CRITICAL IN THE FRONTEND. If critical logic is found in the frontend, move it to the backend.
+
+11. .env credential values are excluded from security findings. Do not flag them.
+
+12. At the end of every phase, produce a phase summary in Spanish.
 
 ════════════════════════════════════════
 PHASE 0 — COMPLETE FILESYSTEM CENSUS
 ════════════════════════════════════════
-Using your full filesystem access, recursively list every file and folder in the entire project — frontend, backend, DB layer, config, scripts, CI/CD, everything including hidden files and dotfiles.
+Using your full filesystem access, recursively list every file and folder — frontend, backend, DB layer, config, scripts, CI/CD, everything including hidden files and dotfiles.
 
 Open every file. Record:
 | # | Path | Type | Side | Purpose (after reading) | Problems found on first read |
@@ -86,152 +194,161 @@ Immediately flag (report in Spanish):
 - Files referencing modules or paths that do not exist.
 - Config files that conflict with each other.
 - Duplicate or redundant files.
-- Files with hardcoded secrets in source code (NOT .env files — those are pre-authorized).
+- Files with hardcoded secrets in source code (NOT .env files).
 - Empty files or stub files with TODO handlers.
+- Frontend files containing critical business logic that belongs on the backend.
 
 ════════════════════════════════════════
 PHASE 1 — SECURITY AUDIT
 ════════════════════════════════════════
 PRIORITY 1. Nothing goes to production with a security failure.
-Read every relevant file line by line. Use MCP to verify security configurations directly in Supabase. Do not assume any protection exists — find it in the code or the database.
+Read every relevant file. Use MCP to verify Supabase security configurations.
 Report all findings and fixes in Spanish.
+If any fix considered requires a regression: reject it, document why, propose an alternative.
 
 A. SECRETS & CREDENTIALS:
-[ ] .gitignore explicitly excludes .env, .env.local, .env.production, and all variants. Verify by reading .gitignore.
-[ ] No secrets hardcoded in source code files (.js, .ts, .py, .jsx, .tsx, config files, etc.). Note: real values in .env files are pre-authorized and must NOT be flagged.
+[ ] .gitignore explicitly excludes all .env variants.
+[ ] No secrets hardcoded in source code files. (NOT .env files — those are pre-authorized.)
 [ ] No credentials in comments, logs, error messages, or API responses.
-[ ] .env.example exists and documents every required variable with descriptions but without real values.
-Search every SOURCE CODE file (not .env files) for literal assigned values of: password=, secret=, api_key=, apikey=, token=, private_key=, connection_string=. Report every instance found in source code.
+[ ] .env.example documents every required variable without real values.
+Search every SOURCE CODE file for literal assigned secret values. Report every instance found.
 
 B. AUTHENTICATION:
-[ ] Every protected route has auth middleware. Verify by reading every route file.
-[ ] JWT tokens have expiration set. Read the token generation code.
-[ ] JWT secret comes from environment variable. Verify in code (not the value itself).
-[ ] Passwords hashed with bcrypt, argon2, or equivalent. Read the hashing code.
+[ ] Every protected route has auth middleware. Verify in every route file.
+[ ] JWT tokens have expiration set.
+[ ] JWT secret from environment variable, never hardcoded.
+[ ] Passwords hashed with bcrypt, argon2, or equivalent.
 [ ] No plain-text passwords stored or logged.
 [ ] Login endpoint has rate limiting.
 [ ] Session invalidation works on logout.
-[ ] Password reset flow uses time-limited, single-use tokens.
+[ ] Password reset uses time-limited, single-use tokens.
 
-C. AUTHORIZATION — verify in both code AND Supabase via MCP:
-[ ] Every admin route verifies admin role in backend code.
-[ ] Row-Level Security (RLS) enabled on all Supabase tables. Use MCP to check directly.
-[ ] RLS policies correctly restrict users to their own data. Use MCP to read each policy.
+C. AUTHORIZATION — verify in code AND Supabase via MCP:
+[ ] Every admin route verifies admin role on the backend. Not just a frontend guard.
+[ ] RLS enabled on ALL Supabase tables. Verify via MCP directly.
+[ ] RLS policies correctly restrict users to their own data. Read each policy via MCP.
 [ ] No table has RLS disabled that contains user data.
-[ ] Service role key used only server-side, never exposed to frontend.
-[ ] Anon key has only the permissions it needs.
+[ ] Service role key used only server-side, never in frontend code or NEXT_PUBLIC_ / VITE_ variables.
+[ ] Anon key permissions scoped correctly (cannot access what RLS should block).
 
 D. INPUT VALIDATION & INJECTION:
-[ ] Every user input validated on the backend (type, length, format).
+[ ] Every user input validated on the backend independently of any frontend validation.
 [ ] Every user input sanitized before storage.
 [ ] No raw SQL with string concatenation using user input.
-[ ] ORM parameterized queries used throughout.
-[ ] Rich text / HTML sanitized with whitelist before storage and render (XSS prevention).
-[ ] File uploads validate type (content, not just extension), size, and filename.
-[ ] Uploaded files not executable and not served from executable locations.
+[ ] ORM parameterized queries throughout.
+[ ] Rich text / HTML sanitized with whitelist (XSS prevention).
+[ ] File uploads validate type (actual content check), size, and filename.
+[ ] Uploaded files not executable, not in executable directories.
 
 E. TRANSPORT & HEADERS:
-[ ] HTTPS enforced, HTTP redirects to HTTPS.
-[ ] CORS configured for specific production domain only. No wildcard in production config.
+[ ] HTTPS enforced.
+[ ] CORS for specific production domain only. No wildcard.
 [ ] Security headers: Content-Security-Policy, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Strict-Transport-Security.
-[ ] Cookies: HttpOnly, Secure, SameSite flags set.
+[ ] Cookies: HttpOnly, Secure, SameSite flags.
 [ ] No sensitive data in URL parameters.
 
 F. RATE LIMITING:
-[ ] Rate limiting on auth endpoints (login, register, password reset).
-[ ] Rate limiting on endpoints that send email or SMS.
-[ ] Rate limiting on payment endpoints.
-[ ] Rate limiting on file upload endpoints.
+[ ] On auth endpoints, email/SMS sending, payment endpoints, file upload endpoints.
 
 G. DATA EXPOSURE:
 [ ] No endpoint returns password hashes, internal tokens, or sensitive internal fields.
-[ ] Error messages do not expose stack traces or DB schema in production.
-[ ] Debug mode OFF in production config.
+[ ] No stack traces in production error responses.
+[ ] Debug mode OFF in production.
 [ ] No logging of PII, payment data, or passwords.
 [ ] Payment card data never stored or logged.
 
-H. SUPABASE-SPECIFIC SECURITY — use MCP to verify directly:
-[ ] RLS enabled on every table.
-[ ] Every RLS policy reviewed for logic errors.
-[ ] No tables with public SELECT access that should be restricted.
+H. SUPABASE-SPECIFIC SECURITY — verify via MCP:
+[ ] RLS enabled on every table. Query pg_tables and pg_policies to confirm.
+[ ] Every RLS policy reviewed for logic errors — overly permissive rules, missing conditions.
+[ ] No table with public SELECT that should be restricted.
 [ ] Supabase Auth configured correctly (email confirmation, password requirements).
-[ ] Storage buckets have correct access policies.
+[ ] Storage bucket policies correct (no public buckets that should be private).
 [ ] Database functions have correct security definer/invoker settings.
 [ ] Realtime subscriptions restricted to authorized data only.
 
-I. DEPENDENCY SECURITY:
-[ ] Run npm audit or equivalent. Read the output.
-[ ] Zero critical or high severity vulnerabilities.
+I. NOTHING CRITICAL IN FRONTEND — security check:
+[ ] No API key, secret, or privileged credential in any frontend environment variable (NEXT_PUBLIC_, VITE_, etc.) unless explicitly designed to be public with correct RLS backing it.
+[ ] No role check, permission check, or access control that exists ONLY in frontend code.
+[ ] No price, total, or financial calculation that the backend trusts from the frontend without re-validating from DB.
+[ ] No user ID, product ID, or ownership claim sent from frontend that the backend trusts without DB verification.
+[ ] No sensitive endpoint that relies solely on frontend-enforced access (hidden button = not security).
+
+J. DEPENDENCY SECURITY:
+[ ] npm audit or equivalent. Zero critical/high vulnerabilities.
 [ ] No abandoned packages handling security-sensitive operations.
 
 Resumen de Fase 1 (en español): X ítems verificados, X aprobados, X fallidos, X corregidos.
+Regresiones de seguridad aplicadas: NINGUNA.
 Todos los fallos de Fase 1 deben corregirse antes de continuar.
 
 ════════════════════════════════════════
-PHASE 2 — DATABASE AUDIT (code + MCP direct verification)
+PHASE 2 — DATABASE AUDIT (code + MCP)
 ════════════════════════════════════════
-Read every model, schema, migration, and query file. Then use MCP to verify the actual Supabase database state. Cross-reference both.
-Report all findings and fixes in Spanish.
+Read every model, schema, migration, and query file. Verify actual Supabase state via MCP.
+Report all findings in Spanish.
+No regression is acceptable: never disable RLS, never drop constraints, never remove indexes to fix a problem.
 
 A. CONNECTION & CONFIGURATION:
 [ ] DB connection string from environment variable. Never hardcoded in source.
-[ ] Connection pool configured with appropriate settings.
+[ ] Connection pool configured appropriately.
 [ ] DB health check exists and works.
 [ ] DB connection errors caught and handled gracefully.
 
-B. SCHEMA VERIFICATION — use MCP to inspect the actual live database:
-[ ] List all tables via MCP. Compare against migration files and models.
-[ ] Every table in migrations actually exists in the database.
-[ ] Every column in models actually exists with correct type.
-[ ] No ghost tables in DB with no corresponding model.
-[ ] No pending migrations.
+B. SCHEMA VERIFICATION — use MCP:
+[ ] List all tables via MCP. Compare against migrations and models.
+[ ] Every table in migrations exists in the live DB.
+[ ] Every column in models exists in the live DB with correct type.
+[ ] No ghost tables with no corresponding model.
+[ ] No pending migrations (code expects columns that don't exist yet).
 [ ] All foreign key, unique, and check constraints verified via MCP.
 
 C. INDEXES — verify via MCP:
 [ ] Primary key on every table.
 [ ] Foreign key indexes on every relation column.
 [ ] Index on every column used in WHERE or ORDER BY.
-[ ] Index on: email, slug, sku, and lookup fields.
+[ ] Index on: email, slug, sku, and all lookup fields.
 
-D. DATA INTEGRITY — inspect actual data via MCP:
+D. DATA INTEGRITY — inspect via MCP:
 [ ] No orphaned records.
 [ ] No duplicates on unique-constrained fields.
-[ ] No null values in NOT NULL columns added after initial data.
+[ ] No null values in NOT NULL columns.
 [ ] No test, seed, or mock data in the database.
 [ ] No development admin accounts with weak passwords.
 
 E. RLS POLICIES — read and verify every policy via MCP:
-[ ] List all RLS policies via MCP.
-[ ] Every policy correctly restricts access.
+[ ] All RLS policies listed and reviewed.
+[ ] Every policy restricts access correctly.
 [ ] No policy has a logic error granting wider access than intended.
 [ ] INSERT, UPDATE, DELETE policies as strict as SELECT.
 [ ] Service role bypasses intentional and documented.
+If a query problem is found: fix the query. Never disable RLS to make it work.
 
 F. QUERIES IN CODE:
-[ ] Every query uses parameterized inputs.
-[ ] N+1 query problems resolved.
+[ ] Parameterized inputs throughout.
+[ ] N+1 problems resolved.
 [ ] Pagination on every list endpoint.
 [ ] Transactions for multi-step atomic operations.
 [ ] DB errors caught and translated to correct HTTP responses.
 
 Resumen de Fase 2 (en español): X ítems verificados, X aprobados, X fallidos, X corregidos.
+Regresiones de base de datos aplicadas: NINGUNA.
 
 ════════════════════════════════════════
 PHASE 3 — BACKEND API AUDIT
 ════════════════════════════════════════
 Open every route, controller, middleware, and service file. Read every line.
-Report all findings and fixes in Spanish.
+Report all findings in Spanish.
+No regression: never remove middleware, never weaken validation, never trust frontend values.
 
 A. ROUTE COMPLETENESS:
 [ ] Every frontend API call has a matching backend route.
 [ ] Every backend route is called by something. No dead routes.
 [ ] All routes registered and mounted.
-[ ] Route paths consistent (prefix, trailing slash, versioning).
+[ ] Route paths consistent.
 
 B. HTTP CORRECTNESS:
 [ ] GET routes do not modify data.
-[ ] Correct methods: POST create, PUT/PATCH update, DELETE delete.
-[ ] Correct status codes: 201, 200, 204, 400, 401, 403, 404, 409, 422, 500.
+[ ] Correct HTTP methods and status codes throughout.
 [ ] No route returns 500 for a predictable user error.
 [ ] No route returns 200 for an error.
 
@@ -239,6 +356,7 @@ C. REQUEST VALIDATION:
 [ ] Every route with a body has validation middleware.
 [ ] Required fields, types, lengths, and allowed values validated.
 [ ] Validation errors return 422 with specific field-level messages.
+[ ] Backend validates ALL fields independently — never skips because frontend validated.
 
 D. RESPONSE CONSISTENCY:
 [ ] All success responses follow the same shape.
@@ -246,84 +364,118 @@ D. RESPONSE CONSISTENCY:
 [ ] No raw DB objects with internal fields exposed.
 [ ] Pagination responses include total, page, per_page.
 
-E. ERROR HANDLING:
-[ ] Every async handler has try/catch or global async error handler.
+E. BACKEND AUTHORITY CHECK — critical logic verification:
+[ ] Price and order total: calculated on backend from DB, never from frontend payload. Verify in every order/checkout handler.
+[ ] Discounts: validated on backend from DB, never from frontend claim.
+[ ] Stock: checked on backend at order creation, never trusted from frontend.
+[ ] User role/admin status: verified on backend from DB on every privileged request, never from JWT payload alone without DB check.
+[ ] Ownership: verified on backend by querying the DB ("does this order belong to this user?"), never from a user-supplied claim.
+[ ] Product active status: enforced on backend query, not just filtered on frontend.
+
+F. ERROR HANDLING:
+[ ] Every async handler has try/catch or global error handler.
 [ ] Unhandled promise rejections caught globally.
 [ ] DB and third-party errors caught and handled.
-[ ] Generic 500 handler exists.
 [ ] No stack traces in production error responses.
 
-F. LOGGING:
+G. LOGGING:
 [ ] Request logging configured.
 [ ] Error logging captures full details server-side.
 [ ] No sensitive data in logs.
-[ ] Log level appropriate for production.
+[ ] Production log level correct.
 
-G. PERFORMANCE:
+H. PERFORMANCE:
 [ ] Response compression enabled.
 [ ] Heavy operations use background jobs.
 [ ] No blocking synchronous I/O in request handlers.
 [ ] Payload size limits configured.
 
 Resumen de Fase 3 (en español): X ítems verificados, X aprobados, X fallidos, X corregidos.
+Regresiones de backend aplicadas: NINGUNA.
 
 ════════════════════════════════════════
 PHASE 4 — FRONTEND AUDIT
 ════════════════════════════════════════
 Open every frontend file. Read every line.
-Report all findings and fixes in Spanish.
+Report all findings in Spanish.
+No regression: never remove loading states, error states, guards, validation, accessibility, or responsive behavior.
+Actively hunt for critical logic that must not be in the frontend.
 
 A. BUILD & COMPILATION:
 [ ] Builds with zero errors and zero warnings.
-[ ] TypeScript: strict mode, zero type errors, no untyped any on critical structures.
+[ ] TypeScript strict mode, zero type errors, no untyped any on critical structures.
 [ ] Tree shaking working. Bundle size analyzed.
 
 B. RENDERING & DATA FETCHING:
 [ ] Every page that should be SSG is actually SSG. Verify in build output.
 [ ] No product page is client-side rendered.
 [ ] Every build-time fetch connects to real DB, not mock data.
-[ ] Loading, error, and empty states on every async operation.
+[ ] Loading states present on every async operation — and have not been removed.
+[ ] Error states present on every async operation — and have not been removed.
+[ ] Empty states present on every list that can be empty — and have not been removed.
 [ ] No crashes when API returns null, empty array, or slow response.
 
 C. FORMS & USER INPUT:
-[ ] Client-side validation matches backend validation rules.
-[ ] Loading, success, and error states on every form.
-[ ] Double-submission prevention on all forms.
+[ ] Client-side validation present on all forms — and has not been removed.
+[ ] Loading state on submission — and has not been removed.
+[ ] Success and error states shown — and have not been removed.
+[ ] Double-submission prevention present — and has not been removed.
 [ ] Password fields are type="password".
+[ ] Note: frontend validation is UX only. Confirm backend validates independently.
 
-D. STATE MANAGEMENT:
+D. CRITICAL LOGIC NOT IN FRONTEND — hunt actively:
+[ ] No price, discount, or total calculation in frontend code that the backend trusts.
+[ ] No role, permission, or admin flag in frontend code that the backend trusts.
+[ ] No frontend environment variable (NEXT_PUBLIC_, VITE_, etc.) contains a secret or privileged credential.
+[ ] No business rule that enforces financial, access, or inventory constraints exists ONLY in frontend code.
+[ ] No fetch call that sends user-controlled values (price, role, total, ownership) that the backend accepts without re-validating from DB.
+[ ] No sensitive data fetched from the backend that the current user should not have access to (even if not displayed).
+Any violation found here: move the logic to the backend. Never solve by hiding on the frontend.
+
+E. STATE MANAGEMENT:
 [ ] Auth state persists across page refreshes.
 [ ] Cart state persists correctly.
-[ ] No stale data after mutations.
+[ ] No stale data after mutations — cache invalidation not removed.
 [ ] No memory leaks from uncleaned listeners or subscriptions.
 
-E. ROUTING & NAVIGATION:
+F. ROUTING & NAVIGATION:
 [ ] Every route renders without crashing.
-[ ] Protected routes redirect unauthenticated users.
-[ ] Admin routes redirect non-admin users.
+[ ] Protected route guards present — and have not been removed.
+[ ] Admin route guards present — and have not been removed.
 [ ] 404 page exists and renders.
 [ ] No broken internal links.
 [ ] Deep links work.
+[ ] Back button behavior correct — not broken.
 
-F. IMAGES & ASSETS:
-[ ] Every image has alt text and explicit width/height.
-[ ] Images optimized (compressed, WebP where supported).
+G. IMAGES & ASSETS:
+[ ] Every image has alt text — not removed.
+[ ] Every image has explicit width and height — not removed.
+[ ] Images optimized (compressed, WebP).
 [ ] No image returns 404.
 [ ] LCP image preloaded.
 
-G. CONSOLE & DEBUG:
+H. ACCESSIBILITY — none removed:
+[ ] Alt attributes on all images — not removed.
+[ ] aria-* attributes present where they were — not removed.
+[ ] label associations on form inputs — not removed.
+[ ] Focus indicators visible — not removed.
+[ ] Keyboard navigation functional — not broken.
+
+I. CONSOLE & DEBUG:
 [ ] Zero console.log, console.warn, console.error in production paths.
 [ ] Zero debugger statements.
 [ ] No TODO in production-critical code.
 [ ] No dev-only UI in production build.
 
 Resumen de Fase 4 (en español): X ítems verificados, X aprobados, X fallidos, X corregidos.
+Regresiones de frontend aplicadas: NINGUNA.
+Lógica crítica encontrada solo en frontend y movida al backend: X instancias.
 
 ════════════════════════════════════════
 PHASE 5 — SEO AUDIT
 ════════════════════════════════════════
-Read every page file and SEO config. Use MCP to verify product data used for SEO is complete in the database.
-Report all findings and fixes in Spanish.
+Read every page file and SEO config. Use MCP to verify product/category data completeness.
+Report all findings in Spanish.
 
 A. META & TAGS — every page:
 [ ] Unique title under 60 chars.
@@ -333,7 +485,7 @@ A. META & TAGS — every page:
 [ ] No noindex on product, category, or home pages.
 
 B. OPEN GRAPH & SOCIAL:
-[ ] og:title, og:description, og:image (absolute URL, 1200x630), og:url, og:type on all public pages.
+[ ] og:title, og:description, og:image (absolute URL ≥1200x630), og:url, og:type on all public pages.
 [ ] twitter:card, twitter:title, twitter:description, twitter:image on all public pages.
 [ ] Unique values per page.
 
@@ -344,9 +496,9 @@ C. STRUCTURED DATA:
 [ ] Organization on home page.
 
 D. TECHNICAL SEO:
-[ ] sitemap.xml present, valid, includes every public page and product URL. Verify via MCP.
-[ ] robots.txt: allows public pages, blocks admin and checkout, references sitemap.
-[ ] Clean URL structure.
+[ ] sitemap.xml present, valid, includes every public and product URL. Verify via MCP.
+[ ] robots.txt: allows public pages, blocks admin/checkout, references sitemap.
+[ ] Clean URL structure (/products/slug not /products?id=123).
 [ ] No redirect chains.
 [ ] No broken internal links.
 
@@ -362,13 +514,13 @@ Resumen de Fase 5 (en español): X ítems verificados, X aprobados, X fallidos, 
 ════════════════════════════════════════
 PHASE 6 — PERFORMANCE AUDIT
 ════════════════════════════════════════
-Report all findings and fixes in Spanish.
+Report all findings in Spanish.
 
 A. BUILD OUTPUT:
 [ ] JS main bundle under 200KB gzipped.
 [ ] Code splitting per route.
-[ ] No full library imported when only a few components needed.
-[ ] Images compressed, modern formats.
+[ ] No full library imported for just a few components.
+[ ] Images compressed, modern formats (WebP, AVIF).
 [ ] Static assets have cache-busting hashes.
 
 B. NETWORK:
@@ -385,29 +537,29 @@ C. DATABASE PERFORMANCE — verify via MCP:
 [ ] DB connection pool sized correctly.
 
 D. SERVER PERFORMANCE:
-[ ] Server response time under 200ms cached, under 500ms dynamic.
+[ ] Server response under 200ms cached, under 500ms dynamic.
 [ ] Background jobs for heavy operations.
-[ ] No blocking operations on the main thread.
+[ ] No blocking operations on main thread.
 
 Resumen de Fase 6 (en español): X ítems verificados, X aprobados, X fallidos, X corregidos.
 
 ════════════════════════════════════════
 PHASE 7 — USER EXPERIENCE & ACCESSIBILITY AUDIT
 ════════════════════════════════════════
-Report all findings and fixes in Spanish.
+Report all findings in Spanish. Verify DB state after each critical flow via MCP.
 
-A. CRITICAL USER FLOWS — trace every step end to end, use MCP to verify DB state:
-[ ] User registration → account created in DB. Verify via MCP.
-[ ] User login → token issued, protected pages accessible.
-[ ] User logout → session invalidated. Verify via MCP.
-[ ] Password reset → token created, used, then invalidated. Verify via MCP.
-[ ] Product browse → category page loads, filters work, pagination works.
-[ ] Product detail → all data from DB displayed, images load, add to cart works.
-[ ] Cart → add, update quantity, remove. Totals correct.
-[ ] Checkout → order created in DB, inventory decremented, confirmation shown. Verify via MCP.
-[ ] Order history → user sees only their own orders. Verify via MCP.
-[ ] Admin login → admin accesses admin routes, non-admin cannot.
-[ ] Admin catalog CRUD → changes reflected in DB and frontend. Verify via MCP.
+A. CRITICAL USER FLOWS — trace end to end:
+[ ] Registration → account in DB. Verify via MCP.
+[ ] Login → token issued, protected pages accessible.
+[ ] Logout → session invalidated. Verify via MCP.
+[ ] Password reset → token created, used, invalidated. Verify via MCP.
+[ ] Product browse → filters, pagination, links work.
+[ ] Product detail → all DB data displayed, images load, add to cart works.
+[ ] Cart → add, update, remove. Totals correct and calculated on backend.
+[ ] Checkout → order in DB, inventory decremented, confirmation shown. Verify via MCP.
+[ ] Order history → user sees only their own orders (RLS + backend verified via MCP).
+[ ] Admin login → admin routes accessible, non-admin cannot access.
+[ ] Admin catalog CRUD → changes in DB and frontend. Verify via MCP.
 
 B. RESPONSIVE DESIGN:
 [ ] Renders correctly on 320px, 768px, 1280px+.
@@ -417,8 +569,8 @@ B. RESPONSIVE DESIGN:
 [ ] Images do not overflow containers.
 
 C. ACCESSIBILITY (WCAG 2.1 AA):
-[ ] Every image has descriptive alt text.
-[ ] Color contrast 4.5:1 normal text, 3:1 large text.
+[ ] Every image: descriptive alt text.
+[ ] Color contrast: 4.5:1 normal text, 3:1 large text.
 [ ] Every interactive element reachable by keyboard.
 [ ] Visible focus indicator on all interactive elements.
 [ ] Form inputs have associated labels.
@@ -430,9 +582,9 @@ C. ACCESSIBILITY (WCAG 2.1 AA):
 
 D. ERROR STATES & EDGE CASES:
 [ ] 404 and 500 pages informative with navigation.
-[ ] Empty cart, empty search, out-of-stock states handled.
+[ ] Empty cart, empty search, out-of-stock handled.
 [ ] Session expiration handled gracefully.
-[ ] Payment failure shows clear error and retry.
+[ ] Payment failure: clear error and retry.
 [ ] Network error on form: user can retry without data loss.
 
 Resumen de Fase 7 (en español): X ítems verificados, X aprobados, X fallidos, X corregidos.
@@ -440,19 +592,18 @@ Resumen de Fase 7 (en español): X ítems verificados, X aprobados, X fallidos, 
 ════════════════════════════════════════
 PHASE 8 — DEPLOYMENT & ENVIRONMENT AUDIT
 ════════════════════════════════════════
-Report all findings and fixes in Spanish.
+Report all findings in Spanish.
 
 A. ENVIRONMENT CONFIGURATION:
-[ ] .env.example documents every variable with description (no real values).
+[ ] .env.example documents every variable without real values.
 [ ] .gitignore explicitly excludes all .env variants.
-[ ] NODE_ENV=production configured for production.
-[ ] No DEBUG=true or verbose logging flags in production config.
-Note: real values in current .env files are development credentials and are pre-authorized. Do not flag them.
+[ ] NODE_ENV=production for production.
+[ ] No DEBUG=true or verbose logging in production config.
+Note: real .env values are pre-authorized development credentials. Do not flag them.
 
 B. BUILD & DEPLOYMENT PIPELINE:
 [ ] Build works from clean install (npm ci).
 [ ] Build dependencies in devDependencies, runtime in dependencies.
-[ ] Build succeeds in clean environment.
 [ ] Zero-downtime deployment configured.
 [ ] Rollback procedure documented.
 
@@ -462,16 +613,15 @@ C. SERVER & INFRASTRUCTURE:
 [ ] Firewall: only ports 80, 443, SSH open.
 [ ] Process manager configured. App auto-restarts on crash.
 [ ] Application logs persisted.
-[ ] Health check endpoint exists and monitored.
+[ ] Health check endpoint monitored.
 [ ] Uptime monitoring configured.
 
 D. DATABASE IN PRODUCTION:
 [ ] Production DB separate from development.
 [ ] DB not publicly accessible.
-[ ] Automated backups configured (daily, 30-day minimum).
+[ ] Automated backups (daily, 30-day minimum).
 [ ] Backup restoration tested.
 [ ] App uses restricted DB user (not superuser).
-Note: current DB credentials in .env are development credentials. Production Supabase project will use separate credentials before go-live.
 
 E. MONITORING & ALERTING:
 [ ] Application error tracking configured.
@@ -484,7 +634,7 @@ Resumen de Fase 8 (en español): X ítems verificados, X aprobados, X fallidos, 
 ════════════════════════════════════════
 PHASE 9 — CODE QUALITY & MAINTAINABILITY
 ════════════════════════════════════════
-Report all findings and fixes in Spanish.
+Report all findings in Spanish.
 
 A. DEAD CODE:
 [ ] No unused files, components, functions, or variables.
@@ -516,63 +666,68 @@ Resumen de Fase 9 (en español): X ítems verificados, X aprobados, X fallidos, 
 ════════════════════════════════════════
 PHASE 10 — ECOMMERCE BUSINESS LOGIC AUDIT
 ════════════════════════════════════════
-Use MCP to verify business rules enforced at the database level.
-Report all findings and fixes in Spanish.
+Use MCP to verify business rules at the database level.
+Report all findings in Spanish.
+All business rules must be enforced on the backend. Frontend enforcement is UX only, never security.
 
 A. PRODUCT & CATALOG:
-[ ] Out-of-stock products cannot be purchased. Enforced on backend. Verify in DB via MCP.
-[ ] Prices read from DB at order time, not from frontend payload.
-[ ] Inactive products not visible and cannot be added to cart.
-[ ] Product slug changes handled gracefully.
+[ ] Out-of-stock: enforced on backend at order creation. Verify in DB via MCP. Frontend display is UX only.
+[ ] Prices: read from DB at order time. Backend never trusts price from frontend payload.
+[ ] Inactive products: enforced on backend query. Not just filtered on frontend.
+[ ] Product slug changes: old URLs redirect correctly.
 
 B. CART & INVENTORY:
-[ ] Cart totals calculated on backend, not trusted from frontend.
-[ ] Discount codes validated on backend. Verify discount table via MCP.
-[ ] Inventory decremented only on confirmed order.
-[ ] Concurrent orders for last unit handled (no overselling). Check DB-level locking via MCP.
+[ ] Cart totals: calculated on backend from DB prices. Frontend display only.
+[ ] Discount codes: validated on backend against DB. Frontend claim never trusted. Verify via MCP.
+[ ] Inventory: decremented only on confirmed order. Atomic operation, DB-level. Verify via MCP.
+[ ] Concurrent orders for last unit: DB-level locking or atomic decrement prevents overselling. Verify via MCP.
 [ ] Cart persists across sessions.
 
 C. ORDER & CHECKOUT:
-[ ] Order total calculated on backend from DB prices. Never from cart payload.
+[ ] Order total: calculated on backend from DB prices. Never from frontend cart payload.
 [ ] Order confirmation email sent on success.
-[ ] Order status transitions validated.
-[ ] Failed payments do not create orders or deduct inventory. Verify via MCP.
-[ ] Payment gateway in test mode for staging, live mode for production.
-[ ] Payment webhook signature verified before processing.
-[ ] Duplicate webhook events handled idempotently. Check idempotency key in DB via MCP.
+[ ] Order status transitions: validated on backend. Frontend cannot skip states.
+[ ] Failed payments: no order created, no inventory decremented. Verify via MCP.
+[ ] Payment gateway: test mode for staging, live for production.
+[ ] Payment webhook: signature verified before processing.
+[ ] Duplicate webhooks: handled idempotently. Verify idempotency key in DB via MCP.
 
 D. USER DATA & PRIVACY:
-[ ] Users see only their own orders. Verify RLS policy via MCP.
-[ ] Users cannot change their own role. Verify RLS or trigger via MCP.
+[ ] Users see only their own orders: enforced by RLS + backend query. Verify via MCP.
+[ ] Users cannot change their own role: enforced by RLS or DB trigger. Verify via MCP.
 [ ] No privilege escalation path in any API endpoint.
 
 Resumen de Fase 10 (en español): X ítems verificados, X aprobados, X fallidos, X corregidos.
+Lógica de negocio crítica encontrada solo en frontend y movida al backend: X instancias.
 
 ════════════════════════════════════════
 PHASE 11 — REGRESSION VERIFICATION
 ════════════════════════════════════════
-After all fixes, produce this verification summary in Spanish:
+Produce this entire section in Spanish.
 
-1. Re-read every modified file. Confirm internally consistent.
-2. Re-check every fixed item. Confirm the fix holds.
-3. Trace every critical user flow from Phase 7A end to end.
-4. Full build on frontend and backend. Zero errors. Zero warnings.
-5. Verify every product page in build output as static HTML.
-6. Verify sitemap includes every active product via MCP.
-7. Confirm all Phase 1 security checks still pass.
-8. Confirm no new console errors or network errors.
-9. Final MCP query sweep: verify DB state is clean, consistent, and matches what the application expects.
+Después de todas las correcciones, verificar:
+
+1. Re-leer cada archivo modificado. Confirmar consistencia interna.
+2. Re-verificar cada ítem corregido. Confirmar que la corrección se mantiene.
+3. Confirmar explícitamente: ¿se aplicó alguna regresión de seguridad? → NINGUNA.
+4. Confirmar explícitamente: ¿se aplicó alguna regresión de frontend? → NINGUNA.
+5. Confirmar explícitamente: ¿quedó lógica crítica en el frontend? → NINGUNA.
+6. Trazar cada flujo crítico de usuario de la Fase 7A de principio a fin.
+7. Build completo de frontend y backend. Cero errores. Cero advertencias.
+8. Verificar que cada página de producto está en el output del build como HTML estático.
+9. Verificar que el sitemap incluye todos los productos activos vía MCP.
+10. Confirmar que todos los checks de seguridad de la Fase 1 siguen aprobados.
+11. Barrido final de MCP: el estado de la DB es limpio, consistente y coincide con lo que espera la aplicación.
 
 ════════════════════════════════════════
 PHASE 12 — INFORME FINAL 360 (completamente en español)
 ════════════════════════════════════════
-El informe final completo debe estar escrito en español. Incluye:
 
 SEGURIDAD: X verificados / X aprobados / X fallidos / X corregidos
-   Lista cada problema de seguridad encontrado y cómo fue corregido.
-   Vulnerabilidades restantes (si las hay): lista con severidad y mitigación.
+   Listar cada problema encontrado y cómo fue corregido.
+   Vulnerabilidades restantes: listar con severidad y mitigación.
 
-BASE DE DATOS (código + verificación MCP): X / X / X / X
+BASE DE DATOS (código + MCP): X / X / X / X
 BACKEND API: X / X / X / X
 FRONTEND: X / X / X / X
 SEO: X / X / X / X
@@ -580,37 +735,39 @@ RENDIMIENTO: X / X / X / X
 UX Y ACCESIBILIDAD: X / X / X / X
 DESPLIEGUE: X / X / X / X
 CALIDAD DE CÓDIGO: X / X / X / X
-LÓGICA DE NEGOCIO (código + verificación MCP): X / X / X / X
+LÓGICA DE NEGOCIO (código + MCP): X / X / X / X
 
 TOTALES:
-   Total de ítems auditados: X
+   Total ítems auditados: X
    Total aprobados: X
    Total fallidos: X
    Total corregidos: X
-   Fallos restantes: X (listar cada uno explícitamente)
+   Fallos restantes: X (listar cada uno)
+
+REGRESIONES DE SEGURIDAD APLICADAS: NINGUNA
+REGRESIONES DE FRONTEND APLICADAS: NINGUNA
+LÓGICA CRÍTICA MOVIDA DE FRONTEND A BACKEND: X instancias (listar cada una)
 
 ARCHIVOS MODIFICADOS: X en total (listar cada archivo y qué cambió)
-CAMBIOS EN BASE DE DATOS VIA MCP: listar cada cambio realizado directamente en la base de datos
+CAMBIOS EN DB VIA MCP: listar cada cambio
 MIGRACIONES ESCRITAS: X
-ESTADO DEL BUILD: frontend APROBADO / backend APROBADO
-REGRESIONES DE SEGURIDAD: NINGUNA
-REGRESIONES DE RENDIMIENTO: NINGUNA
+BUILD: frontend APROBADO / backend APROBADO
 
-ACCIONES REQUERIDAS ANTES DEL LANZAMIENTO (no bloquean, pero deben completarse):
-- Reemplazar todas las credenciales del .env con valores específicos de producción.
+ACCIONES REQUERIDAS ANTES DEL LANZAMIENTO:
+- Reemplazar todas las credenciales del .env con valores de producción.
 - Apuntar el cliente de Supabase al proyecto de producción.
 - Configurar NODE_ENV=production.
 - Verificar el dominio de producción en la configuración de CORS.
 - Habilitar SSL en el servidor de producción.
 - Configurar monitoreo y alertas en producción.
 - Ejecutar migraciones en la base de datos de producción.
-- Confirmar que los backups automáticos están activos en la base de datos de producción.
+- Confirmar backups automáticos activos en la DB de producción.
 
 BLOQUEOS PENDIENTES (deben resolverse antes del despliegue):
-   Listar cada ítem no resuelto. Para cada uno: qué es, por qué bloquea la producción, qué se necesita para corregirlo.
+   Listar cada ítem no resuelto. Para cada uno: qué es, por qué bloquea, qué se necesita para resolverlo. Si un bloqueo no pudo resolverse sin una regresión: documentar en detalle y escalar al desarrollador.
 
 VEREDICTO FINAL:
-   LISTO PARA PRODUCCIÓN — todos los ítems aprobados, cero bloqueos.
+   LISTO PARA PRODUCCIÓN — todos los ítems aprobados, cero bloqueos, cero regresiones.
    O
    BLOQUEADO — X bloqueos pendientes (listarlos). No desplegar hasta resolverlos.
 
@@ -618,11 +775,13 @@ VEREDICTO FINAL:
 REGLAS ABSOLUTAS — NUNCA VIOLAR
 ════════════════════════════════════════
 - Acceso total a todos los archivos. Úsalo. Abre todo.
-- Usar MCP para verificar el estado real de la base de datos Supabase. No depender solo del código.
-- Los valores reales en archivos .env son credenciales de desarrollo preautorizadas. No marcarlos como vulnerabilidades. Solo verificar que .gitignore los excluya.
-- Nunca marcar un ítem como aprobado sin encontrar la prueba en el código o la base de datos.
+- Usar MCP para verificar el estado real de la base de datos. No depender solo del código.
+- Los valores reales en archivos .env son credenciales de desarrollo preautorizadas. No marcarlos.
+- Nunca marcar un ítem como aprobado sin encontrar la prueba en código o base de datos.
 - Los fallos de seguridad de la Fase 1 bloquean todas las demás fases.
+- NUNCA APLICAR UNA REGRESIÓN. Si una solución requiere desactivar, eliminar, saltarse, hardcodear o debilitar cualquier protección existente — de seguridad o de frontend — esa solución está prohibida. Buscar una alternativa o escalar al desarrollador.
+- NADA CRÍTICO EN EL FRONTEND. Si se encuentra lógica crítica en el frontend, moverla al backend. Nunca resolver ocultándola en el frontend.
 - Nunca hacer cambios especulativos. Cada cambio corrige un problema documentado.
 - Nunca dejar el proyecto en estado roto entre pasos.
 - Esta auditoría termina en uno de dos estados: LISTO PARA PRODUCCIÓN o BLOQUEADO. No hay aprobación parcial.
-- Todo lo que se comunique al desarrollador debe estar en español. Sin excepciones.
+- Todo lo dirigido al desarrollador debe estar en español. Sin excepciones.

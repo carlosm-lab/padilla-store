@@ -203,18 +203,24 @@ export default function StoreSettingsForm({ showToast }) {
           </div>
         </div>
 
-        <div className="pt-4 flex flex-col sm:flex-row sm:justify-end">
+        <div className="pt-4 flex flex-col sm:flex-row sm:justify-end" aria-live="polite">
           <button
             type="submit"
             disabled={isSaving}
+            aria-busy={isSaving}
             className="w-full sm:w-auto justify-center bg-primary text-white font-bold py-3 sm:py-2 px-6 rounded-lg shadow-md hover:bg-primary/90 transition-colors disabled:opacity-50 flex items-center gap-2"
           >
             {isSaving ? (
-              <span className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></span>
+              <>
+                <span className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" aria-hidden="true"></span>
+                <span>Guardando...</span>
+              </>
             ) : (
-              <span className="material-symbols-outlined text-[20px]">save</span>
+              <>
+                <span className="material-symbols-outlined text-[20px]" aria-hidden="true">save</span>
+                <span>Guardar Cambios</span>
+              </>
             )}
-            Guardar Cambios
           </button>
         </div>
       </form>

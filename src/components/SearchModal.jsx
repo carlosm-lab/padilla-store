@@ -21,7 +21,7 @@ export default function SearchModal({ isOpen, onClose }) {
     if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 100);
     } else {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+       
       setQuery('');
     }
   }, [isOpen]);
@@ -49,6 +49,9 @@ export default function SearchModal({ isOpen, onClose }) {
 
       <div 
         ref={modalRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Buscador de productos"
         className="bg-white dark:bg-white/5 w-full max-w-[48rem] rounded-3xl shadow-2xl relative z-10 overflow-hidden flex flex-col max-h-[80vh] animate-fade-in-up"
       >
         <FocusLock returnFocus className="flex flex-col h-full w-full">

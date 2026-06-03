@@ -42,7 +42,7 @@ export default function Navbar() {
   const prevCount = useRef(cartCount);
   useEffect(() => {
     if (cartCount > prevCount.current) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+       
       setIsBouncing(true);
       const timer = setTimeout(() => setIsBouncing(false), 300);
       return () => clearTimeout(timer);

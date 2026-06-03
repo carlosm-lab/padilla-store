@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { useFavorites } from '@/context/FavoritesContext';
 import { useProducts } from '@/hooks/useProducts';
 import { useCategories } from '@/hooks/useCategories';
@@ -138,7 +138,7 @@ export default function TechCatalogPage() {
       name: cat.name,
       icon: cat.icon || 'category'
     }));
-  }, [dbCategories]);
+  }, [dbCategories, activeCatalogSlugs]);
 
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
 
@@ -176,6 +176,7 @@ export default function TechCatalogPage() {
         />
 
         <div className="flex-1">
+          <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-6 tracking-tight">Catálogo de Tecnología</h1>
           {/* Desktop sort bar */}
           <div className="hidden lg:flex justify-between items-center mb-[var(--space-lg)]">
             <p className="text-[var(--text-sm)] text-slate-500 dark:text-slate-400 font-medium">
@@ -237,14 +238,20 @@ export default function TechCatalogPage() {
               {/* Pagination */}
               {totalPages > 1 && (
                 <div className="flex justify-center items-center mt-[var(--space-xl)] gap-[var(--space-xs)]">
-                  <button
-                    onClick={() => { setCurrentPage(p => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                    disabled={currentPage === 1}
-                    aria-label="Página anterior"
-                    className="w-[clamp(2rem,5vw,2.5rem)] aspect-square flex items-center justify-center rounded-lg border border-slate-200 text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white transition-all disabled:opacity-30"
-                  >
-                    <span className="material-symbols-outlined">chevron_left</span>
-                  </button>
+                  {currentPage === 1 ? (
+                    <span className="w-11 min-w-[44px] min-h-[44px] aspect-square flex items-center justify-center rounded-lg border border-slate-200 text-slate-600 dark:text-slate-400 opacity-30">
+                      <span className="material-symbols-outlined">chevron_left</span>
+                    </span>
+                  ) : (
+                    <Link
+                      to={`?${new URLSearchParams({ ...Object.fromEntries(searchParams.entries()), page: Math.max(1, currentPage - 1) }).toString()}`}
+                      onClick={() => { setCurrentPage(p => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                      aria-label="Página anterior"
+                      className="w-11 min-w-[44px] min-h-[44px] aspect-square flex items-center justify-center rounded-lg border border-slate-200 text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white transition-all"
+                    >
+                      <span className="material-symbols-outlined">chevron_left</span>
+                    </Link>
+                  )}
                   
                   {Array.from({ length: totalPages }, (_, i) => i + 1)
                     .filter(page => page === 1 || page === totalPages || Math.abs(page - currentPage) <= 1)
@@ -253,26 +260,33 @@ export default function TechCatalogPage() {
                       return (
                         <div key={page} className="flex items-center gap-[var(--space-xs)]">
                           {prev && page - prev > 1 && <span className="px-[var(--space-xs)] text-slate-400">...</span>}
-                          <button
+                          <Link
+                            to={`?${new URLSearchParams({ ...Object.fromEntries(searchParams.entries()), page }).toString()}`}
                             onClick={() => { setCurrentPage(page); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                             aria-label={`Ir a página ${page}`}
                             aria-current={currentPage === page ? 'page' : undefined}
-                            className={`w-[clamp(2rem,5vw,2.5rem)] aspect-square flex items-center justify-center rounded-lg font-bold transition-all ${currentPage === page ? 'bg-primary text-white' : 'border border-slate-200 text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white'}`}
+                            className={`w-11 min-w-[44px] min-h-[44px] aspect-square flex items-center justify-center rounded-lg font-bold transition-all ${currentPage === page ? 'bg-primary text-white' : 'border border-slate-200 text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white'}`}
                           >
                             {page}
-                          </button>
+                          </Link>
                         </div>
                       );
                     })}
                     
-                  <button
-                    onClick={() => { setCurrentPage(p => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                    disabled={currentPage === totalPages}
-                    aria-label="Página siguiente"
-                    className="w-[clamp(2rem,5vw,2.5rem)] aspect-square flex items-center justify-center rounded-lg border border-slate-200 text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white transition-all disabled:opacity-30"
-                  >
-                    <span className="material-symbols-outlined">chevron_right</span>
-                  </button>
+                  {currentPage === totalPages ? (
+                    <span className="w-11 min-w-[44px] min-h-[44px] aspect-square flex items-center justify-center rounded-lg border border-slate-200 text-slate-600 dark:text-slate-400 opacity-30">
+                      <span className="material-symbols-outlined">chevron_right</span>
+                    </span>
+                  ) : (
+                    <Link
+                      to={`?${new URLSearchParams({ ...Object.fromEntries(searchParams.entries()), page: Math.min(totalPages, currentPage + 1) }).toString()}`}
+                      onClick={() => { setCurrentPage(p => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                      aria-label="Página siguiente"
+                      className="w-11 min-w-[44px] min-h-[44px] aspect-square flex items-center justify-center rounded-lg border border-slate-200 text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white transition-all"
+                    >
+                      <span className="material-symbols-outlined">chevron_right</span>
+                    </Link>
+                  )}
                 </div>
               )}
             </>
