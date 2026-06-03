@@ -8,7 +8,7 @@ import ProductCard from '@/components/ProductCard';
 import FilterSidebar from '@/components/FilterSidebar';
 import MobileFilterDrawer from '@/components/MobileFilterDrawer';
 import { BASE_URL, SITE_NAME } from '@/config/constants';
-import StructuredData, { createBreadcrumbSchema } from '@/components/StructuredData';
+import StructuredData, { createBreadcrumbSchema, createCollectionSchema } from '@/components/StructuredData';
 
 export default function JewelryCatalogPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -166,6 +166,11 @@ export default function JewelryCatalogPage() {
         { name: 'Inicio', url: '/' },
         { name: 'Joyería', url: '/catalog-joyeria' }
       ])} />
+      <StructuredData data={createCollectionSchema(
+        "Catálogo de Joyería de Acero y Bisutería", 
+        "Explora el catálogo de Joyería en Padilla Store: anillos, collares y aretes de acero inoxidable y bisutería fina con envío en 24h en San Miguel.", 
+        "/catalog-joyeria"
+      )} />
       <main className="flex flex-1 flex-col lg:flex-row w-full px-container py-[var(--space-lg)] gap-[var(--space-lg)]">
         
         <FilterSidebar

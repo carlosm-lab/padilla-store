@@ -9,7 +9,7 @@ import { WHATSAPP_NUMBER, CONTACT_EMAIL, BASE_URL, SITE_NAME, BUSINESS_PHONE } f
 import { logger } from '@/utils/logger';
 import { safeLocalStorage } from '@/utils/storage';
 import { Turnstile } from '@marsidev/react-turnstile';
-import StructuredData, { createBreadcrumbSchema } from '@/components/StructuredData';
+import StructuredData, { createBreadcrumbSchema, createContactPageSchema } from '@/components/StructuredData';
 
 // MED-004: Warn loudly if Turnstile key is missing in production
 if (import.meta.env.PROD && !import.meta.env.VITE_TURNSTILE_SITE_KEY) {
@@ -148,6 +148,7 @@ export default function ContactPage() {
         { name: 'Inicio', url: '/' },
         { name: 'Contacto', url: '/contact' }
       ])} />
+      <StructuredData data={createContactPageSchema()} />
       
       <div className="w-full mx-auto px-container">
         

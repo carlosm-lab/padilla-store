@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet-async';
 import { BASE_URL, SITE_NAME, FOUNDER_NAME } from '@/config/constants';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import lottie from 'lottie-web';
-import StructuredData, { createFAQSchema, createBreadcrumbSchema } from '@/components/StructuredData';
+import StructuredData, { createFAQSchema, createBreadcrumbSchema, createLocalBusinessSchema, createWebSiteSchema } from '@/components/StructuredData';
 import { useModal } from '@/hooks/useModal';
 import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 
@@ -182,6 +182,9 @@ export default function HomePage() {
       <StructuredData data={createFAQSchema(FAQ_ITEMS)} />
       {/* Breadcrumb: Inicio */}
       <StructuredData data={createBreadcrumbSchema([{ name: 'Inicio', url: '/' }])} />
+      {/* Site and LocalBusiness Structured Data */}
+      <StructuredData data={createWebSiteSchema()} />
+      <StructuredData data={createLocalBusinessSchema(settings)} />
 
       {/* Hero Section — Modern & Executive Redesign */}
       <section className="main-banner relative w-full overflow-hidden">

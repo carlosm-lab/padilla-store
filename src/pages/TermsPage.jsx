@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { BASE_URL, SITE_NAME } from '@/config/constants';
+import StructuredData, { createBreadcrumbSchema, createWebPageSchema } from '@/components/StructuredData';
 
 export default function TermsPage() {
   return (
@@ -10,6 +11,15 @@ export default function TermsPage() {
         <meta property="og:image" content={`${BASE_URL}/og-image.png`} />
         <meta name="description" content={`Términos y condiciones de uso de la plataforma ${SITE_NAME}. Información sobre precios, envíos, devoluciones, responsabilidades y derechos del usuario.`} />
       </Helmet>
+      <StructuredData data={createBreadcrumbSchema([
+        { name: 'Inicio', url: '/' },
+        { name: 'Términos y Condiciones', url: '/terms' }
+      ])} />
+      <StructuredData data={createWebPageSchema(
+        `Términos y Condiciones | ${SITE_NAME}`,
+        `Términos y condiciones de uso de la plataforma ${SITE_NAME}. Información sobre precios, envíos, devoluciones, responsabilidades y derechos del usuario.`,
+        "/terms"
+      )} />
 
       <div className="container mx-auto px-[var(--space-md)] sm:px-[var(--space-lg)] max-w-4xl">
         <div className="bg-white dark:bg-white/5 rounded-3xl px-[var(--space-xl)] pb-[var(--space-xl)] pt-[var(--space-2xl)] sm:px-[var(--space-3xl)] sm:pb-[var(--space-3xl)] sm:pt-[var(--space-3xl)] shadow-360 dark:shadow-none border border-slate-100 dark:border-white/5">

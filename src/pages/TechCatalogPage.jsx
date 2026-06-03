@@ -8,7 +8,7 @@ import ProductCard from '@/components/ProductCard';
 import FilterSidebar from '@/components/FilterSidebar';
 import MobileFilterDrawer from '@/components/MobileFilterDrawer';
 import { BASE_URL, SITE_NAME } from '@/config/constants';
-import StructuredData, { createBreadcrumbSchema } from '@/components/StructuredData';
+import StructuredData, { createBreadcrumbSchema, createCollectionSchema } from '@/components/StructuredData';
 
 export default function TechCatalogPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -166,6 +166,11 @@ export default function TechCatalogPage() {
         { name: 'Inicio', url: '/' },
         { name: 'Tecnología', url: '/catalog-tecnologia' }
       ])} />
+      <StructuredData data={createCollectionSchema(
+        "Catálogo de Tecnología y Accesorios", 
+        "Explora el catálogo de Tecnología en Padilla Store: fundas premium para celular, cargadores rápidos, audífonos y electrónicos con envío en 24h en San Miguel.", 
+        "/catalog-tecnologia"
+      )} />
       <main className="flex flex-1 flex-col lg:flex-row w-full px-container py-[var(--space-lg)] gap-[var(--space-lg)]">
         
         <FilterSidebar

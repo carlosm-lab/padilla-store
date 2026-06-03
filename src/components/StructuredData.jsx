@@ -264,3 +264,57 @@ export const createProductSchema = (product) => {
     }
   };
 };
+
+// ── CollectionPage Schema ────────────────────────────────
+// Para catálogos de productos (Joyería, Tecnología)
+// eslint-disable-next-line react-refresh/only-export-components
+export const createCollectionSchema = (title, description, urlSlug) => {
+  const origin = typeof window !== 'undefined' ? window.location.origin : BASE_URL;
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": title,
+    "description": description,
+    "url": `${origin}${urlSlug}`,
+    "publisher": {
+      "@type": "Organization",
+      "@id": `${origin}/#organization`
+    }
+  };
+};
+
+// ── ContactPage Schema ───────────────────────────────────
+// Para la página de contacto
+// eslint-disable-next-line react-refresh/only-export-components
+export const createContactPageSchema = () => {
+  const origin = typeof window !== 'undefined' ? window.location.origin : BASE_URL;
+  return {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": `Contacto - ${SITE_NAME}`,
+    "url": `${origin}/contact`,
+    "mainEntity": {
+      "@type": "LocalBusiness",
+      "@id": `${origin}/#organization`
+    }
+  };
+};
+
+// ── WebPage Schema ───────────────────────────────────────
+// Para páginas genéricas como Términos y Privacidad
+// eslint-disable-next-line react-refresh/only-export-components
+export const createWebPageSchema = (title, description, urlSlug) => {
+  const origin = typeof window !== 'undefined' ? window.location.origin : BASE_URL;
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": title,
+    "description": description,
+    "url": `${origin}${urlSlug}`,
+    "publisher": {
+      "@type": "Organization",
+      "@id": `${origin}/#organization`
+    }
+  };
+};
+
