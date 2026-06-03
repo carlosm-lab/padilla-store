@@ -43,6 +43,31 @@ const LinksPage = () => {
     <>
       <Helmet>
         <title>{bioName} | Links</title>
+        <meta name="description" content={bioDescription} />
+        <meta property="og:title" content={`${bioName} | Links`} />
+        <meta property="og:description" content={bioDescription} />
+        <meta property="og:image" content={bioImageUrl} />
+        <meta property="og:type" content="profile" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${bioName} | Links`} />
+        <meta name="twitter:description" content={bioDescription} />
+        <meta name="twitter:image" content={bioImageUrl} />
+        <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : 'https://padillastore.com/links'} />
+        
+        {/* Schema.org JSON-LD para ProfilePage / Organization */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ProfilePage",
+            "mainEntity": {
+              "@type": "Organization",
+              "name": bioName,
+              "description": bioDescription,
+              "image": bioImageUrl,
+              "sameAs": bioLinks.filter(link => !link.id.includes('whatsapp') && !link.id.includes('location')).map(link => link.url)
+            }
+          })}
+        </script>
         <style>{`
           .links-page-container {
             font-family: 'Plus Jakarta Sans', sans-serif;
