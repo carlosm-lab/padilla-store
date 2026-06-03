@@ -503,6 +503,7 @@ export default function ProductModal({ isOpen, onClose, product, onSave, categor
                   </button>
                 </div>
               </div>
+            </div>
 
               {/* Tags */}
               <div className="md:col-span-2">
