@@ -39,6 +39,7 @@ const ContactPage = lazy(() => import('./pages/ContactPage'));
 const TermsPage = lazy(() => import('./pages/TermsPage'));
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+const LinksPage = lazy(() => import('./pages/LinksPage'));
 
 // ── Panel admin (lazy) ───────────────────────────────────
 // Separados del bundle público. Un usuario normal nunca descarga
@@ -133,6 +134,7 @@ function App() {
         <Route path="/contact" element={<ErrorBoundary><Suspense fallback={<PageLoading />}><ShopLayout><ContactPage /></ShopLayout></Suspense></ErrorBoundary>} />
         <Route path="/terms" element={<ErrorBoundary><Suspense fallback={<PageLoading />}><ShopLayout><TermsPage /></ShopLayout></Suspense></ErrorBoundary>} />
         <Route path="/privacy" element={<ErrorBoundary><Suspense fallback={<PageLoading />}><ShopLayout><PrivacyPage /></ShopLayout></Suspense></ErrorBoundary>} />
+        <Route path="/links" element={<ErrorBoundary><Suspense fallback={<PageLoading />}><LinksPage /></Suspense></ErrorBoundary>} />
         <Route path="*" element={<ErrorBoundary><Suspense fallback={<PageLoading />}><ShopLayout><NotFoundPage /></ShopLayout></Suspense></ErrorBoundary>} />
       </Routes>
     </ErrorBoundary>
