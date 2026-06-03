@@ -16,6 +16,7 @@ export default function StoreSettingsForm({ showToast }) {
     social_facebook: '',
     social_instagram: '',
     social_tiktok: '',
+    bio_header_name: '',
     bio_name: '',
     bio_description: '',
     bio_image_url: '',
@@ -34,6 +35,7 @@ export default function StoreSettingsForm({ showToast }) {
         social_facebook: settings.social_facebook || '',
         social_instagram: settings.social_instagram || '',
         social_tiktok: settings.social_tiktok || '',
+        bio_header_name: settings.bio_header_name || '',
         bio_name: settings.bio_name || '',
         bio_description: settings.bio_description || '',
         bio_image_url: settings.bio_image_url || '',
@@ -77,6 +79,7 @@ export default function StoreSettingsForm({ showToast }) {
           social_facebook: formData.social_facebook,
           social_instagram: formData.social_instagram,
           social_tiktok: formData.social_tiktok,
+          bio_header_name: formData.bio_header_name,
           bio_name: formData.bio_name,
           bio_description: formData.bio_description,
           bio_image_url: formData.bio_image_url,
@@ -243,7 +246,18 @@ export default function StoreSettingsForm({ showToast }) {
             
             <div className="space-y-4">
               <div>
-                <label htmlFor="bio-name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nombre a mostrar</label>
+                <label htmlFor="bio-header-name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nombre en el Header (Superior)</label>
+                <input 
+                  id="bio-header-name"
+                  type="text" 
+                  name="bio_header_name"
+                  value={formData.bio_header_name}
+                  onChange={handleChange}
+                  className="w-full bg-slate-50 dark:bg-transparent border border-slate-200 dark:border-white/5 rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20"
+                />
+              </div>
+              <div>
+                <label htmlFor="bio-name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nombre en el Perfil (Central)</label>
                 <input 
                   id="bio-name"
                   type="text" 

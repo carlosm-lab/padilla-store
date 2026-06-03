@@ -38,7 +38,7 @@ export function SettingsProvider({ children }) {
     try {
       const { data, error } = await supabase
         .from('store_settings')
-        .select('id, hero_title, hero_subtitle, hero_description, hero_image_url, story_image_url, contact_phone, contact_email, social_facebook, social_instagram, social_tiktok, bio_name, bio_description, bio_image_url, bio_links, created_at, updated_at')
+        .select('id, hero_title, hero_subtitle, hero_description, hero_image_url, story_image_url, contact_phone, contact_email, social_facebook, social_instagram, social_tiktok, bio_header_name, bio_name, bio_description, bio_image_url, bio_links, created_at, updated_at')
         .single();
         
       if (error) {

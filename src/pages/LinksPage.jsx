@@ -8,6 +8,7 @@ const LinksPage = () => {
   const [copied, setCopied] = useState(false);
 
   // Fallbacks para renderizado "estático" sin spinners
+  const bioHeaderName = settings?.bio_header_name || SITE_NAME;
   const bioName = settings?.bio_name || SITE_NAME;
   const bioDescription = settings?.bio_description || 'Accesorios tecnológicos, bisutería fina de acero y plata en San Miguel. Entrega a domicilio en 24h.';
   const bioImageUrl = settings?.bio_image_url || '/logo.svg';
@@ -59,7 +60,7 @@ const LinksPage = () => {
             <div className="w-8 h-8 rounded-full flex items-center justify-center shadow-md overflow-hidden bg-white border border-[#7c3aed]/20">
               <img src={bioImageUrl} alt="Icon" className="w-full h-full object-cover" />
             </div>
-            <span className="text-lg font-bold text-[#32323b] tracking-[-0.02em]">{bioName}</span>
+            <span className="text-lg font-bold text-[#32323b] tracking-[-0.02em]">{bioHeaderName}</span>
           </div>
           <button
             onClick={copyLink}
